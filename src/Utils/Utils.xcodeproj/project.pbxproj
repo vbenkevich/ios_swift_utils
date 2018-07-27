@@ -10,6 +10,14 @@
 		BA54B826210B70E000A5F22F /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA54B81C210B70DF00A5F22F /* Utils.framework */; };
 		BA54B82B210B70E000A5F22F /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B82A210B70E000A5F22F /* UtilsTests.swift */; };
 		BA54B82D210B70E000A5F22F /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = BA54B81F210B70DF00A5F22F /* Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA54B85E210B73BF00A5F22F /* UIButton+Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */; };
+		BA54B85F210B73BF00A5F22F /* UIButton+Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */; };
+		BA54B860210B73BF00A5F22F /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85B210B73BF00A5F22F /* Command.swift */; };
+		BA54B861210B73BF00A5F22F /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85B210B73BF00A5F22F /* Command.swift */; };
+		BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85C210B73BF00A5F22F /* SerialCommand.swift */; };
+		BA54B863210B73BF00A5F22F /* SerialCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85C210B73BF00A5F22F /* SerialCommand.swift */; };
+		BA54B864210B73BF00A5F22F /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85D210B73BF00A5F22F /* ActionCommand.swift */; };
+		BA54B865210B73BF00A5F22F /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85D210B73BF00A5F22F /* ActionCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +37,10 @@
 		BA54B825210B70E000A5F22F /* UtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B82A210B70E000A5F22F /* UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
 		BA54B82C210B70E000A5F22F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Command.swift"; sourceTree = "<group>"; };
+		BA54B85B210B73BF00A5F22F /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		BA54B85C210B73BF00A5F22F /* SerialCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialCommand.swift; sourceTree = "<group>"; };
+		BA54B85D210B73BF00A5F22F /* ActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +83,7 @@
 		BA54B81E210B70DF00A5F22F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BA54B84D210B739100A5F22F /* Command */,
 				BA54B81F210B70DF00A5F22F /* Utils.h */,
 				BA54B820210B70E000A5F22F /* Info.plist */,
 			);
@@ -84,6 +97,17 @@
 				BA54B82C210B70E000A5F22F /* Info.plist */,
 			);
 			path = UtilsTests;
+			sourceTree = "<group>";
+		};
+		BA54B84D210B739100A5F22F /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				BA54B85D210B73BF00A5F22F /* ActionCommand.swift */,
+				BA54B85B210B73BF00A5F22F /* Command.swift */,
+				BA54B85C210B73BF00A5F22F /* SerialCommand.swift */,
+				BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */,
+			);
+			path = Command;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +218,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA54B85E210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
+				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
+				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
+				BA54B864210B73BF00A5F22F /* ActionCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +230,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA54B82B210B70E000A5F22F /* UtilsTests.swift in Sources */,
+				BA54B863210B73BF00A5F22F /* SerialCommand.swift in Sources */,
+				BA54B85F210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
+				BA54B861210B73BF00A5F22F /* Command.swift in Sources */,
+				BA54B865210B73BF00A5F22F /* ActionCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +422,7 @@
 		BA54B834210B70E000A5F22F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = UtilsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -407,6 +440,7 @@
 		BA54B835210B70E000A5F22F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = UtilsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
