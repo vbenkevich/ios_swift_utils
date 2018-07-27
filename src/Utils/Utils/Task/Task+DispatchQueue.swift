@@ -24,11 +24,15 @@ public extension DispatchQueue {
         }
     }
 
-    func async<T>(_ task: Task<T>) {
+    @discardableResult
+    func async<T>(_ task: Task<T>) -> Task<T> {
         self.async(execute: task.workItem)
+        return task
     }
 
-    func async<T>(_ task: Task<T>, after interval: DispatchTimeInterval) {
+    @discardableResult
+    func async<T>(_ task: Task<T>, after interval: DispatchTimeInterval) -> Task<T> {
         self.asyncAfter(deadline: .now() + interval, execute: task.workItem)
+        return task
     }
 }

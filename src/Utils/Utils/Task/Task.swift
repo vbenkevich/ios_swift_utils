@@ -73,7 +73,7 @@ public class Task<T> {
         lock.lock()
         defer { lock.unlock() }
 
-        guard _status.isFinite else {
+        guard !_status.isFinite else {
             throw TaskError.inconsistentState(message: "task has finite state")
         }
 
@@ -111,13 +111,13 @@ public class Task<T> {
 
         private var workItem: DispatchWorkItem!
 
-        init() {
+        public init() {
             workItem = DispatchWorkItem {}
             task = Task(workItem)
             task._status = .executing
         }
 
-        private (set) var task: Task<T>
+        public private (set) var task: Task<T>
 
         public func complete(_ result: T) throws {
             try task.setStatus(.success(result: result))
