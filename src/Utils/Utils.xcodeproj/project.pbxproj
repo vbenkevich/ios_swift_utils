@@ -18,6 +18,10 @@
 		BA54B863210B73BF00A5F22F /* SerialCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85C210B73BF00A5F22F /* SerialCommand.swift */; };
 		BA54B864210B73BF00A5F22F /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85D210B73BF00A5F22F /* ActionCommand.swift */; };
 		BA54B865210B73BF00A5F22F /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85D210B73BF00A5F22F /* ActionCommand.swift */; };
+		BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */; };
+		BA54B86A210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */; };
+		BA54B86B210B73F600A5F22F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B868210B73F600A5F22F /* Task.swift */; };
+		BA54B86C210B73F600A5F22F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B868210B73F600A5F22F /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,8 @@
 		BA54B85B210B73BF00A5F22F /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		BA54B85C210B73BF00A5F22F /* SerialCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialCommand.swift; sourceTree = "<group>"; };
 		BA54B85D210B73BF00A5F22F /* ActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCommand.swift; sourceTree = "<group>"; };
+		BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+DispatchQueue.swift"; sourceTree = "<group>"; };
+		BA54B868210B73F600A5F22F /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,7 @@
 		BA54B81E210B70DF00A5F22F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BA54B866210B73D700A5F22F /* Task */,
 				BA54B84D210B739100A5F22F /* Command */,
 				BA54B81F210B70DF00A5F22F /* Utils.h */,
 				BA54B820210B70E000A5F22F /* Info.plist */,
@@ -108,6 +115,15 @@
 				BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */,
 			);
 			path = Command;
+			sourceTree = "<group>";
+		};
+		BA54B866210B73D700A5F22F /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				BA54B868210B73F600A5F22F /* Task.swift */,
+				BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +236,9 @@
 			files = (
 				BA54B85E210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
+				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
+				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
 				BA54B864210B73BF00A5F22F /* ActionCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,10 +247,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA54B86A210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA54B82B210B70E000A5F22F /* UtilsTests.swift in Sources */,
 				BA54B863210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BA54B85F210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
 				BA54B861210B73BF00A5F22F /* Command.swift in Sources */,
+				BA54B86C210B73F600A5F22F /* Task.swift in Sources */,
 				BA54B865210B73BF00A5F22F /* ActionCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
