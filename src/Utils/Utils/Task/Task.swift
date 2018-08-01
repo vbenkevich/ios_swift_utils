@@ -7,7 +7,18 @@
 
 import Foundation
 
-public class Task<T> {
+protocol Cancellable: class {
+
+    func cancel() throws
+}
+
+public enum TaskError: Swift.Error {
+
+    case taskCancelled
+    case inconsistentState(message: String)
+}
+
+public class Task<T>: Cancellable {
 
     private let lock = NSLock()
     var workItem: DispatchWorkItem!
@@ -15,6 +26,7 @@ public class Task<T> {
     public init(_ execute: @escaping () throws -> T) {
         self.workItem = DispatchWorkItem {
             do {
+                try self.setStatus(.executing)
                 let data = try execute()
                 try? self.setStatus(.success(result: data))
             } catch {
@@ -39,6 +51,8 @@ public class Task<T> {
             return nil
         }
     }
+
+    weak var linked: Cancellable?
 
     private var _status: Status = .new
 
@@ -67,20 +81,21 @@ public class Task<T> {
     public func cancel() throws {
         try setStatus(.cancelled)
         workItem.cancel()
+        try linked?.cancel()
     }
 
     fileprivate func setStatus(_ status: Status) throws {
         lock.lock()
         defer { lock.unlock() }
 
-        guard !_status.isFinite else {
-            throw TaskError.inconsistentState(message: "task has finite state")
+        guard !_status.completed else {
+            throw TaskError.inconsistentState(message: "task has completed state")
         }
 
         _status = status
     }
 
-    public enum Status {
+    public enum Status: Equatable {
 
         case new
         case executing
@@ -88,7 +103,7 @@ public class Task<T> {
         case cancelled
         case failed(error: Swift.Error)
 
-        var isFinite: Bool {
+        var completed: Bool {
             switch self {
             case .success(_), .cancelled, .failed(_):
                 return true
@@ -97,9 +112,17 @@ public class Task<T> {
             }
         }
 
-        var isStarted: Bool {
-            switch self {
-            case .new:
+        public static func == (lhs: Task<T>.Status, rhs: Task<T>.Status) -> Bool {
+            switch (lhs, rhs) {
+            case (.new, .new):
+                return true
+            case (.executing, .executing):
+                return true
+            case (.cancelled, .cancelled):
+                return true
+            case (.failed(_), .failed(_)):
+                return true
+            case (.success(_), .success(_)):
                 return true
             default:
                 return false
@@ -135,9 +158,3 @@ public class Task<T> {
         }
     }
 }
-
-public enum TaskError: Swift.Error {
-    case taskCancelled
-    case inconsistentState(message: String)
-}
-
