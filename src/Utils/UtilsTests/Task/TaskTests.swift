@@ -20,6 +20,61 @@ class TaskTests: XCTestCase {
         super.tearDown()
     }
 
+    func testRunNotify() {
+        let notify = expectation(description: "notify")
+
+        let task = Task<Int> {
+            return 1
+        }
+        task.notify(notifyQueue) {
+            XCTAssertEqual($0.result, 1)
+            XCTAssertEqual($0.status, .success(1))
+            XCTAssert($0 === task)
+            notify.fulfill()
+        }
+
+        executeQueue.async(task)
+
+        wait(for: [notify], timeout: 1)
+    }
+
+    func testRunMultiNotify() {
+        let notify1 = expectation(description: "notify1")
+        let notify2 = expectation(description: "notify2")
+
+        let task = Task<Int> {
+            return 1
+        }.notify(notifyQueue) { _ in
+            notify1.fulfill()
+        }.notify(notifyQueue) { _ in
+            notify2.fulfill()
+        }
+
+        executeQueue.async(task)
+
+        wait(for: [notify1, notify2], timeout: 1)
+        XCTAssertEqual(task.status, .success(1))
+    }
+
+    func testCancelRun() {
+        let notify = expectation(description: "notify")
+
+        let task = Task<Int> {
+            return 1
+        }.notify(notifyQueue) {
+            XCTAssertEqual($0.result, nil)
+            XCTAssertEqual($0.status, .cancelled)
+            notify.fulfill()
+        }
+
+        try! task.cancel()
+
+        executeQueue.async(task)
+
+        wait(for: [notify], timeout: 1)
+        XCTAssertEqual(task.status, .cancelled)
+    }
+
     func testPositiveLifeCycle() {
         let started = expectation(description: "started")
         let completed = expectation(description: "completed")
@@ -36,7 +91,6 @@ class TaskTests: XCTestCase {
         executeQueue.async(task)
 
         wait(for: [started, completed], timeout: 1, enforceOrder: true)
-        XCTAssertEqual(task.status, .success(result: 1))
     }
 
     func testCancelRunningLifeCycle() {

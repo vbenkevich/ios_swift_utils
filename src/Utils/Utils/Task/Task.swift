@@ -7,6 +7,19 @@
 
 import Foundation
 
+typealias SpinLock = os_unfair_lock
+
+extension SpinLock {
+
+    mutating func lock() {
+        os_unfair_lock_lock(&self)
+    }
+
+    mutating func unlock() {
+        os_unfair_lock_unlock(&self)
+    }
+}
+
 protocol Cancellable: class {
 
     func cancel() throws
@@ -20,27 +33,32 @@ public enum TaskError: Swift.Error {
 
 public class Task<T>: Cancellable {
 
-    private let lock = NSLock()
-    var workItem: DispatchWorkItem!
+    private var lock = SpinLock()
+    private var notifyItem = DispatchWorkItem {}
+    private (set) var executeItem: DispatchWorkItem!
 
     public init(_ execute: @escaping () throws -> T) {
-        self.workItem = DispatchWorkItem {
+        executeItem = DispatchWorkItem {
             do {
                 try self.setStatus(.executing)
                 let data = try execute()
-                try? self.setStatus(.success(result: data))
+                try? self.setStatus(.success(data))
             } catch {
                 try? self.setStatus(.failed(error: error))
             }
         }
+
+        executeItem.notify(queue: DispatchQueue.main) { [notifyItem] in
+            notifyItem.perform()
+        }
     }
 
     private init(_ workItem: DispatchWorkItem) {
-        self.workItem = workItem
-    }
+        executeItem = workItem
 
-    public var status: Status {
-        return _status
+        notifyItem.notify(queue: DispatchQueue.main) { [notifyItem] in
+            notifyItem.perform()
+        }
     }
 
     public var result: T? {
@@ -52,15 +70,43 @@ public class Task<T>: Cancellable {
         }
     }
 
+    public var status: Status {
+        lock.lock()
+        defer {
+            lock.unlock()
+        }
+
+        return _status
+    }
+
+    fileprivate func setStatus(_ status: Status) throws {
+        lock.lock()
+        defer {
+            lock.unlock()
+        }
+
+        guard !_status.completed else {
+            throw TaskError.inconsistentState(message: "task has completed state")
+        }
+
+        _status = status
+    }
+
     weak var linked: Cancellable?
 
     private var _status: Status = .new
 
     @discardableResult
     public func notify(_ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Task<T>) -> Void) -> Task<T> {
-        workItem.notify(queue: queue) {
+        if status.completed {
+            callBack(self)
+            return self
+        }
+
+        notifyItem.notify(queue: queue) {
             callBack(self)
         }
+
         return self
     }
 
@@ -68,7 +114,7 @@ public class Task<T>: Cancellable {
     public func chain<K>(factory: @escaping (Task<T>) -> Task<K>) -> Task<K> {
         let tcs = Task<K>.Source()
 
-        workItem.notify(queue: DispatchQueue.main) {
+        notifyItem.notify(queue: DispatchQueue.main) {
             let task = factory(self)
             task.notify {
                 try? tcs.setStatus($0.status)
@@ -80,26 +126,16 @@ public class Task<T>: Cancellable {
 
     public func cancel() throws {
         try setStatus(.cancelled)
-        workItem.cancel()
+        notifyItem.perform()
+        executeItem.cancel()
         try linked?.cancel()
-    }
-
-    fileprivate func setStatus(_ status: Status) throws {
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard !_status.completed else {
-            throw TaskError.inconsistentState(message: "task has completed state")
-        }
-
-        _status = status
     }
 
     public enum Status: Equatable {
 
         case new
         case executing
-        case success(result: T)
+        case success(_: T)
         case cancelled
         case failed(error: Swift.Error)
 
@@ -143,7 +179,7 @@ public class Task<T>: Cancellable {
         public private (set) var task: Task<T>
 
         public func complete(_ result: T) throws {
-            try task.setStatus(.success(result: result))
+            try task.setStatus(.success(result))
             workItem.perform()
         }
 
