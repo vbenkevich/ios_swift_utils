@@ -19,14 +19,34 @@ class CommandSampleController: UIViewController {
         super.viewDidLoad()
         viewModel.view = self
         button.command = viewModel.command
+        button.command = viewModel.testWorkItemCommand
     }
 }
 
 class ViewModel {
-    var counter = 0
 
     lazy var command = ActionCommand(self) {
         $0.request()
+    }
+
+    lazy var testWorkItemCommand = ActionCommand {
+        var semaphore = DispatchSemaphore(value: 0)
+
+        var workItem = DispatchWorkItem {
+            semaphore.wait()
+        }
+
+        workItem.notify(queue: DispatchQueue.main) {
+            print("completed")
+        }
+
+        DispatchQueue.global().async(execute: workItem)
+
+        workItem.cancel()
+        print("cancel")
+
+        semaphore.signal()
+        print("signal")
     }
 
     weak var view: CommandSampleController?
@@ -35,11 +55,6 @@ class ViewModel {
         didSet {
             view?.label.text = text
         }
-    }
-
-    var newText: String {
-        defer { counter += 1 }
-        return counter.description
     }
 
     func request() {
@@ -66,7 +81,8 @@ class Service {
     }
 
     func fetchDataQueue<T>(test: T) -> Task<T> {
-        return DispatchQueue.global().async(Task { return test }, after: .seconds(1))
+        let task = Task { return test }
+        return DispatchQueue.global().async(task, after: .seconds(1))
     }
 
     struct test: Error {

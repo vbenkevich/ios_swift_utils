@@ -12,22 +12,22 @@ open class ActionCommand: SerialCommand {
     private let execute: (Any?) -> Void
     private let canExecute: ((Any?) -> Bool)?
 
-    init(execute: @escaping () -> Void) {
+    public init(execute: @escaping () -> Void) {
         self.execute = { _ in execute() }
         self.canExecute = nil
     }
 
-    init(execute: @escaping () -> Void, canExecute: @escaping () -> Bool) {
+    public init(execute: @escaping () -> Void, canExecute: @escaping () -> Bool) {
         self.execute = { _ in execute() }
         self.canExecute = { _ in canExecute() }
     }
 
-    init<T>(execute: @escaping (T) -> Void) {
+    public init<T>(execute: @escaping (T) -> Void) {
         self.execute = { execute($0 as! T) }
         self.canExecute = nil
     }
 
-    init<T>(execute: @escaping (T) -> Void, canExecute: @escaping (T) -> Bool) {
+    public init<T>(execute: @escaping (T) -> Void, canExecute: @escaping (T) -> Bool) {
         self.execute = { execute($0 as! T) }
         self.canExecute = { $0 is T && canExecute($0 as! T) }
     }

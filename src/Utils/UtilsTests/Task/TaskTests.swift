@@ -20,7 +20,7 @@ class TaskTests: XCTestCase {
         super.tearDown()
     }
 
-    func testRunNotify() {
+    func testSimpleNotify() {
         let notify = expectation(description: "notify")
 
         let task = Task<Int> {
@@ -38,7 +38,7 @@ class TaskTests: XCTestCase {
         wait(for: [notify], timeout: 1)
     }
 
-    func testRunMultiNotify() {
+    func testMultiNotify() {
         let notify1 = expectation(description: "notify1")
         let notify2 = expectation(description: "notify2")
 
@@ -56,7 +56,25 @@ class TaskTests: XCTestCase {
         XCTAssertEqual(task.status, .success(1))
     }
 
-    func testCancelRun() {
+    func testStatusRunComplete() {
+        let started = expectation(description: "started")
+        let completed = expectation(description: "completed")
+
+        let task = Task<Int> {
+            started.fulfill()
+            return 1
+        }
+
+        task.notify(executeQueue) { _ in
+            completed.fulfill()
+        }
+
+        executeQueue.async(task)
+
+        wait(for: [started, completed], timeout: 1, enforceOrder: true)
+    }
+
+    func testStatusCancelRun() {
         let notify = expectation(description: "notify")
 
         let task = Task<Int> {
@@ -75,25 +93,7 @@ class TaskTests: XCTestCase {
         XCTAssertEqual(task.status, .cancelled)
     }
 
-    func testPositiveLifeCycle() {
-        let started = expectation(description: "started")
-        let completed = expectation(description: "completed")
-
-        let task = Task<Int> {
-            started.fulfill()
-            return 1
-        }
-
-        task.notify(executeQueue) { _ in
-            completed.fulfill()
-        }
-
-        executeQueue.async(task)
-
-        wait(for: [started, completed], timeout: 1, enforceOrder: true)
-    }
-
-    func testCancelRunningLifeCycle() {
+    func testStatusRunCancel() {
         let started = expectation(description: "started")
         let cancelled = expectation(description: "cancelled")
 
@@ -119,5 +119,38 @@ class TaskTests: XCTestCase {
         XCTAssertEqual(task.status, .cancelled)
 
         semafore.signal()
+    }
+
+    func testSimpleChain() {
+        let notifyTask1 = expectation(description: "notify task1")
+        let createTask2 = expectation(description: "create task2")
+        let notifyTask2 = expectation(description: "notify task2")
+
+        let result1 = 1
+        let result2 = "2"
+
+        let createSecondTask: (Task<Int>) -> Task<String> = { [executeQueue] (task: Task<Int>) in
+            XCTAssertEqual(task.result, result1)
+            XCTAssertEqual(task.status, .success(result1))
+            createTask2.fulfill()
+            return executeQueue.async(Task { return result2 })
+        }
+
+        let task = Task { return result1 }
+            .notify {
+                XCTAssertEqual($0.result, result1)
+                XCTAssertEqual($0.status, .success(result1))
+                notifyTask1.fulfill()
+            }
+            .chain(factory: createSecondTask)
+            .notify {
+                XCTAssertEqual($0.result, result2)
+                XCTAssertEqual($0.status, .success(result2))
+                notifyTask2.fulfill()
+            }
+
+        executeQueue.async(task)
+
+        wait(for: [notifyTask1, createTask2, notifyTask2], timeout: 1)
     }
 }

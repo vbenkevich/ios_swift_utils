@@ -7,19 +7,6 @@
 
 import Foundation
 
-typealias SpinLock = os_unfair_lock
-
-extension SpinLock {
-
-    mutating func lock() {
-        os_unfair_lock_lock(&self)
-    }
-
-    mutating func unlock() {
-        os_unfair_lock_unlock(&self)
-    }
-}
-
 protocol Cancellable: class {
 
     func cancel() throws
@@ -44,7 +31,7 @@ public class Task<T>: Cancellable {
                 let data = try execute()
                 try? self.setStatus(.success(data))
             } catch {
-                try? self.setStatus(.failed(error: error))
+                try? self.setStatus(.failed(error))
             }
         }
 
@@ -55,8 +42,7 @@ public class Task<T>: Cancellable {
 
     private init(_ workItem: DispatchWorkItem) {
         executeItem = workItem
-
-        notifyItem.notify(queue: DispatchQueue.main) { [notifyItem] in
+        executeItem.notify(queue: DispatchQueue.main) { [notifyItem] in
             notifyItem.perform()
         }
     }
@@ -110,20 +96,6 @@ public class Task<T>: Cancellable {
         return self
     }
 
-    @discardableResult
-    public func chain<K>(factory: @escaping (Task<T>) -> Task<K>) -> Task<K> {
-        let tcs = Task<K>.Source()
-
-        notifyItem.notify(queue: DispatchQueue.main) {
-            let task = factory(self)
-            task.notify {
-                try? tcs.setStatus($0.status)
-            }
-        }
-
-        return tcs.task
-    }
-
     public func cancel() throws {
         try setStatus(.cancelled)
         notifyItem.perform()
@@ -137,7 +109,7 @@ public class Task<T>: Cancellable {
         case executing
         case success(_: T)
         case cancelled
-        case failed(error: Swift.Error)
+        case failed(_: Swift.Error)
 
         var completed: Bool {
             switch self {
@@ -168,10 +140,9 @@ public class Task<T>: Cancellable {
 
     public class Source {
 
-        private var workItem: DispatchWorkItem!
+        private var workItem: DispatchWorkItem = DispatchWorkItem {}
 
         public init() {
-            workItem = DispatchWorkItem {}
             task = Task(workItem)
             task._status = .executing
         }
@@ -180,12 +151,14 @@ public class Task<T>: Cancellable {
 
         public func complete(_ result: T) throws {
             try task.setStatus(.success(result))
-            workItem.perform()
         }
 
-        public func cancel(_ result: T) throws {
+        public func error(_ error: Error) throws {
+            try task.setStatus(.failed(error))
+        }
+
+        public func cancel() throws {
             try task.setStatus(.cancelled)
-            workItem.cancel()
         }
 
         fileprivate func setStatus(_ status: Task<T>.Status) throws {

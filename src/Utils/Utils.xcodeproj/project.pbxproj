@@ -21,6 +21,10 @@
 		BA54B86A210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */; };
 		BA54B86B210B73F600A5F22F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B868210B73F600A5F22F /* Task.swift */; };
 		BA54B86C210B73F600A5F22F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B868210B73F600A5F22F /* Task.swift */; };
+		BA9EB305211351590008C539 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB304211351590008C539 /* SpinLock.swift */; };
+		BA9EB3062113518A0008C539 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB304211351590008C539 /* SpinLock.swift */; };
+		BA9EB30821135DDA0008C539 /* Task+Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB30721135DDA0008C539 /* Task+Chain.swift */; };
+		BA9EB30921135FC30008C539 /* Task+Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB30721135DDA0008C539 /* Task+Chain.swift */; };
 		BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC82013210F7AAC0011DCF3 /* HttpClient.swift */; };
 		BAC820232111F0AF0011DCF3 /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC820222111F0AF0011DCF3 /* TaskTests.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +51,8 @@
 		BA54B85D210B73BF00A5F22F /* ActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCommand.swift; sourceTree = "<group>"; };
 		BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+DispatchQueue.swift"; sourceTree = "<group>"; };
 		BA54B868210B73F600A5F22F /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		BA9EB304211351590008C539 /* SpinLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
+		BA9EB30721135DDA0008C539 /* Task+Chain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Chain.swift"; sourceTree = "<group>"; };
 		BAC82013210F7AAC0011DCF3 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		BAC820222111F0AF0011DCF3 /* TaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +97,7 @@
 		BA54B81E210B70DF00A5F22F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BA9EB303211351440008C539 /* Common */,
 				BAC82012210F7A880011DCF3 /* Http */,
 				BA54B866210B73D700A5F22F /* Task */,
 				BA54B84D210B739100A5F22F /* Command */,
@@ -126,9 +133,18 @@
 			isa = PBXGroup;
 			children = (
 				BA54B868210B73F600A5F22F /* Task.swift */,
+				BA9EB30721135DDA0008C539 /* Task+Chain.swift */,
 				BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */,
 			);
 			path = Task;
+			sourceTree = "<group>";
+		};
+		BA9EB303211351440008C539 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BA9EB304211351590008C539 /* SpinLock.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		BAC82012210F7A880011DCF3 /* Http */ = {
@@ -270,9 +286,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA54B85E210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
+				BA9EB30821135DDA0008C539 /* Task+Chain.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
+				BA9EB305211351590008C539 /* SpinLock.swift in Sources */,
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
 				BA54B864210B73BF00A5F22F /* ActionCommand.swift in Sources */,
@@ -284,9 +302,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAC820232111F0AF0011DCF3 /* TaskTests.swift in Sources */,
+				BA9EB30921135FC30008C539 /* Task+Chain.swift in Sources */,
 				BA54B86A210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA54B863210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BA54B85F210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
+				BA9EB3062113518A0008C539 /* SpinLock.swift in Sources */,
 				BA54B861210B73BF00A5F22F /* Command.swift in Sources */,
 				BA54B86C210B73F600A5F22F /* Task.swift in Sources */,
 				BA54B865210B73BF00A5F22F /* ActionCommand.swift in Sources */,
