@@ -1,9 +1,10 @@
 //
 //  SpinLock.swift
-//  Utils
 //
-//  Created by Vladimir Benkevich on 02/08/2018.
+//  Created by Vladimir Benkevich
+//  Copyright © 2018
 //
+
 
 import Foundation
 

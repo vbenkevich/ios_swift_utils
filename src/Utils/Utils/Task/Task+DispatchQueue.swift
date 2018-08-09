@@ -9,6 +9,7 @@ import Foundation
 
 public extension DispatchQueue {
 
+    @discardableResult
     func await<T>(task: Task<T>) throws -> T {
         self.sync(execute: task.executeItem)
 

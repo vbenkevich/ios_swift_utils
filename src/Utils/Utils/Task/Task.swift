@@ -35,14 +35,14 @@ public class Task<T>: Cancellable {
             }
         }
 
-        executeItem.notify(queue: DispatchQueue.main) { [notifyItem] in
+        executeItem.notify(queue: DispatchQueue.global(qos: .userInitiated)) { [notifyItem] in
             notifyItem.perform()
         }
     }
 
-    private init(_ workItem: DispatchWorkItem) {
+    init(_ workItem: DispatchWorkItem) {
         executeItem = workItem
-        executeItem.notify(queue: DispatchQueue.main) { [notifyItem] in
+        executeItem.notify(queue: DispatchQueue.global(qos: .userInitiated)) { [notifyItem] in
             notifyItem.perform()
         }
     }
@@ -65,7 +65,7 @@ public class Task<T>: Cancellable {
         return _status
     }
 
-    fileprivate func setStatus(_ status: Status) throws {
+    func setStatus(_ status: Status) throws {
         lock.lock()
         defer {
             lock.unlock()
@@ -101,69 +101,5 @@ public class Task<T>: Cancellable {
         notifyItem.perform()
         executeItem.cancel()
         try linked?.cancel()
-    }
-
-    public enum Status: Equatable {
-
-        case new
-        case executing
-        case success(_: T)
-        case cancelled
-        case failed(_: Swift.Error)
-
-        var completed: Bool {
-            switch self {
-            case .success(_), .cancelled, .failed(_):
-                return true
-            default:
-                return false
-            }
-        }
-
-        public static func == (lhs: Task<T>.Status, rhs: Task<T>.Status) -> Bool {
-            switch (lhs, rhs) {
-            case (.new, .new):
-                return true
-            case (.executing, .executing):
-                return true
-            case (.cancelled, .cancelled):
-                return true
-            case (.failed(_), .failed(_)):
-                return true
-            case (.success(_), .success(_)):
-                return true
-            default:
-                return false
-            }
-        }
-    }
-
-    public class Source {
-
-        private var workItem: DispatchWorkItem = DispatchWorkItem {}
-
-        public init() {
-            task = Task(workItem)
-            task._status = .executing
-        }
-
-        public private (set) var task: Task<T>
-
-        public func complete(_ result: T) throws {
-            try task.setStatus(.success(result))
-        }
-
-        public func error(_ error: Error) throws {
-            try task.setStatus(.failed(error))
-        }
-
-        public func cancel() throws {
-            try task.setStatus(.cancelled)
-        }
-
-        fileprivate func setStatus(_ status: Task<T>.Status) throws {
-            try task.setStatus(status)
-            workItem.perform()
-        }
     }
 }
