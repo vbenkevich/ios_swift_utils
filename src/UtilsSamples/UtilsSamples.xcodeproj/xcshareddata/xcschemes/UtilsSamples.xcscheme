@@ -17,7 +17,21 @@
                BlueprintIdentifier = "BA54B81B210B70DF00A5F22F"
                BuildableName = "Utils.framework"
                BlueprintName = "Utils"
-               ReferencedContainer = "container:Utils.xcodeproj">
+               ReferencedContainer = "container:../Utils/Utils.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BA54B875210B754A00A5F22F"
+               BuildableName = "UtilsSamples.app"
+               BlueprintName = "UtilsSamples"
+               ReferencedContainer = "container:UtilsSamples.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,8 +40,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      systemAttachmentLifetime = "keepNever"
-      userAttachmentLifetime = "keepAlways"
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -37,7 +49,14 @@
             BlueprintIdentifier = "BA54B81B210B70DF00A5F22F"
             BuildableName = "Utils.framework"
             BlueprintName = "Utils"
-            ReferencedContainer = "container:Utils.xcodeproj">
+            ReferencedContainer = "container:../Utils/Utils.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "BA54B875210B754A00A5F22F"
+            BuildableName = "UtilsSamples.app"
+            BlueprintName = "UtilsSamples"
+            ReferencedContainer = "container:UtilsSamples.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -48,25 +67,20 @@
                BlueprintIdentifier = "BA54B824210B70E000A5F22F"
                BuildableName = "UtilsTests.xctest"
                BlueprintName = "UtilsTests"
-               ReferencedContainer = "container:Utils.xcodeproj">
+               ReferencedContainer = "container:../Utils/Utils.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BA54B81B210B70DF00A5F22F"
-            BuildableName = "Utils.framework"
-            BlueprintName = "Utils"
-            ReferencedContainer = "container:Utils.xcodeproj">
+            BlueprintIdentifier = "BA54B875210B754A00A5F22F"
+            BuildableName = "UtilsSamples.app"
+            BlueprintName = "UtilsSamples"
+            ReferencedContainer = "container:UtilsSamples.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
@@ -79,15 +93,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BA54B81B210B70DF00A5F22F"
-            BuildableName = "Utils.framework"
-            BlueprintName = "Utils"
-            ReferencedContainer = "container:Utils.xcodeproj">
+            BlueprintIdentifier = "BA54B875210B754A00A5F22F"
+            BuildableName = "UtilsSamples.app"
+            BlueprintName = "UtilsSamples"
+            ReferencedContainer = "container:UtilsSamples.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -97,15 +112,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BA54B81B210B70DF00A5F22F"
-            BuildableName = "Utils.framework"
-            BlueprintName = "Utils"
-            ReferencedContainer = "container:Utils.xcodeproj">
+            BlueprintIdentifier = "BA54B875210B754A00A5F22F"
+            BuildableName = "UtilsSamples.app"
+            BlueprintName = "UtilsSamples"
+            ReferencedContainer = "container:UtilsSamples.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

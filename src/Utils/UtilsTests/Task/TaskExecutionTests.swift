@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import Utils
 
 class TaskExecutionTests: XCTestCase {
 
@@ -29,6 +30,25 @@ class TaskExecutionTests: XCTestCase {
         task.notify(notifyQueue) {
             XCTAssertEqual($0.result, 1)
             XCTAssertEqual($0.status, .success(1))
+            XCTAssert($0 === task)
+            notify.fulfill()
+        }
+
+        executeQueue.async(task)
+
+        wait(for: [notify], timeout: 1)
+    }
+
+    func testErrorNotify() {
+        let notify = expectation(description: "notify")
+        let error = TestError()
+
+        let task = Task<Int> {
+            throw error
+        }
+        task.notify(notifyQueue) {
+            XCTAssertEqual($0.result, nil)
+            XCTAssertEqual($0.status, .failed(error))
             XCTAssert($0 === task)
             notify.fulfill()
         }
@@ -119,5 +139,8 @@ class TaskExecutionTests: XCTestCase {
         XCTAssertEqual(task.status, .cancelled)
 
         semafore.signal()
+    }
+
+    class TestError: Error {
     }
 }

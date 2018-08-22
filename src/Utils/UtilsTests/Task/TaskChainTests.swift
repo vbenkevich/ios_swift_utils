@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import Utils
 
 class TaskChainTests: XCTestCase {
 
@@ -46,12 +47,12 @@ class TaskChainTests: XCTestCase {
             XCTAssertEqual($0.result, result1)
             XCTAssertEqual($0.status, .success(result1))
             notifyTask1.fulfill()
-            }
-            .chain(factory: createSecondTask)
-            .notify(notifyQueue) {
-                XCTAssertEqual($0.result, result2)
-                XCTAssertEqual($0.status, .success(result2))
-                notifyTask2.fulfill()
+        }
+        .chain(factory: createSecondTask)
+        .notify(notifyQueue) {
+            XCTAssertEqual($0.result, result2)
+            XCTAssertEqual($0.status, .success(result2))
+            notifyTask2.fulfill()
         }
 
         executeQueue.async(task)
