@@ -94,6 +94,24 @@ class TaskExecutionTests: XCTestCase {
         wait(for: [started, completed], timeout: 1, enforceOrder: true)
     }
 
+    func testStatusRunCompleteDelayed() {
+        let started = expectation(description: "started")
+        let completed = expectation(description: "completed")
+
+        let task = Task<Int> {
+            started.fulfill()
+            return 1
+        }
+
+        task.notify(executeQueue) { _ in
+            completed.fulfill()
+        }
+
+        executeQueue.async(task, after: .milliseconds(1))
+
+        wait(for: [started, completed], timeout: 1, enforceOrder: true)
+    }
+
     func testStatusCancelRun() {
         let notify = expectation(description: "notify")
 
@@ -139,6 +157,57 @@ class TaskExecutionTests: XCTestCase {
         XCTAssertEqual(task.status, .cancelled)
 
         semafore.signal()
+    }
+
+    func testAwaitSuccess() {
+        let task = Task<Int> {
+            return 1
+        }
+
+        XCTAssertNoThrow(try executeQueue.await(task: task))
+        XCTAssertEqual(task.result, 1)
+        XCTAssertEqual(task.status, .success(1))
+    }
+
+    func testAwaitError() {
+        let error = TestError()
+
+        let task = Task<Int> {
+            throw error
+        }
+
+        XCTAssertThrowsError(try executeQueue.await(task: task))
+        XCTAssertEqual(task.result, nil)
+        XCTAssertEqual(task.status, .failed(error))
+    }
+
+    func testAwaitCancel() {
+        let error = TestError()
+        let semafore = DispatchSemaphore(value: 0)
+        let cancelled = expectation(description: "cancelled")
+        let cancelledError = expectation(description: "cancelledErrors")
+
+        let task = Task<Int> {
+            semafore.wait()
+            throw error
+        }
+
+        notifyQueue.async {
+            do {
+                try self.executeQueue.await(task: task)
+            } catch TaskError.taskCancelled {
+                XCTAssertEqual(task.status, .cancelled)
+                cancelledError.fulfill()
+            } catch {}
+
+            XCTAssertEqual(task.result, nil)
+            XCTAssertEqual(task.status, .cancelled)
+            cancelled.fulfill()
+        }
+
+        try! task.cancel()
+
+        wait(for: [cancelledError, cancelled], timeout: 1)
     }
 
     class TestError: Error {
