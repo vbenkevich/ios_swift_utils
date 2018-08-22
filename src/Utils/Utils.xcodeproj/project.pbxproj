@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2043DC212D896000343D45 /* HttpResponse.swift */; };
 		BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA541F55212D615400904EC4 /* ActionCommand.swift */; };
 		BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB304211351590008C539 /* SpinLock.swift */; };
 		BA54B826210B70E000A5F22F /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA54B81C210B70DF00A5F22F /* Utils.framework */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA2043DC212D896000343D45 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		BA541F55212D615400904EC4 /* ActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCommand.swift; sourceTree = "<group>"; };
 		BA54B81C210B70DF00A5F22F /* Utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B81F210B70DF00A5F22F /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				BAC82013210F7AAC0011DCF3 /* HttpClient.swift */,
+				BA2043DC212D896000343D45 /* HttpResponse.swift */,
 			);
 			path = Http;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
+				BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
