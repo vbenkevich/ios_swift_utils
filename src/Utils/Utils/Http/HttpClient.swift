@@ -20,23 +20,22 @@ public class HttpClient {
 
     public var urlSession: URLSession = URLSession.shared
 
-    public func request(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<HttpResponse> {
-        let task: Task<HttpResponse> = self.request(request)
-        return task
-    }
-
-    public func request<TResponse: HttpResponse>(_ request: URLRequest, adapter: URLRequestAdapter?) -> Task<TResponse> {
+    public func request<TResponse: HttpResponse>(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<TResponse> {
         let prepared = (adapter ?? requetAdapter)?.adapt(origin: request) ?? request
         let tcs = Task<TResponse>.Source()
         let result = TResponse(prepared)
 
-        tcs.task.linked = URLSession.shared.dataTask(with: prepared) { (data, response, error) in
+        let dataTask = urlSession.dataTask(with: prepared) { (data, response, error) in
             // order is important
             result.origin = response
             result.error = error
-            result.data = data
+            result.content = data
             try? tcs.complete(result)
         }
+
+        tcs.task.linked = dataTask
+
+        dataTask.resume()
 
         return tcs.task
     }
