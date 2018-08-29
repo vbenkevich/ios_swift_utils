@@ -1,10 +1,7 @@
 //
-//  Task+Source.swift
+//  Created on 22/08/2018
+//  Copyright © Vladimir Benkevich 2018
 //
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
-//
-
 
 import Foundation
 
