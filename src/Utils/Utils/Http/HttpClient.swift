@@ -7,32 +7,35 @@
 
 import Foundation
 
-open class RequestResult {
+public protocol URLRequestAdapter {
 
-    init(_ request: URLRequest) {
-        self.request = request
-    }
-
-    open let request: URLRequest
-    open var response: URLResponse?
-    open var data: Data?
-    open var error: Error?
+    func adapt(origin: URLRequest) -> URLRequest
 }
 
 public class HttpClient {
 
     public static let `default`: HttpClient = HttpClient()
 
-    public func ruquest(_ request: URLRequest) -> Task<RequestResult> {
-        let tcs = Task<RequestResult>.Source()
-        let result = RequestResult(request)
+    public var requetAdapter: URLRequestAdapter?
 
-        tcs.task.linked = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            result.data = data
-            result.response = response
+    public var urlSession: URLSession = URLSession.shared
+
+    public func request<TResponse: HttpResponse>(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<TResponse> {
+        let prepared = (adapter ?? requetAdapter)?.adapt(origin: request) ?? request
+        let tcs = Task<TResponse>.Source()
+        let result = TResponse(prepared)
+
+        let dataTask = urlSession.dataTask(with: prepared) { (data, response, error) in
+            // order is important
+            result.origin = response
             result.error = error
+            result.content = data
             try? tcs.complete(result)
         }
+
+        tcs.task.linked = dataTask
+
+        dataTask.resume()
 
         return tcs.task
     }

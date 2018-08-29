@@ -209,7 +209,4 @@ class TaskExecutionTests: XCTestCase {
 
         wait(for: [cancelledError, cancelled], timeout: 1)
     }
-
-    class TestError: Error {
-    }
 }
