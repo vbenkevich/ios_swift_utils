@@ -8,11 +8,13 @@ import XCTest
 
 class TaskExecutionTests: XCTestCase {
 
-    let executeQueue = DispatchQueue(label: "task.execute", qos: .default)
-    let notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
+    var executeQueue: DispatchQueue!
+    var notifyQueue: DispatchQueue!
 
     override func setUp() {
         super.setUp()
+        notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
+        executeQueue = DispatchQueue(label: "task.execute", qos: .default)
     }
     
     override func tearDown() {
