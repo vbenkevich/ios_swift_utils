@@ -21,8 +21,12 @@ open class ActionCommand: SerialCommand {
     }
 
     public init<T>(execute: @escaping (T) -> Void) {
-        self.execute = { execute($0 as! T) }
-        self.canExecute = nil
+        self.execute = {
+            execute($0 as! T)
+        }
+        self.canExecute = {
+            return $0 is T
+        }
     }
 
     public init<T>(execute: @escaping (T) -> Void, canExecute: @escaping (T) -> Bool) {
@@ -31,7 +35,7 @@ open class ActionCommand: SerialCommand {
     }
 
     open override func executeImpl(parameter: Any?) {
-        return self.execute(execute)
+        return self.execute(parameter)
     }
 
     open override func canExecuteImpl(parameter: Any?) -> Bool {

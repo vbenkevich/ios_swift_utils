@@ -18,7 +18,7 @@ public extension DispatchQueue {
             throw TaskError.taskCancelled
         case .failed(let error):
             throw error
-        case .executing, .new:
+        default:
             throw TaskError.inconsistentState(message: "Unable to complete task")
         }
     }

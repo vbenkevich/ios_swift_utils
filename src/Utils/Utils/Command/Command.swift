@@ -22,3 +22,10 @@ public protocol CommandDelegate: class {
 
     func stateChanged(_ command: Command)
 }
+
+public extension Command {
+
+    func execute() {
+        execute(parameter: nil)
+    }
+}
