@@ -10,13 +10,27 @@ protocol Cancellable: class {
     func cancel() throws
 }
 
+public protocol NotifyCompletion: class {
+
+    @discardableResult
+    func notify(_ queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self
+}
+
+public extension NotifyCompletion {
+
+    @discardableResult
+    func notify(callBack: @escaping (Self) -> Void) -> Self {
+        return notify(DispatchQueue.main, callBack: callBack)
+    }
+}
+
 public enum TaskError: Swift.Error {
 
     case taskCancelled
     case inconsistentState(message: String)
 }
 
-public class Task<T>: Cancellable {
+public final class Task<T>: Cancellable, NotifyCompletion {
 
     private var lock = SpinLock()
     private var notifyItem = DispatchWorkItem {}
@@ -81,7 +95,7 @@ public class Task<T>: Cancellable {
     private var _status: Status = .new
 
     @discardableResult
-    public func notify(_ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Task<T>) -> Void) -> Task<T> {
+    public func notify(_ queue: DispatchQueue, callBack: @escaping (Task<T>) -> Void) -> Task<T> {
         if status.completed {
             callBack(self)
             return self
