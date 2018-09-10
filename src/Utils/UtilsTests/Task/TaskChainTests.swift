@@ -41,7 +41,7 @@ class TaskChainTests: XCTestCase {
             })
         }
 
-        let task = Task { return result1 }
+        let task = Task<Int> { return result1 }
 
         task.notify(notifyQueue) {
             XCTAssertEqual($0.result, result1)

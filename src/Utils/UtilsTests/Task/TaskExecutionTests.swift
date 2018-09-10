@@ -21,7 +21,35 @@ class TaskExecutionTests: XCTestCase {
         super.tearDown()
     }
 
-    func testSimpleNotify() {
+    func testCompletedTaskCreation() {
+        let result = "completed"
+        let task = Task(result)
+
+        XCTAssertEqual(task.result, result)
+        XCTAssertEqual(task.status, .success(result))
+    }
+
+    func testCompletedUnableToCancel() {
+        let task = Task("completed")
+        XCTAssertThrowsError(try task.cancel())
+    }
+
+    func testCompletedTaskNotify() {
+        let notify = expectation(description: "notify")
+        let result = "completed"
+        let task = Task(result)
+
+        task.notify(notifyQueue) {
+            XCTAssertEqual($0.result, result)
+            XCTAssertEqual($0.status, .success(result))
+            XCTAssert($0 === task)
+            notify.fulfill()
+        }
+
+        wait(for: [notify], timeout: 1)
+    }
+
+    func testActionTaskNotify() {
         let notify = expectation(description: "notify")
 
         let task = Task<Int> {
@@ -39,7 +67,7 @@ class TaskExecutionTests: XCTestCase {
         wait(for: [notify], timeout: 1)
     }
 
-    func testErrorNotify() {
+    func testActionTaskErrorNotify() {
         let notify = expectation(description: "notify")
         let error = TestError()
 

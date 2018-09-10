@@ -36,6 +36,11 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     private var notifyItem = DispatchWorkItem {}
     private (set) var executeItem: DispatchWorkItem!
 
+    public init(_ result: T) {
+        notifyItem.perform()
+        _status = .success(result)
+    }
+
     public init(_ execute: @escaping () throws -> T) {
         executeItem = DispatchWorkItem {
             do {
