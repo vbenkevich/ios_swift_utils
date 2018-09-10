@@ -36,9 +36,12 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     private var notifyItem = DispatchWorkItem {}
     private (set) var executeItem: DispatchWorkItem!
 
-    public init(_ result: T) {
-        notifyItem.perform()
-        _status = .success(result)
+    convenience public init(_ result: T) {
+        self.init(status: .success(result))
+    }
+
+    convenience public init(_ error: Error) {
+        self.init(status: .failed(error))
     }
 
     public init(_ execute: @escaping () throws -> T) {
@@ -55,6 +58,11 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         executeItem.notify(queue: DispatchQueue.global(qos: .userInitiated)) { [notifyItem] in
             notifyItem.perform()
         }
+    }
+
+    init(status: Task.Status) {
+        notifyItem.perform()
+        _status = status
     }
 
     init(_ workItem: DispatchWorkItem) {
@@ -88,7 +96,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
             lock.unlock()
         }
 
-        guard !_status.completed else {
+        guard !_status.isCompleted else {
             throw TaskError.inconsistentState(message: "task has completed state")
         }
 
@@ -101,7 +109,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
 
     @discardableResult
     public func notify(_ queue: DispatchQueue, callBack: @escaping (Task<T>) -> Void) -> Task<T> {
-        if status.completed {
+        if status.isCompleted {
             callBack(self)
             return self
         }
