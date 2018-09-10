@@ -1,21 +1,21 @@
 //
-//  TaskChainTests.swift
+//  Created on 22/08/2018
+//  Copyright © Vladimir Benkevich 2018
 //
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
-//
+
 
 import XCTest
 @testable import Utils
 
 class TaskChainTests: XCTestCase {
 
-    let executeQueue = DispatchQueue(label: "task.execute", qos: .default)
-    let notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
+    var executeQueue: DispatchQueue!
+    var notifyQueue: DispatchQueue!
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        executeQueue = DispatchQueue(label: "task.execute", qos: .default)
+        notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
     }
     
     override func tearDown() {
@@ -36,7 +36,7 @@ class TaskChainTests: XCTestCase {
             XCTAssertEqual(task.status, .success(result1))
             createTask2.fulfill()
 
-            return executeQueue.async(Task {
+            return executeQueue!.async(Task {
                 return result2
             })
         }

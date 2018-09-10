@@ -1,8 +1,6 @@
 //
-//  Task+DispatchQueue.swift
-//
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
+//  Created on 22/08/2018
+//  Copyright © Vladimir Benkevich 2018
 //
 
 import Foundation
@@ -20,7 +18,7 @@ public extension DispatchQueue {
             throw TaskError.taskCancelled
         case .failed(let error):
             throw error
-        case .executing, .new:
+        default:
             throw TaskError.inconsistentState(message: "Unable to complete task")
         }
     }

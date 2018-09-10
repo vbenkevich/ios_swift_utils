@@ -1,25 +1,26 @@
 //
-//  SerialCommand.swift
-//
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
+//  Created on 27/07/2018
+//  Copyright © Vladimir Benkevich 2018
 //
 
 import Foundation
 
 open class SerialCommand: Command {
 
+    private var lock = SpinLock()
+
     open weak var delegate: CommandDelegate?
 
     open var executeQueue: DispatchQueue = DispatchQueue.main
+    open var callbackQueue: DispatchQueue = DispatchQueue.main
 
     open var serial = true
 
     public final var executing: Bool {
-        return executingCount != 0
+        return lock.sync { return executingCount > 0 }
     }
 
-    private var executingCount = 0 {
+    private var executingCount: Int = 0 {
         didSet {
             delegate?.stateChanged(self)
         }
@@ -30,14 +31,21 @@ open class SerialCommand: Command {
             return
         }
 
-        executingCount += 1
+        lock.sync {
+            self.executingCount += 1
+        }
 
-        executeQueue.async { [weak self] in
+        let item = DispatchWorkItem { [weak self] in
             self?.executeImpl(parameter: parameter)
-            DispatchQueue.main.async {
+        }
+
+        item.notify(queue: callbackQueue) { [weak self] in
+            self?.lock.sync {
                 self?.executingCount -= 1
             }
         }
+
+        executeQueue.async(execute: item)
     }
 
     public final func canExecute(parameter: Any?) -> Bool {
@@ -49,10 +57,10 @@ open class SerialCommand: Command {
     }
 
     open func executeImpl(parameter: Any?) {
-        fatalError("abstract")
+        preconditionFailure("abstract")
     }
 
     open func canExecuteImpl(parameter: Any?) -> Bool {
-        fatalError("abstract")
+        preconditionFailure("abstract")
     }
 }

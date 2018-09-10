@@ -1,8 +1,6 @@
 //
-//  Command.swift
-//
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
+//  Created on 27/07/2018
+//  Copyright © Vladimir Benkevich 2018
 //
 
 import Foundation
@@ -23,4 +21,11 @@ public protocol Command: class {
 public protocol CommandDelegate: class {
 
     func stateChanged(_ command: Command)
+}
+
+public extension Command {
+
+    func execute() {
+        execute(parameter: nil)
+    }
 }

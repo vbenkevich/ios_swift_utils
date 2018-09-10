@@ -1,8 +1,6 @@
 //
-//  TaskExecutionTests.swift
-//
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
+//  Created on 22/08/2018
+//  Copyright © Vladimir Benkevich 2018
 //
 
 import XCTest
@@ -10,11 +8,13 @@ import XCTest
 
 class TaskExecutionTests: XCTestCase {
 
-    let executeQueue = DispatchQueue(label: "task.execute", qos: .default)
-    let notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
+    var executeQueue: DispatchQueue!
+    var notifyQueue: DispatchQueue!
 
     override func setUp() {
         super.setUp()
+        notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
+        executeQueue = DispatchQueue(label: "task.execute", qos: .default)
     }
     
     override func tearDown() {

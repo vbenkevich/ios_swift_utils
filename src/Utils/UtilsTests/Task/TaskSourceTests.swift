@@ -1,8 +1,6 @@
 //
-//  TaskSourceTests.swift
-//
-//  Created by Vladimir Benkevich
-//  Copyright © 2018
+//  Created on 22/08/2018
+//  Copyright © Vladimir Benkevich 2018
 //
 
 import XCTest
@@ -14,12 +12,13 @@ class TaskSourceTests: XCTestCase {
     let testError2 = TestError()
     let expectedResult = "expected result"
     let expectedResult2 = "expected result2"
-    let executeQueue = DispatchQueue(label: "task.execute", qos: .default)
-    let notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
+    var executeQueue: DispatchQueue!
+    var notifyQueue: DispatchQueue!
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        executeQueue = DispatchQueue(label: "task.execute", qos: .default)
+        notifyQueue = DispatchQueue(label: "task.notify", qos: .default)
     }
     
     override func tearDown() {
