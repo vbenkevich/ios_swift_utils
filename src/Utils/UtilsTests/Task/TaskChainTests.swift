@@ -124,9 +124,7 @@ class TaskChainTests: XCTestCase {
     func testChainOnSuccessError() {
         let singleExpectation = expectation(description: "single")
         let error = TestError()
-        let task = Task<Int> { throw error }
-
-        task.notify(notifyQueue) { _ in singleExpectation.fulfill() }
+        let task = Task<Int> { throw error }.notify(notifyQueue) { _ in singleExpectation.fulfill() }
         let _: Task<String> = task.chainOnSuccess { _ in
             singleExpectation.fulfill()
             return Task("1")
@@ -144,26 +142,256 @@ class TaskChainTests: XCTestCase {
     }
 
     func testNotifyOnSuccess() {
-        XCTAssertFalse(true)
+        let exp = expectation(description: "expectation")
+        let result = 10
+        let task = Task(result)
+        let sameTask = task.onSuccess {
+            XCTAssertEqual(result, $0)
+            exp.fulfill()
+        }
+
+        XCTAssert(task === sameTask)
+
+        wait(exp)
     }
 
-    func testNotifyOnFail() {
-        XCTAssertFalse(true)
+    func testNotifyOnSuccessOnly() {
+        let exp = expectation(description: "expectation")
+        let result = 10
+
+        Task(result).onSuccess { _ in
+            exp.fulfill()
+        }.onCancel {
+            exp.fulfill()
+        }.onFail { _ in
+            exp.fulfill()
+        }
+
+        wait(exp)
+    }
+
+    func testNotifyOnFaill() {
+        let exp = expectation(description: "expectation")
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        let sameTask = task.onFail {
+            XCTAssertEqual(error, $0 as? TestError)
+            exp.fulfill()
+        }
+
+        XCTAssert(task === sameTask)
+
+        executeQueue.async(task)
+
+        wait(exp)
+    }
+
+    func testNotifyOnFailOnly() {
+        let exp = expectation(description: "expectation")
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        task.onSuccess { _ in
+            exp.fulfill()
+        }.onCancel {
+            exp.fulfill()
+        }.onFail { _ in
+            exp.fulfill()
+        }
+
+        executeQueue.async(task)
+
+        wait(exp)
     }
 
     func testNotifyOnCancel() {
-        XCTAssertFalse(true)
+        let exp = expectation(description: "expectation")
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        let sameTask = task.onCancel {
+            exp.fulfill()
+        }
+
+        XCTAssert(task === sameTask)
+
+        XCTAssertNoThrow(try task.cancel())
+
+        wait(exp)
+    }
+
+    func testNotifyOnCancelOnly() {
+        let exp = expectation(description: "expectation")
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        task.onSuccess { _ in
+            exp.fulfill()
+        }.onCancel {
+            exp.fulfill()
+        }.onFail { _ in
+            exp.fulfill()
+        }
+
+        XCTAssertNoThrow(try task.cancel())
+
+        wait(exp)
     }
 
     func testMapSuccess() {
-        XCTAssertFalse(true)
+        let exp = expectation(description: "expectation")
+        let result = 10
+        let mappedResult = "mapped result"
+        let task = Task(result)
+
+        let mapped = task.map { _ in
+            return mappedResult
+        }
+
+        mapped.notify { _ in
+            exp.fulfill()
+        }
+
+        wait(exp)
+
+        XCTAssertEqual(mapped.result, mappedResult)
+
+        XCTAssertFalse(mapped.isCancelled)
+        XCTAssertFalse(mapped.isFailed)
+
+        XCTAssertTrue(mapped.isCompleted)
+        XCTAssertTrue(mapped.isSuccess)
+
+        XCTAssertNil(mapped.error)
     }
 
-    func testMapFailCancel() {
-        XCTAssertFalse(true)
+    func testMapFail() {
+        let exp = expectation(description: "expectation")
+        let mappedResult = "mapped result"
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        let mapped = task.map { _ in
+            return mappedResult
+        }
+
+        mapped.notify { _ in
+            exp.fulfill()
+        }
+
+        executeQueue.async(task)
+
+        wait(exp)
+
+        XCTAssertNil(mapped.result)
+
+        XCTAssertFalse(mapped.isCancelled)
+        XCTAssertFalse(mapped.isSuccess)
+
+        XCTAssertTrue(mapped.isFailed)
+        XCTAssertTrue(mapped.isCompleted)
+
+        XCTAssertEqual(mapped.error as? TestError, error)
     }
+
+    func testMapCancelSource() {
+        let exp = expectation(description: "expectation")
+        let mappedResult = "mapped result"
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        let mapped = task.map { _ in
+            return mappedResult
+        }
+
+        mapped.notify { _ in
+            exp.fulfill()
+        }
+
+        XCTAssertNoThrow(try task.cancel())
+
+        wait(exp)
+
+        XCTAssertNil(mapped.result)
+
+        XCTAssertFalse(mapped.isFailed)
+        XCTAssertFalse(mapped.isSuccess)
+
+        XCTAssertTrue(mapped.isCancelled)
+        XCTAssertTrue(mapped.isCompleted)
+
+        XCTAssertNil(mapped.error)
+    }
+
+    func testMapCancelMapped() {
+        let exp = expectation(description: "expectation")
+        let mappedResult = "mapped result"
+        let error = TestError()
+        let task = Task<Int> {
+            throw error
+        }
+
+        let mapped = task.map { _ in
+            return mappedResult
+        }
+
+        mapped.notify { _ in
+            exp.fulfill()
+        }
+
+        XCTAssertNoThrow(try mapped.cancel())
+
+        wait(exp)
+
+        XCTAssertNil(mapped.result)
+
+        XCTAssertFalse(mapped.isFailed)
+        XCTAssertFalse(mapped.isSuccess)
+
+        XCTAssertTrue(mapped.isCancelled)
+        XCTAssertTrue(mapped.isCompleted)
+
+        XCTAssertNil(mapped.error)
+    }
+
 
     func testMapConverterThrow() {
-        XCTAssertFalse(true)
+        let exp = expectation(description: "expectation")
+        let result = 10
+        let error = TestError()
+        let task = Task(result)
+
+        let mapped = task.map { _ in
+            throw error
+        }
+
+        mapped.notify { _ in
+            exp.fulfill()
+        }
+
+        wait(exp)
+
+        XCTAssertNil(mapped.result)
+
+        XCTAssertFalse(mapped.isCancelled)
+        XCTAssertFalse(mapped.isSuccess)
+
+        XCTAssertTrue(mapped.isFailed)
+        XCTAssertTrue(mapped.isCompleted)
+
+        XCTAssertEqual(mapped.error as? TestError, error)
     }
 }
