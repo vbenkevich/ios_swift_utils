@@ -28,6 +28,12 @@ public extension HttpClient {
 
         public var callbackQueue: DispatchQueue = DispatchQueue(label: "mock.session.callback")
 
+        public private (set) var lastTask: URLSessionDataTask?
+
+        public var lastMockTask: SessionTask? {
+            return lastTask as? SessionTask
+        }
+
         public func setResult(_ response: URLResponse?, data: Data? = nil, error: Error? = nil,
                               for predicate: MockRequestPredicate,
                               lifetime: Lifetime = .thisSession) {
@@ -42,11 +48,17 @@ public extension HttpClient {
         }
 
         public override func dataTask(with request: URLRequest, completionHandler: @escaping Callback) -> URLSessionDataTask {
+            var task: URLSessionDataTask!
+
             if let result = getAcceptableResultSafe(for: request) {
-                return SessionTask(result, queue: callbackQueue, delay: delay, completionHandler: completionHandler)
+                task = SessionTask(result, queue: callbackQueue, delay: delay, completionHandler: completionHandler)
             } else {
-                return origin.dataTask(with: request, completionHandler: completionHandler)
+                task = origin.dataTask(with: request, completionHandler: completionHandler)
             }
+
+            lastTask = task
+
+            return task
         }
 
         private static let resultsQueue: DispatchQueue = DispatchQueue(label: "mock.session.result", qos: .default)
@@ -75,7 +87,7 @@ public extension HttpClient {
             }
         }
 
-        class SessionTask: URLSessionDataTask {
+        public class SessionTask: URLSessionDataTask {
 
             let queue: DispatchQueue
             let delay: DispatchTimeInterval
@@ -90,7 +102,7 @@ public extension HttpClient {
                 self.completionHandler = completionHandler
             }
 
-            var canceled: Bool = false {
+            public private (set) var canceled: Bool = false {
                 didSet {
                     if canceled {
                         invokeCallbackIfNeeded()
@@ -98,11 +110,11 @@ public extension HttpClient {
                 }
             }
 
-            override func cancel() {
+            override public func cancel() {
                 self.canceled = true
             }
 
-            override func resume() {
+            override public func resume() {
                 guard !canceled else {
                     return
                 }
@@ -129,6 +141,15 @@ public extension HttpClient {
 public protocol MockRequestPredicate {
 
     func test(request: URLRequest) -> Bool
+}
+
+extension String: MockRequestPredicate {
+
+    public func test(request: URLRequest) -> Bool {
+        let regex = try? NSRegularExpression(pattern: self)
+        let requestString = request.url?.absoluteString ?? ""
+        return regex?.matches(in: requestString, options: [], range: NSRange(location: 0, length: requestString.count)).isEmpty == false
+    }
 }
 
 extension URL: MockRequestPredicate {

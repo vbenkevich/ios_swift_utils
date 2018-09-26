@@ -10,14 +10,14 @@ import XCTest
 class HttpClientBasicTests: XCTestCase {
 
     var client: HttpClient!
-    var session: MockUrlSession!
+    var mockSession: HttpClient.URLSessionMockDecorator!
     var testRequest = URLRequest(url: URL(string: "http://apple.com")!)
 
     override func setUp() {
         super.setUp()
         client = HttpClient()
-        session = MockUrlSession()
-        client.urlSession = session
+        mockSession = HttpClient.URLSessionMockDecorator(origin: client.urlSession)
+        client.urlSession = mockSession
     }
 
     func testRequestExecution() {
@@ -27,9 +27,6 @@ class HttpClientBasicTests: XCTestCase {
         requestTask.notify { _ in
             callbackExp.fulfill()
         }
-
-        XCTAssertTrue(session.lastTask!.resumed)
-        XCTAssertFalse(session.lastTask!.canceled)
 
         wait(for: [callbackExp], timeout: 1)
     }
@@ -42,7 +39,7 @@ class HttpClientBasicTests: XCTestCase {
         let error = TestError()
         let data = "test content".data(using: .utf8)
 
-        session.setNext(response: response, data: data, error: error)
+        mockSession.setResult(response, data: data, error: error, for: ".", lifetime: .oneRequest)
 
         let requestTask: Task<HttpResponse> = client.request(request)
         requestTask.notify {
@@ -106,7 +103,8 @@ class HttpClientBasicTests: XCTestCase {
     func testCancelRequest() {
         let callbackExp = expectation(description: "callback")
 
-        session.requestTime = .seconds(2)
+        mockSession.delay = .seconds(2)
+        mockSession.setResult(nil, for: testRequest.url!)
 
         let requestTask: Task<HttpResponse> = client.request(testRequest)
         requestTask.notify {
@@ -115,7 +113,8 @@ class HttpClientBasicTests: XCTestCase {
         }
 
         try! requestTask.cancel()
-        XCTAssertTrue(session.lastTask!.canceled)
+
+        XCTAssertTrue(mockSession.lastMockTask!.canceled)
 
         wait(for: [callbackExp], timeout: 1)
     }
