@@ -10,13 +10,13 @@ import XCTest
 class HttpClientHelpersTests: XCTestCase {
     
     var client: HttpClient!
-    var session: MockUrlSession!
+    var session: HttpClient.URLSessionMockDecorator!
     var testUrl = URL(string: "http://apple.com")!
 
     override func setUp() {
         super.setUp()
         client = HttpClient()
-        session = MockUrlSession()
+        session = HttpClient.URLSessionMockDecorator(origin: client.urlSession)
         client.urlSession = session
     }
 
@@ -97,7 +97,7 @@ class HttpClientHelpersTests: XCTestCase {
         let callbackExp = expectation(description: "callback")
         let data = TestData(val1: UUID().uuidString)
 
-        session.setNext(response: HTTPURLResponse.success(testUrl), data: try! JSONEncoder().encode(data), error: nil)
+        session.setResult(HTTPURLResponse.success(testUrl), data: try! JSONEncoder().encode(data), error: nil, for: testUrl, lifetime: .allSessions)
 
         let responseTask: Task<JsonResponse<TestData>> = client.request(URLRequest(url: testUrl))
         responseTask.notify {
@@ -113,7 +113,7 @@ class HttpClientHelpersTests: XCTestCase {
         let callbackExp = expectation(description: "callback")
         let data = TestData2(val2: UUID().uuidString)
 
-        session.setNext(response: HTTPURLResponse.success(testUrl), data: try! JSONEncoder().encode(data), error: nil)
+        session.setResult(HTTPURLResponse.success(testUrl), data: try! JSONEncoder().encode(data), error: nil, for: testUrl)
 
         let responseTask: Task<JsonResponse<TestData>> = client.request(URLRequest(url: testUrl))
         responseTask.notify {

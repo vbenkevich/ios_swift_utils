@@ -19,13 +19,14 @@
 		BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85C210B73BF00A5F22F /* SerialCommand.swift */; };
 		BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */; };
 		BA54B86B210B73F600A5F22F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B868210B73F600A5F22F /* Task.swift */; };
+		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
+		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
 		BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDF7211C954000C81653 /* Task+Source.swift */; };
 		BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFA211C95C700C81653 /* Task+Status.swift */; };
 		BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */; };
 		BA9EB30821135DDA0008C539 /* Task+Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB30721135DDA0008C539 /* Task+Chain.swift */; };
 		BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F254D211CA679009ABE47 /* TaskChainTests.swift */; };
 		BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC44513213566F1005AB974 /* HttpClientBasicTests.swift */; };
-		BAC44516213567BC005AB974 /* MockUrlSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC44515213567BC005AB974 /* MockUrlSession.swift */; };
 		BAC4451921357BEC005AB974 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4451821357BEC005AB974 /* TestError.swift */; };
 		BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4451A21357E19005AB974 /* HTTPURLResponse.swift */; };
 		BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4451C21358679005AB974 /* HttpClientHelpersTests.swift */; };
@@ -63,6 +64,8 @@
 		BA54B85C210B73BF00A5F22F /* SerialCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialCommand.swift; sourceTree = "<group>"; };
 		BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+DispatchQueue.swift"; sourceTree = "<group>"; };
 		BA54B868210B73F600A5F22F /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
+		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
 		BA7CEDF7211C954000C81653 /* Task+Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Source.swift"; sourceTree = "<group>"; };
 		BA7CEDFA211C95C700C81653 /* Task+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Status.swift"; sourceTree = "<group>"; };
 		BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSourceTests.swift; sourceTree = "<group>"; };
@@ -70,7 +73,6 @@
 		BA9EB30721135DDA0008C539 /* Task+Chain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Chain.swift"; sourceTree = "<group>"; };
 		BA9F254D211CA679009ABE47 /* TaskChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskChainTests.swift; sourceTree = "<group>"; };
 		BAC44513213566F1005AB974 /* HttpClientBasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientBasicTests.swift; sourceTree = "<group>"; };
-		BAC44515213567BC005AB974 /* MockUrlSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUrlSession.swift; sourceTree = "<group>"; };
 		BAC4451821357BEC005AB974 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		BAC4451A21357E19005AB974 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		BAC4451C21358679005AB974 /* HttpClientHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientHelpersTests.swift; sourceTree = "<group>"; };
@@ -180,7 +182,6 @@
 		BAC4451721357BD5005AB974 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				BAC44515213567BC005AB974 /* MockUrlSession.swift */,
 				BAC4451821357BEC005AB974 /* TestError.swift */,
 				BAC4451A21357E19005AB974 /* HTTPURLResponse.swift */,
 				BAE6485721384CC9000BB449 /* XCTestCase.swift */,
@@ -191,10 +192,11 @@
 		BAC82012210F7A880011DCF3 /* Http */ = {
 			isa = PBXGroup;
 			children = (
+				BA2043DC212D896000343D45 /* HttpResponse.swift */,
 				BAC82013210F7AAC0011DCF3 /* HttpClient.swift */,
 				BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */,
-				BA2043DC212D896000343D45 /* HttpResponse.swift */,
 				BA4E95BA212F1B64009B2154 /* HttpClient+Json.swift */,
+				BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */,
 			);
 			path = Http;
 			sourceTree = "<group>";
@@ -204,6 +206,7 @@
 			children = (
 				BAC44513213566F1005AB974 /* HttpClientBasicTests.swift */,
 				BAC4451C21358679005AB974 /* HttpClientHelpersTests.swift */,
+				BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */,
 			);
 			path = Http;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
 				BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
+				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
@@ -368,8 +372,8 @@
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
 				BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */,
+				BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */,
 				BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */,
-				BAC44516213567BC005AB974 /* MockUrlSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

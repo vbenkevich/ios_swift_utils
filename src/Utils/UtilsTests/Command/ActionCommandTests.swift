@@ -117,16 +117,17 @@ class ActionCommandTests: XCTestCase {
 
     func testGenericWrongType() {
         let execute = expectation(description: "execute")
+        execute.fulfill()
 
         let command = ActionCommand(execute: { (param: CommandParameter) in
+            execute.fulfill()
             XCTAssertTrue(false)
         }, canExecute: { (param: CommandParameter) in
+            execute.fulfill()
             return true
         })
 
         command.execute(parameter: 1)
-        
-        command.executeQueue.async { execute.fulfill() }
 
         wait(execute)
     }
