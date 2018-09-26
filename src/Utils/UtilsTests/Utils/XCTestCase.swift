@@ -8,7 +8,7 @@ import XCTest
 
 extension XCTestCase {
 
-    func wait(_ expectation: XCTestExpectation) {
-        self.wait(for: [expectation], timeout: 1)
+    func wait(_ expectations: XCTestExpectation...) {
+        self.wait(for: expectations, timeout: 1)
     }
 }

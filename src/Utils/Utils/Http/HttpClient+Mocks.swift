@@ -47,6 +47,20 @@ public extension HttpClient {
             }
         }
 
+        public func cleanResults(_ lifetimes: Lifetime...) {
+            let lifetimes = lifetimes.isEmpty ? [.oneRequest, .thisSession, .allSessions] : lifetimes
+
+            URLSessionMockDecorator.resultsQueue.sync {
+                for lifetime in lifetimes {
+                    switch lifetime {
+                    case .oneRequest:   self.requestMocks = []
+                    case .thisSession:  self.mocks = []
+                    case .allSessions:  URLSessionMockDecorator.mocks = []
+                    }
+                }
+            }
+        }
+
         public override func dataTask(with request: URLRequest, completionHandler: @escaping Callback) -> URLSessionDataTask {
             var task: URLSessionDataTask!
 
@@ -158,3 +172,4 @@ extension URL: MockRequestPredicate {
         return request.url?.absoluteString.contains(self.absoluteString) == true
     }
 }
+
