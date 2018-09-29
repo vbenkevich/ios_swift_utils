@@ -81,7 +81,7 @@ class Service {
     }
 
     func fetchDataQueue<T>(test: T) -> Task<T> {
-        let task = Task { return test }
+        let task = Task<T> { return test }
         return DispatchQueue.global().async(task, after: .seconds(1))
     }
 
