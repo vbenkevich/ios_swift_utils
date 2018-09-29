@@ -7,14 +7,14 @@ import UIKit
 
 public protocol MenuController {
 
-    var contenrPresenter: ControllerPresenter? { get set }
+    var presenter: ControllerPresenter? { get set }
 }
 
 open class SlideMenuViewController: ContainerViewController {
 
     open var menuController: (UIViewController & MenuController)! {
         didSet {
-            menuController?.contenrPresenter = self
+            menuController?.presenter = self
         }
     }
 
