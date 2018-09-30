@@ -31,7 +31,7 @@ class SlideMenuSampleController: SlideMenuViewController {
 
 class MenuListController: UITableViewController, MenuController {
 
-    weak var contentPresenter: ControllerPresenter?
+    weak var presenter: ControllerPresenter?
 
     let items: [(name: String, create: () -> UIViewController)] = [
         (name: "Item1", create: { return UIViewController(title: "Item1", color: UIColor.red) }),
@@ -55,7 +55,7 @@ class MenuListController: UITableViewController, MenuController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contentPresenter?.currentController = items[indexPath.row].create()
+        presenter?.currentController = items[indexPath.row].create()
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: {
             print("menu has been dismissed")

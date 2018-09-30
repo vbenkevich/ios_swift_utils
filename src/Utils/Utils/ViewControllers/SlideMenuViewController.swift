@@ -56,6 +56,11 @@ open class SlideMenuViewController: ContainerViewController {
 
     fileprivate var menuTransitioningDelegate = TransitioningDelegate()
 
+    fileprivate var interativePresent: UIPercentDrivenInteractiveTransition? {
+        get { return menuTransitioningDelegate.interactivePresent }
+        set { menuTransitioningDelegate.interactivePresent = newValue }
+    }
+
     fileprivate var edgePanGesture: UIScreenEdgePanGestureRecognizer? {
         didSet {
             guard isViewLoaded else {
@@ -92,37 +97,14 @@ open class SlideMenuViewController: ContainerViewController {
     }
 
     @objc func handlePanGesture(gesture: UIScreenEdgePanGestureRecognizer) {
-        let translate = gesture.translation(in: gesture.view)
-        let velocity = gesture.velocity(in: gesture.view)
-
-        var interaction: UIPercentDrivenInteractiveTransition? {
-            get { return menuTransitioningDelegate.interactivePresent }
-            set { menuTransitioningDelegate.interactivePresent = newValue }
-        }
-
-        var percent: CGFloat {
-            return translate.x / menuSize.width
-        }
-
-        var shouldFinish: Bool {
-            return (percent > 0.5 && velocity.x == 0) || velocity.x > 0
-        }
-
-        switch gesture.state {
-        case .began:
-            interaction = UIPercentDrivenInteractiveTransition()
-            showMenu { interaction = nil }
-            interaction?.update(percent)
-        case .changed:
-            interaction?.update(percent)
-        case .ended, .cancelled:
-            if shouldFinish {
-                interaction?.finish()
-            } else {
-                interaction?.cancel()
-            }
-        default: break
-        }
+        gesture.update(transition: interativePresent, getPercent: {
+            $0.x / menuSize.width
+        }, getVelocity: {
+            $0.x
+        }, beginTransition: {
+            self.interativePresent = UIPercentDrivenInteractiveTransition()
+            self.showMenu { self.interativePresent = nil }
+        })
     }
 }
 
@@ -271,6 +253,11 @@ extension SlideMenuViewController {
             return CGRect(origin: bounds.origin, size: viewSize)
         }
 
+        var interactiveTransition: UIPercentDrivenInteractiveTransition? {
+            get { return transitioningDelegate.interactiveDismiss }
+            set { transitioningDelegate.interactiveDismiss = newValue }
+        }
+
         override func presentationTransitionWillBegin() {
             self.containerView!.addSubview(dimmingView)
             self.containerView!.addSubview(presentedViewController.view)
@@ -310,35 +297,37 @@ extension SlideMenuViewController {
         }
 
         @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
-            let translate = gesture.translation(in: gesture.view)
-            let velocity = gesture.velocity(in: gesture.view)
+            gesture.update(transition: interactiveTransition, getPercent: {
+                -$0.x / transitioningDelegate.menuSize(for: gesture.view!.bounds.size).width
+            }, getVelocity: {
+                -$0.x
+            }, beginTransition: {
+                self.interactiveTransition = UIPercentDrivenInteractiveTransition()
+                self.presentedViewController.dismiss(animated: true) { self.interactiveTransition = nil }
+            })
+        }
+    }
+}
 
-            var interaction: UIPercentDrivenInteractiveTransition? {
-                get { return transitioningDelegate.interactiveDismiss }
-                set { transitioningDelegate.interactiveDismiss = newValue }
-            }
+extension UIPanGestureRecognizer {
 
-            var percent: CGFloat {
-                return -translate.x / transitioningDelegate.menuSize(for: gesture.view!.bounds.size).width
-            }
+    func update(transition: UIPercentDrivenInteractiveTransition?,
+                getPercent:  (_ translate: CGPoint) -> CGFloat,
+                getVelocity: (_ original: CGPoint) -> CGFloat,
+                beginTransition: () -> Void) {
+        let translate = self.translation(in: view)
 
-            var shouldFinish: Bool {
-                return (percent > 0.5 && velocity.x == 0) || velocity.x < 0
-            }
-
-            switch gesture.state {
-            case .began:
-                interaction = UIPercentDrivenInteractiveTransition()
-                presentedViewController.dismiss(animated: true) { interaction = nil }
-            case .changed:
-                interaction?.update(percent)
-            case .ended, .cancelled:
-                if shouldFinish {
-                    interaction?.finish()
-                } else {
-                    interaction?.cancel()
-                }
-            default: break
+        if state == .began {
+            beginTransition()
+        } else if state == .changed {
+            transition?.update(getPercent(translate))
+        } else if state == .cancelled || state == .ended {
+            let velocity = getVelocity(self.velocity(in: view))
+            let percents = getPercent(translate)
+            if velocity < 0 || (velocity == 0 && percents < 0.5) {
+                transition?.cancel()
+            } else {
+                transition?.finish()
             }
         }
     }
