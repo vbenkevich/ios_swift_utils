@@ -9,7 +9,7 @@ public extension DispatchQueue {
 
     @discardableResult
     func await<T>(task: Task<T>) throws -> T {
-        self.sync(execute: task.executeItem)
+        self.sync(execute: task.workItem)
 
         switch task.status {
         case .success(let result):
@@ -25,13 +25,13 @@ public extension DispatchQueue {
 
     @discardableResult
     func async<T>(_ task: Task<T>) -> Task<T> {
-        self.async(execute: task.executeItem)
+        self.async(execute: task.workItem)
         return task
     }
 
     @discardableResult
     func async<T>(_ task: Task<T>, after interval: DispatchTimeInterval) -> Task<T> {
-        self.asyncAfter(deadline: .now() + interval, execute: task.executeItem)
+        self.asyncAfter(deadline: .now() + interval, execute: task.workItem)
         return task
     }
 }
