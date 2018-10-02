@@ -34,8 +34,18 @@ open class ActionCommand: SerialCommand {
         self.canExecute = { $0 is T && canExecute($0 as! T) }
     }
 
-    open override func executeImpl(parameter: Any?) {
-        return self.execute(parameter)
+    open var executeQueue: DispatchQueue = DispatchQueue.main
+
+    open override func executeImpl(parameter: Any?) -> DispatchWorkItem {
+        let workItem = DispatchWorkItem {
+            self.execute(parameter)
+        }
+
+        defer {
+            executeQueue.async(execute: workItem)
+        }
+
+        return workItem
     }
 
     open override func canExecuteImpl(parameter: Any?) -> Bool {

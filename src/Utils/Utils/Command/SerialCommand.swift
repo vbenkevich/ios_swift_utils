@@ -11,7 +11,6 @@ open class SerialCommand: Command {
 
     open weak var delegate: CommandDelegate?
 
-    open var executeQueue: DispatchQueue = DispatchQueue.main
     open var callbackQueue: DispatchQueue = DispatchQueue.main
 
     open var serial = true
@@ -35,17 +34,11 @@ open class SerialCommand: Command {
             self.executingCount += 1
         }
 
-        let item = DispatchWorkItem { [weak self] in
-            self?.executeImpl(parameter: parameter)
-        }
-
-        item.notify(queue: callbackQueue) { [weak self] in
+        executeImpl(parameter: parameter).notify(queue: callbackQueue) { [weak self] in
             self?.lock.sync {
                 self?.executingCount -= 1
             }
         }
-
-        executeQueue.async(execute: item)
     }
 
     public final func canExecute(parameter: Any?) -> Bool {
@@ -56,7 +49,7 @@ open class SerialCommand: Command {
         delegate?.stateChanged(self)
     }
 
-    open func executeImpl(parameter: Any?) {
+    open func executeImpl(parameter: Any?) -> DispatchWorkItem {
         preconditionFailure("abstract")
     }
 
