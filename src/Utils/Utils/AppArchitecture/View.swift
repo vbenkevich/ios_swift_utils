@@ -8,7 +8,7 @@ import Foundation
 public protocol View: class {
 }
 
-public protocol ViewLifecycleAware: class {
+public protocol ViewLifecycleDelegate: class {
 
     func viewWillAppear(_ animated: Bool)
 

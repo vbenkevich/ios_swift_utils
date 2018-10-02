@@ -14,7 +14,7 @@ public extension DataTaskTag {
     public static var singleTaskTag: DataTaskTag { return "singleTaskTag" }
 }
 
-open class ViewModel<TView: View>: ViewLifecycleAware {
+open class ViewModel<TView: View>: ViewLifecycleDelegate {
 
     private let taskStorage = TaskStorage(workQueue: dataLoaderQueue)
 

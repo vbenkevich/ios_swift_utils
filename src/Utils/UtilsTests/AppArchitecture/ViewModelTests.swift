@@ -6,6 +6,8 @@
 import XCTest
 @testable import Utils
 
+var value1: Int32 = 0
+
 class ViewModelTests: XCTestCase {
 
     var viewModel: BaseTestViewModel!

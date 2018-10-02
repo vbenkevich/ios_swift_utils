@@ -25,6 +25,8 @@
 		BA6666812163711D0004D41B /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666802163711D0004D41B /* View.swift */; };
 		BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666822163717D0004D41B /* ViewModel+Updating.swift */; };
 		BA6666862163850B0004D41B /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666852163850B0004D41B /* ViewModelTests.swift */; };
+		BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666872163B4EA0004D41B /* UIViewController+View.swift */; };
+		BA66668A2163C3940004D41B /* ViewLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666892163C3940004D41B /* ViewLifecycleTests.swift */; };
 		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
 		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
 		BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDF7211C954000C81653 /* Task+Source.swift */; };
@@ -76,6 +78,8 @@
 		BA6666802163711D0004D41B /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		BA6666822163717D0004D41B /* ViewModel+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Updating.swift"; sourceTree = "<group>"; };
 		BA6666852163850B0004D41B /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
+		BA6666872163B4EA0004D41B /* UIViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+View.swift"; sourceTree = "<group>"; };
+		BA6666892163C3940004D41B /* ViewLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLifecycleTests.swift; sourceTree = "<group>"; };
 		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
 		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
 		BA7CEDF7211C954000C81653 /* Task+Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Source.swift"; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				BA6666802163711D0004D41B /* View.swift */,
+				BA6666872163B4EA0004D41B /* UIViewController+View.swift */,
 				BA66667E216371120004D41B /* ViewModel.swift */,
 				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
 			);
@@ -209,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				BA6666852163850B0004D41B /* ViewModelTests.swift */,
+				BA6666892163C3940004D41B /* ViewLifecycleTests.swift */,
 			);
 			path = AppArchitecture;
 			sourceTree = "<group>";
@@ -399,6 +405,7 @@
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
+				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,
 				BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */,
 				BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */,
 				BAC445282136A112005AB974 /* TaskGroup.swift in Sources */,
@@ -420,6 +427,7 @@
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
 				BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */,
+				BA66668A2163C3940004D41B /* ViewLifecycleTests.swift in Sources */,
 				BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */,
 				BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */,
 			);
