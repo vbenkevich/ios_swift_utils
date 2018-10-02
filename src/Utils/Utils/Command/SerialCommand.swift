@@ -9,17 +9,17 @@ open class SerialCommand: Command {
 
     private var lock = SpinLock()
 
-    open weak var delegate: CommandDelegate?
+    public weak var delegate: CommandDelegate?
 
     open var callbackQueue: DispatchQueue = DispatchQueue.main
 
     open var serial = true
 
     public final var executing: Bool {
-        return lock.sync { return executingCount > 0 }
+        return executingCount > 0
     }
 
-    private var executingCount: Int = 0 {
+    private var executingCount: Int32 = 0 {
         didSet {
             delegate?.stateChanged(self)
         }
@@ -30,14 +30,11 @@ open class SerialCommand: Command {
             return
         }
 
-        lock.sync {
-            self.executingCount += 1
-        }
+        OSAtomicIncrement32(&executingCount)
 
         executeImpl(parameter: parameter).notify(queue: callbackQueue) { [weak self] in
-            self?.lock.sync {
-                self?.executingCount -= 1
-            }
+            guard self != nil else { return }
+            OSAtomicDecrement32(&self!.executingCount)
         }
     }
 
