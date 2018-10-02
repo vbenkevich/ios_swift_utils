@@ -21,10 +21,10 @@ public class HttpClient {
     public func request<TResponse: HttpResponse>(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<TResponse> {
         let prepared = (adapter ?? requetAdapter)?.adapt(origin: request) ?? request
         let tcs = Task<TResponse>.Source()
-        let result = TResponse(prepared)
 
         let dataTask = urlSession.dataTask(with: prepared) { (data, response, error) in
             // order is important
+            let result = TResponse(prepared)
             result.origin = response
             result.error = error
             result.content = data

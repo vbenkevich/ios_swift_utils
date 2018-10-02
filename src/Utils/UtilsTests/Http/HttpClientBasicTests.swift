@@ -17,6 +17,8 @@ class HttpClientBasicTests: XCTestCase {
         super.setUp()
         client = HttpClient()
         mockSession = HttpClient.URLSessionMockDecorator(origin: client.urlSession)
+        mockSession.delay = .milliseconds(20)
+        mockSession.setResult(nil, for: testRequest.url!)
         client.urlSession = mockSession
     }
 
@@ -39,6 +41,7 @@ class HttpClientBasicTests: XCTestCase {
         let error = TestError()
         let data = "test content".data(using: .utf8)
 
+        mockSession.cleanResults()
         mockSession.setResult(response, data: data, error: error, for: ".", lifetime: .oneRequest)
 
         let requestTask: Task<HttpResponse> = client.request(request)
