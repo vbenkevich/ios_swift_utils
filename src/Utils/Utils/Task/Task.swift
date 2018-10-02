@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol Cancellable: class {
+public protocol Cancellable: class {
 
     func cancel() throws
 }
@@ -43,7 +43,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         self.init(status: .failed(error))
     }
 
-    public init(_ execute: @escaping () throws -> T) {
+    public init(execute: @escaping () throws -> T) {
         workItem = DispatchWorkItem {
             do {
                 try self.setStatus(.executing)

@@ -21,6 +21,10 @@
 		BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B85C210B73BF00A5F22F /* SerialCommand.swift */; };
 		BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */; };
 		BA54B86B210B73F600A5F22F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B868210B73F600A5F22F /* Task.swift */; };
+		BA66667F216371120004D41B /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA66667E216371120004D41B /* ViewModel.swift */; };
+		BA6666812163711D0004D41B /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666802163711D0004D41B /* View.swift */; };
+		BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666822163717D0004D41B /* ViewModel+Updating.swift */; };
+		BA6666862163850B0004D41B /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666852163850B0004D41B /* ViewModelTests.swift */; };
 		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
 		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
 		BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDF7211C954000C81653 /* Task+Source.swift */; };
@@ -68,6 +72,10 @@
 		BA54B85C210B73BF00A5F22F /* SerialCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialCommand.swift; sourceTree = "<group>"; };
 		BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+DispatchQueue.swift"; sourceTree = "<group>"; };
 		BA54B868210B73F600A5F22F /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		BA66667E216371120004D41B /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		BA6666802163711D0004D41B /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		BA6666822163717D0004D41B /* ViewModel+Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Updating.swift"; sourceTree = "<group>"; };
+		BA6666852163850B0004D41B /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
 		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
 		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
 		BA7CEDF7211C954000C81653 /* Task+Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Source.swift"; sourceTree = "<group>"; };
@@ -138,6 +146,7 @@
 		BA54B81E210B70DF00A5F22F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BA66667D2163702B0004D41B /* AppArchitecture */,
 				BA436E72215FCDE8000A59D1 /* ViewControllers */,
 				BA9EB303211351440008C539 /* Common */,
 				BAC82012210F7A880011DCF3 /* Http */,
@@ -153,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				BAC4451721357BD5005AB974 /* Utils */,
+				BA666684216384E50004D41B /* AppArchitecture */,
 				BAC8201F2111F05D0011DCF3 /* Http */,
 				BAC820202111F0630011DCF3 /* Task */,
 				BAC820212111F06C0011DCF3 /* Command */,
@@ -183,6 +193,24 @@
 				BAC445272136A112005AB974 /* TaskGroup.swift */,
 			);
 			path = Task;
+			sourceTree = "<group>";
+		};
+		BA66667D2163702B0004D41B /* AppArchitecture */ = {
+			isa = PBXGroup;
+			children = (
+				BA6666802163711D0004D41B /* View.swift */,
+				BA66667E216371120004D41B /* ViewModel.swift */,
+				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
+			);
+			path = AppArchitecture;
+			sourceTree = "<group>";
+		};
+		BA666684216384E50004D41B /* AppArchitecture */ = {
+			isa = PBXGroup;
+			children = (
+				BA6666852163850B0004D41B /* ViewModelTests.swift */,
+			);
+			path = AppArchitecture;
 			sourceTree = "<group>";
 		};
 		BA9EB303211351440008C539 /* Common */ = {
@@ -358,12 +386,15 @@
 				BA4E95BB212F1B64009B2154 /* HttpClient+Json.swift in Sources */,
 				BA436E74215FCE19000A59D1 /* SlideMenuViewController.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
+				BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */,
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
 				BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
+				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
+				BA6666812163711D0004D41B /* View.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
@@ -384,6 +415,7 @@
 				BAC4451921357BEC005AB974 /* TestError.swift in Sources */,
 				BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */,
 				BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */,
+				BA6666862163850B0004D41B /* ViewModelTests.swift in Sources */,
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
