@@ -15,7 +15,6 @@ class ViewLifecycleTests: XCTestCase {
     override func tearDown() {
     }
 
-
     func testAddDelegate() {
         let view = UIViewController()
         let delegate = TestViewLifecycleDelegate()

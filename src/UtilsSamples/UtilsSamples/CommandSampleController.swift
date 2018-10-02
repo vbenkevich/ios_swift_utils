@@ -13,43 +13,32 @@ class CommandSampleController: UIViewController {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var button: UIButton!
 
-    var viewModel = ViewModel()
+    var viewModel: CommandSampleViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewModel = CommandSampleViewModel()
         viewModel.view = self
+        add(viewModel)
+
         button.command = viewModel.command
-        button.command = viewModel.testWorkItemCommand
     }
 }
 
-class ViewModel {
+class CommandSampleViewModel: ViewModel<CommandSampleController> {
 
-    lazy var command = ActionCommand(self) {
-        $0.request()
+    override init() {
+        super.init()
+
+        command = ActionCommand(self, execute: {
+            $0.doSomething()
+        }, canExecute: {
+            $0.canLoadData
+        })
     }
 
-    lazy var testWorkItemCommand = ActionCommand {
-        var semaphore = DispatchSemaphore(value: 0)
-
-        var workItem = DispatchWorkItem {
-            semaphore.wait()
-        }
-
-        workItem.notify(queue: DispatchQueue.main) {
-            print("completed")
-        }
-
-        DispatchQueue.global().async(execute: workItem)
-
-        workItem.cancel()
-        print("cancel")
-
-        semaphore.signal()
-        print("signal")
-    }
-
-    weak var view: CommandSampleController?
+    var command: ActionCommand!
 
     var text: String? {
         didSet {
@@ -57,13 +46,17 @@ class ViewModel {
         }
     }
 
-    func request() {
-        Service().fetchDataQueue(test: "1").notify {
+    func doSomething() {
+        let complexRequest = submit(task:  Service().fetchDataQueue(test: "1").notify(DispatchQueue.main) {
             self.text = $0.result!
         }.chain { _ in
             return Service().fetchDataTcs(test: "2")
-        }.notify {
+        }.notify(DispatchQueue.main) {
             self.text = $0.result!
+        })
+
+        complexRequest.notify { [weak self] (_) in
+            self?.command.invalidate()
         }
     }
 }
@@ -73,7 +66,7 @@ class Service {
     func fetchDataTcs<T>(test: T) -> Task<T> {
         let tcs = Task<T>.Source()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
             try? tcs.complete(test)
         }
 
@@ -81,7 +74,9 @@ class Service {
     }
 
     func fetchDataQueue<T>(test: T) -> Task<T> {
-        let task = Task<T> { return test }
+        let task = Task<T>(execute: {
+            return test
+        })
         return DispatchQueue.global().async(task, after: .seconds(1))
     }
 

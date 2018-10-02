@@ -16,9 +16,13 @@ public extension DataTaskTag {
 
 open class ViewModel<TView: View>: ViewLifecycleDelegate {
 
-    private let taskStorage = TaskStorage(workQueue: dataLoaderQueue)
+    private let taskStorage: TaskStorage
 
-    open weak var view: TView?
+    public init() {
+        self.taskStorage = TaskStorage(workQueue: dataLoaderQueue)
+    }
+
+    public weak var view: TView?
 
     open var loading: Bool {
         return !taskStorage.all.isEmpty

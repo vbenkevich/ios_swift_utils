@@ -28,11 +28,9 @@ extension UIViewController: View {
             class_getInstanceMethod(self, #selector(viewDidAppear(_:)))!,
             class_getInstanceMethod(self, #selector(swizzled_viewDidAppear(_:)))!)
 
-
         method_exchangeImplementations(
             class_getInstanceMethod(self, #selector(viewWillDisappear(_:)))!,
             class_getInstanceMethod(self, #selector(swizzled_viewWillDisappear(_:)))!)
-
 
         method_exchangeImplementations(
             class_getInstanceMethod(self, #selector(viewDidDisappear(_:)))!,

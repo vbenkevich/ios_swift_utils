@@ -26,7 +26,6 @@ class SlideMenuSampleController: SlideMenuViewController {
     @objc func handleShowMenu(_ sender: Any) {
         self.showMenu()
     }
-
 }
 
 class MenuListController: UITableViewController, MenuController {
@@ -34,6 +33,7 @@ class MenuListController: UITableViewController, MenuController {
     weak var presenter: ControllerPresenter?
 
     let items: [(name: String, create: () -> UIViewController)] = [
+        (name: "CommandSample", create: { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "commandSample")}),
         (name: "Item1", create: { return UIViewController(title: "Item1", color: UIColor.red) }),
         (name: "Item2", create: { return UIViewController(title: "Item2", color: UIColor.green) }),
         (name: "Item3", create: { return UIViewController(title: "Item3", color: UIColor.blue) }),
