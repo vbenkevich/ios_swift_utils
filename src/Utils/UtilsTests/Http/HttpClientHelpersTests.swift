@@ -70,6 +70,7 @@ class HttpClientHelpersTests: XCTestCase {
         wait(for: [requestAdapted], timeout: 1)
     }
 
+    #warning("TODO use order insensitive url parameters comparision for escaping test")
     func testGetRequestBuilding() {
         let requestAdapted = expectation(description: "adapted")
         let params: [String : CustomStringConvertible] = [

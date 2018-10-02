@@ -33,8 +33,7 @@ public enum TaskError: Swift.Error {
 public final class Task<T>: Cancellable, NotifyCompletion {
 
     private var lock = SpinLock()
-    private var notifyItem = DispatchWorkItem {}
-    private (set) var executeItem: DispatchWorkItem!
+    private (set) var workItem: DispatchWorkItem!
 
     convenience public init(_ result: T) {
         self.init(status: .success(result))
@@ -45,7 +44,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     }
 
     public init(_ execute: @escaping () throws -> T) {
-        executeItem = DispatchWorkItem {
+        workItem = DispatchWorkItem {
             do {
                 try self.setStatus(.executing)
                 let data = try execute()
@@ -54,22 +53,16 @@ public final class Task<T>: Cancellable, NotifyCompletion {
                 try? self.setStatus(.failed(error))
             }
         }
-
-        executeItem.notify(queue: DispatchQueue.global(qos: .userInitiated)) { [notifyItem] in
-            notifyItem.perform()
-        }
     }
 
     init(status: Task.Status) {
-        notifyItem.perform()
         _status = status
+        workItem = DispatchWorkItem {}
+        workItem.perform()
     }
 
     init(_ workItem: DispatchWorkItem) {
-        executeItem = workItem
-        executeItem.notify(queue: DispatchQueue.global(qos: .userInitiated)) { [notifyItem] in
-            notifyItem.perform()
-        }
+        self.workItem = workItem
     }
 
     public var result: T? {
@@ -114,7 +107,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
             return self
         }
 
-        notifyItem.notify(queue: queue) {
+        workItem.notify(queue: queue) {
             callBack(self)
         }
 
@@ -123,8 +116,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
 
     public func cancel() throws {
         try setStatus(.cancelled)
-        notifyItem.perform()
-        executeItem.cancel()
+        workItem.perform()
         try linked?.cancel()
     }
 }

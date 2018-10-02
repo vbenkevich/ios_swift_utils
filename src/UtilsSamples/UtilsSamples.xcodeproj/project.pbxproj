@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */; };
+		BA436E7A215FD075000A59D1 /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA436E79215FD075000A59D1 /* Utils.framework */; };
+		BA436E7B215FD075000A59D1 /* Utils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA436E79215FD075000A59D1 /* Utils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B879210B754A00A5F22F /* AppDelegate.swift */; };
 		BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B87B210B754A00A5F22F /* CommandSampleController.swift */; };
 		BA54B87F210B754A00A5F22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B87D210B754A00A5F22F /* Main.storyboard */; };
@@ -14,7 +17,23 @@
 		BA54B884210B754C00A5F22F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BA436E7C215FD076000A59D1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BA436E7B215FD075000A59D1 /* Utils.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuSampleController.swift; sourceTree = "<group>"; };
+		BA436E79215FD075000A59D1 /* Utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B876210B754A00A5F22F /* UtilsSamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UtilsSamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B879210B754A00A5F22F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA54B87B210B754A00A5F22F /* CommandSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSampleController.swift; sourceTree = "<group>"; };
@@ -29,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA436E7A215FD075000A59D1 /* Utils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +58,7 @@
 		BA54B86D210B754A00A5F22F = {
 			isa = PBXGroup;
 			children = (
+				BA436E79215FD075000A59D1 /* Utils.framework */,
 				BA54B878210B754A00A5F22F /* UtilsSamples */,
 				BA54B877210B754A00A5F22F /* Products */,
 			);
@@ -56,6 +77,7 @@
 			children = (
 				BA54B879210B754A00A5F22F /* AppDelegate.swift */,
 				BA54B87B210B754A00A5F22F /* CommandSampleController.swift */,
+				BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */,
 				BA54B87D210B754A00A5F22F /* Main.storyboard */,
 				BA54B880210B754C00A5F22F /* Assets.xcassets */,
 				BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */,
@@ -74,6 +96,7 @@
 				BA54B872210B754A00A5F22F /* Sources */,
 				BA54B873210B754A00A5F22F /* Frameworks */,
 				BA54B874210B754A00A5F22F /* Resources */,
+				BA436E7C215FD076000A59D1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -135,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */,
 				BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */,
 				BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */,
 			);
@@ -281,6 +305,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6WDJKU2H55;
 				INFOPLIST_FILE = UtilsSamples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -298,6 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6WDJKU2H55;
 				INFOPLIST_FILE = UtilsSamples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
