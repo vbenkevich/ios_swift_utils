@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A98D6006F3AEDB27732D2284 /* Pods_UtilsSamples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 339BB92294B46F520E76C725 /* Pods_UtilsSamples.framework */; };
 		BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */; };
 		BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B879210B754A00A5F22F /* AppDelegate.swift */; };
 		BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B87B210B754A00A5F22F /* CommandSampleController.swift */; };
 		BA54B87F210B754A00A5F22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B87D210B754A00A5F22F /* Main.storyboard */; };
 		BA54B881210B754C00A5F22F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA54B880210B754C00A5F22F /* Assets.xcassets */; };
 		BA54B884210B754C00A5F22F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */; };
-		BAB786462163D069007AE0C1 /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB786452163D069007AE0C1 /* Utils.framework */; };
-		BAB786472163D069007AE0C1 /* Utils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAB786452163D069007AE0C1 /* Utils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +23,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BAB786472163D069007AE0C1 /* Utils.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,6 +30,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		339BB92294B46F520E76C725 /* Pods_UtilsSamples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UtilsSamples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuSampleController.swift; sourceTree = "<group>"; };
 		BA54B876210B754A00A5F22F /* UtilsSamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UtilsSamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B879210B754A00A5F22F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,7 +39,8 @@
 		BA54B880210B754C00A5F22F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA54B883210B754C00A5F22F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA54B885210B754C00A5F22F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BAB786452163D069007AE0C1 /* Utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEE5E702AA644FDF20EDEC61 /* Pods-UtilsSamples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UtilsSamples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UtilsSamples/Pods-UtilsSamples.debug.xcconfig"; sourceTree = "<group>"; };
+		EE9B4737377BE59C14409071 /* Pods-UtilsSamples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UtilsSamples.release.xcconfig"; path = "Pods/Target Support Files/Pods-UtilsSamples/Pods-UtilsSamples.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,19 +48,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAB786462163D069007AE0C1 /* Utils.framework in Frameworks */,
+				A98D6006F3AEDB27732D2284 /* Pods_UtilsSamples.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA04F43923AE18CB58A89E38 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BEE5E702AA644FDF20EDEC61 /* Pods-UtilsSamples.debug.xcconfig */,
+				EE9B4737377BE59C14409071 /* Pods-UtilsSamples.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BA54B86D210B754A00A5F22F = {
 			isa = PBXGroup;
 			children = (
-				BAB786452163D069007AE0C1 /* Utils.framework */,
 				BA54B878210B754A00A5F22F /* UtilsSamples */,
 				BA54B877210B754A00A5F22F /* Products */,
+				BA04F43923AE18CB58A89E38 /* Pods */,
+				CC901B4C6614F8F36293085F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,6 +96,14 @@
 			path = UtilsSamples;
 			sourceTree = "<group>";
 		};
+		CC901B4C6614F8F36293085F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				339BB92294B46F520E76C725 /* Pods_UtilsSamples.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -93,6 +111,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA54B888210B754C00A5F22F /* Build configuration list for PBXNativeTarget "UtilsSamples" */;
 			buildPhases = (
+				62664F7D01C6EE57D7F83997 /* [CP] Check Pods Manifest.lock */,
 				BA54B872210B754A00A5F22F /* Sources */,
 				BA54B873210B754A00A5F22F /* Frameworks */,
 				BA54B874210B754A00A5F22F /* Resources */,
@@ -152,6 +171,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62664F7D01C6EE57D7F83997 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UtilsSamples-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BA54B872210B754A00A5F22F /* Sources */ = {
@@ -302,15 +342,13 @@
 		};
 		BA54B889210B754C00A5F22F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEE5E702AA644FDF20EDEC61 /* Pods-UtilsSamples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6WDJKU2H55;
 				INFOPLIST_FILE = UtilsSamples/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vb.UtilsSamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -320,15 +358,13 @@
 		};
 		BA54B88A210B754C00A5F22F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE9B4737377BE59C14409071 /* Pods-UtilsSamples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6WDJKU2H55;
 				INFOPLIST_FILE = UtilsSamples/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vb.UtilsSamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
