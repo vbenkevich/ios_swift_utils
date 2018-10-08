@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:/Users/nemo/Documents/repos/my/ios_swift_utils/src/JetLibSamples/JetLibSamples.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "container:/Users/nemo/Documents/repos/my/ios_swift_utils/src/JetLib/JetLib.xcodeproj">
+   </FileRef>
+</Workspace>
