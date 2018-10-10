@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
   s.name         = "JetLib"
   s.version      = "0.1.0"
-  s.summary      = "Toolkit for quick building iOS apps"
+  s.summary      = "Toolkit for fast development iOS apps"
   s.homepage     = "https://github.com/vbenkevich/ios_swift_utils"
 
   s.license      = "MIT"

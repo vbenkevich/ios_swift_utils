@@ -55,16 +55,16 @@ open class ViewModel<TView: View>: ViewLifecycleDelegate {
     }
 
     @discardableResult
-    open func submit(task: NotifyCompletion & Cancellable, tag: DataTaskTag? = nil) -> NotifyCompletion {
+    open func submit<TData>(task: Task<TData>, tag: DataTaskTag? = nil) -> Task<TData> {
         self.updateStarted()
         return taskStorage.append(task: task, tag: tag)
             .notify(DispatchQueue.main) { [weak self] (_) in
                 self?.updateCompleted()
-            }
+        }
     }
 
     @discardableResult
-    public func load(task: NotifyCompletion & Cancellable, tag: DataTaskTag? = .singleTaskTag) -> NotifyCompletion {
+    public func load<TData>(task: Task<TData>, tag: DataTaskTag? = .singleTaskTag) -> Task<TData> {
         return taskStorage.append(task: task, tag: tag)
     }
 }
@@ -102,7 +102,7 @@ fileprivate final class TaskStorage: NotifyCompletion {
         return self
     }
 
-    func append(task: NotifyCompletion & Cancellable, tag: DataTaskTag? = nil) -> NotifyCompletion {
+    func append<T>(task: Task<T>, tag: DataTaskTag? = nil) -> Task<T> {
         workQueue.sync {
             all.append(task)
 

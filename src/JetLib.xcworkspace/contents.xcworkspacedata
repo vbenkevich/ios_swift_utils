@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/nemo/Documents/repos/my/ios_swift_utils/src/JetLibSamples/JetLibSamples.xcodeproj">
+      location = "group:JetLib/JetLib.xcodeproj">
    </FileRef>
    <FileRef
-      location = "container:/Users/nemo/Documents/repos/my/ios_swift_utils/src/JetLib/JetLib.xcodeproj">
+      location = "group:JetLibSamples/JetLibSamples.xcodeproj">
    </FileRef>
 </Workspace>

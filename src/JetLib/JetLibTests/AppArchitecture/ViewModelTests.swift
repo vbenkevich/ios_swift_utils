@@ -16,7 +16,7 @@ class ViewModelTests: XCTestCase {
 
     override func tearDown() {
         viewModel?.onLoadCompleted = nil
-        viewModel?.taskToLoad = []
+        viewModel?.cleanTasks()
     }
 
     func testViewRelease() {
@@ -29,11 +29,14 @@ class ViewModelTests: XCTestCase {
 
     func testTaskRelease() {
         let completed = expectation(description: "completed")
-        viewModel.taskToLoad.append(Task(1))
+        var task: Task? = Task(1)
+        viewModel.addTask(task!)
         viewModel.loadData().notify { _ in
             completed.fulfill()
         }
-        weak var weakTask = viewModel.taskToLoad.first
+
+        weak var weakTask = task
+        task = nil
 
         XCTAssertNotNil(weakTask)
 
@@ -138,7 +141,7 @@ class ViewModelTests: XCTestCase {
     func testBeginLoading() {
         XCTAssertFalse(viewModel.loading)
 
-        viewModel.taskToLoad.append(Task(execute: { return 123 }))
+        viewModel.addTask(Task(execute: { return 123 }))
         viewModel.viewWillAppear(false)
 
         XCTAssertTrue(viewModel.loading)
@@ -148,7 +151,7 @@ class ViewModelTests: XCTestCase {
         let exp1 = expectation(description: "exp1")
         let task = Task(execute: { return 123 }).notify { _ in exp1.fulfill() }
 
-        viewModel.taskToLoad.append(task)
+        viewModel.addTask(task)
         viewModel.viewWillAppear(false)
 
         DispatchQueue.global().async(task)
@@ -162,7 +165,7 @@ class ViewModelTests: XCTestCase {
         let exp1 = expectation(description: "exp1")
         let task = Task(execute: { return 123 }).notify { _ in exp1.fulfill() }
 
-        viewModel.taskToLoad.append(task)
+        viewModel.addTask(task)
         viewModel.viewWillAppear(false)
         viewModel.viewDidDisappear(false)
 
@@ -173,7 +176,7 @@ class ViewModelTests: XCTestCase {
 
     func testSimultaniuslyLoading() {
         let task = Task(execute: { return 123 })
-        viewModel.taskToLoad.append(task)
+        viewModel.addTask(task)
 
         viewModel.viewWillAppear(false)
         viewModel.viewWillAppear(true)
@@ -184,7 +187,7 @@ class ViewModelTests: XCTestCase {
     func testSerialLoading() {
         let task = Task(execute: { return 123 })
         let completed = expectation(description: "completed")
-        viewModel.taskToLoad.append(task)
+        viewModel.addTask(task)
         viewModel.onLoadCompleted = { completed.fulfill() }
 
         viewModel.viewWillAppear(true)
@@ -207,18 +210,26 @@ class BaseTestView: View, DataLoadingPresenter {
 
 class BaseTestViewModel: ViewModel<BaseTestView> {
 
-    var taskToLoad: [NotifyCompletion & Cancellable] = []
+    private var loadings: [(BaseTestViewModel) -> Void] = []
 
     var loadDataCallCount: Int = 0
     var loadDataCompletedCount: Int = 0
 
     var onLoadCompleted: (() -> Void)? = nil
 
+    func addTask<TData>(_ task: Task<TData>) {
+        loadings.append({ $0.load(task: task)})
+    }
+
+    func cleanTasks() {
+        loadings = []
+    }
+
     override func loadData() -> NotifyCompletion {
         loadDataCallCount += 1
 
-        for task in taskToLoad {
-            load(task: task)
+        for loading in loadings {
+            loading(self)
         }
 
         return super.loadData()
