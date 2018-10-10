@@ -128,6 +128,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "JetLibSample"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
