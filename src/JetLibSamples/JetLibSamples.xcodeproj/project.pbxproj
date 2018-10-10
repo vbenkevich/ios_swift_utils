@@ -13,6 +13,7 @@
 		BA54B87F210B754A00A5F22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B87D210B754A00A5F22F /* Main.storyboard */; };
 		BA54B881210B754C00A5F22F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA54B880210B754C00A5F22F /* Assets.xcassets */; };
 		BA54B884210B754C00A5F22F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */; };
+		BAA4E790216EB64E00A60DC0 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,7 @@
 		BA54B880210B754C00A5F22F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA54B883210B754C00A5F22F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA54B885210B754C00A5F22F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAA4E78F216EB64E00A60DC0 /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAA4E790216EB64E00A60DC0 /* JetLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +58,7 @@
 			children = (
 				BA54B878210B754A00A5F22F /* JetLibSamples */,
 				BA54B877210B754A00A5F22F /* Products */,
+				BAA4E78E216EB64E00A60DC0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +82,14 @@
 				BA54B885210B754C00A5F22F /* Info.plist */,
 			);
 			path = JetLibSamples;
+			sourceTree = "<group>";
+		};
+		BAA4E78E216EB64E00A60DC0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BAA4E78F216EB64E00A60DC0 /* JetLib.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
