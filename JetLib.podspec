@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "10.0"
   s.swift_version = "4.0"
 
-  s.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", tag: "0.1.0" }
+  s.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
   s.source_files  = "src/JetLib/JetLib/**/*.swift"
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
