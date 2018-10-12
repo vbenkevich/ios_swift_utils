@@ -43,6 +43,8 @@
 		BAC4452D2137FCE0005AB974 /* TaskGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4452C2137FCE0005AB974 /* TaskGroupTests.swift */; };
 		BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC82013210F7AAC0011DCF3 /* HttpClient.swift */; };
 		BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC820222111F0AF0011DCF3 /* TaskExecutionTests.swift */; };
+		BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA7217001D500F0B451 /* AsyncCommand.swift */; };
+		BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */; };
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
 		BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */; };
 		BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE6485721384CC9000BB449 /* XCTestCase.swift */; };
@@ -98,6 +100,8 @@
 		BAC4452C2137FCE0005AB974 /* TaskGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGroupTests.swift; sourceTree = "<group>"; };
 		BAC82013210F7AAC0011DCF3 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		BAC820222111F0AF0011DCF3 /* TaskExecutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExecutionTests.swift; sourceTree = "<group>"; };
+		BAD07BA7217001D500F0B451 /* AsyncCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommand.swift; sourceTree = "<group>"; };
+		BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommandTests.swift; sourceTree = "<group>"; };
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
 		BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonCommandTests.swift; sourceTree = "<group>"; };
 		BAE6485721384CC9000BB449 /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				BA541F55212D615400904EC4 /* ActionCommand.swift */,
+				BAD07BA7217001D500F0B451 /* AsyncCommand.swift */,
 				BA54B85B210B73BF00A5F22F /* Command.swift */,
 				BA54B85C210B73BF00A5F22F /* SerialCommand.swift */,
 				BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */,
@@ -277,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				BAD74819213823D100259F95 /* ActionCommandTests.swift */,
+				BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */,
 				BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */,
 			);
 			path = Command;
@@ -394,6 +400,7 @@
 				BA54B85E210B73BF00A5F22F /* UIButton+Command.swift in Sources */,
 				BA9EB30821135DDA0008C539 /* Task+Chain.swift in Sources */,
 				BA4E95BB212F1B64009B2154 /* HttpClient+Json.swift in Sources */,
+				BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */,
 				BA436E74215FCE19000A59D1 /* SlideMenuViewController.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */,
@@ -427,6 +434,7 @@
 				BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */,
 				BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */,
 				BA6666862163850B0004D41B /* ViewModelTests.swift in Sources */,
+				BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */,
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
@@ -631,7 +639,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jetlib-tests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jetlib-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -650,7 +658,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jetlib-tests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jetlib-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
