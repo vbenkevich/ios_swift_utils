@@ -55,32 +55,6 @@ open class ActionCommand: SerialCommand {
 
 public extension ActionCommand {
 
-    public convenience init<Source: AnyObject>(_ source: Source, execute: @escaping (Source) -> Void) {
-        self.init(
-            execute: { [weak source] in
-                if let src = source {
-                    execute(src)
-                }
-            },
-            canExecute: { [weak source] in
-                return source != nil
-            }
-        )
-    }
-
-    public convenience init<Source: AnyObject, Param>(_ source: Source, execute: @escaping (Source, Param) -> Void) {
-        self.init(
-            execute: { [weak source] (param: Param) in
-                if let src = source {
-                    execute(src, param)
-                }
-            },
-            canExecute: { [weak source] (param: Param) in
-                return source != nil
-            }
-        )
-    }
-
     public convenience init<Source: AnyObject>(
         _ source:   Source,
         execute:    @escaping (Source) -> Void,
@@ -104,13 +78,13 @@ public extension ActionCommand {
 
     public convenience init<Source: AnyObject, TParam>(
         _ source:   Source,
-        execute:    @escaping (Source, TParam) -> Void,
+        executeGeneric:    @escaping (Source, TParam) -> Void,
         canExecute: @escaping (Source, TParam) -> Bool)
     {
         self.init(
             execute: { [weak source] (param: TParam) in
                 if let src = source {
-                    execute(src, param)
+                    executeGeneric(src, param)
                 }
             },
             canExecute: { [weak source] (param: TParam) in
@@ -121,5 +95,13 @@ public extension ActionCommand {
                 }
             }
         )
+    }
+
+    public convenience init<Source: AnyObject>(_ source: Source, execute: @escaping (Source) -> Void) {
+        self.init(source, execute: { execute($0) }, canExecute: { _ in return true } )
+    }
+
+    public convenience init<Source: AnyObject, Param>(_ source: Source, execute: @escaping (Source, Param) -> Void) {
+        self.init(source, executeGeneric: { execute($0, $1) }, canExecute: { (_, _) in return true } )
     }
 }

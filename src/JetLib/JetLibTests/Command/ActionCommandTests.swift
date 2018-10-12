@@ -22,7 +22,7 @@ class ActionCommandTests: XCTestCase {
         let created = expectation(description: "created")
         let execute = expectation(description: "execute")
 
-        let command = ActionCommand {
+        let command = ActionCommand() {
             execute.fulfill()
         }
 
@@ -130,6 +130,60 @@ class ActionCommandTests: XCTestCase {
         command.execute(parameter: 1)
 
         wait(execute)
+    }
+
+    func testCommandSource() {
+        let execute = expectation(description: "execute")
+        let source = CommandSource()
+
+        let command = ActionCommand(source) {
+            XCTAssertEqual(source, $0)
+            execute.fulfill()
+        }
+
+        command.execute()
+
+        wait(execute)
+    }
+
+    func testCommandSourceGeneric() {
+        let execute = expectation(description: "execute")
+        let source = CommandSource()
+        let parameter = CommandParameter()
+
+        let command = ActionCommand(source) { (src: CommandSource, param: CommandParameter) in
+            XCTAssertEqual(source, src)
+            XCTAssertEqual(parameter, param)
+            execute.fulfill()
+        }
+
+        command.execute(parameter: parameter)
+
+        wait(execute)
+    }
+
+    func testCommandSourceIsWeak() {
+        let execute = expectation(description: "execute")
+        var source: CommandSource? = CommandSource()
+
+        weak var sourceRef = source
+        execute.fulfill()
+
+        let command = ActionCommand(source!) { (source: CommandSource, param: CommandParameter) in
+            execute.fulfill()
+        }
+
+        source = nil
+        command.execute(parameter: CommandParameter())
+
+        XCTAssertNil(sourceRef)
+        wait(execute)
+    }
+
+    class CommandSource: Equatable {
+        static func == (lhs: ActionCommandTests.CommandSource, rhs: ActionCommandTests.CommandSource) -> Bool {
+            return rhs === lhs
+        }
     }
 
     class CommandParameter: Equatable {
