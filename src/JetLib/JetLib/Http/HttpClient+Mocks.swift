@@ -152,6 +152,30 @@ public extension HttpClient {
     }
 }
 
+public extension HttpClient {
+
+    var mock: HttpClient.URLSessionMockDecorator {
+        if let mock = self.urlSession as? HttpClient.URLSessionMockDecorator {
+            return mock
+        }
+
+        let mock = URLSessionMockDecorator(origin: self.urlSession)
+        self.urlSession = mock
+        return mock
+    }
+}
+
+public extension HttpClient.URLSessionMockDecorator {
+
+    func setJsonResult<T: Codable>(_ data: T, for url: URL, lifetime: Lifetime = .thisSession) {
+        self.setResult(HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil),
+                       data: try! HttpClient.Json.defaultEncoder.encode(data),
+                       error: nil,
+                       for: url,
+                       lifetime: lifetime)
+    }
+}
+
 public protocol MockRequestPredicate {
 
     func test(request: URLRequest) -> Bool
