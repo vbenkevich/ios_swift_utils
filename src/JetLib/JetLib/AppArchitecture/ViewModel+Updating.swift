@@ -19,6 +19,20 @@ public protocol Updatable {
     func dataUpdateRequested(initiator: UpdateInitiator)
 }
 
+public extension ViewModel {
+
+    func reload(force: Bool = false) {
+        guard force else {
+            self.dataUpdateRequested(initiator: self)
+            return
+        }
+
+        cancelAll().notify(queue: DispatchQueue.main) {
+            self.dataUpdateRequested(initiator: self)
+        }
+    }
+}
+
 extension ViewModel: UpdateInitiator {
 
     open func updateAborted() {

@@ -73,7 +73,7 @@ class TaskChainTests: XCTestCase {
             return result1
         }
         let task2: Task<String> = task1.chainOnSuccess {
-            XCTAssertTrue($0.isSuccess)
+            XCTAssertEqual($0, result1)
             createTask2.fulfill()
             return Task<String>(result2)
         }
