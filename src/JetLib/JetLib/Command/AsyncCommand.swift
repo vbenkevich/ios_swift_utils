@@ -70,7 +70,7 @@ public extension AsyncCommand {
             }
         }
 
-        self.init(task1: factory, canExecute: canExecute)
+        self.init(task: factory, canExecute: canExecute)
     }
 
     public convenience init<Source: AnyObject, TParam, TOut>(
