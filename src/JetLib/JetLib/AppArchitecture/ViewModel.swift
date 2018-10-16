@@ -67,6 +67,12 @@ open class ViewModel<TView: View>: ViewLifecycleDelegate {
     public func load<TData>(task: Task<TData>, tag: DataTaskTag? = .singleTaskTag) -> Task<TData> {
         return taskStorage.append(task: task, tag: tag)
     }
+
+    @discardableResult
+    public func cancelAll() -> DispatchWorkItem {
+        taskStorage.tryCancelAll()
+        return taskStorage.workItem
+    }
 }
 
 fileprivate final class TaskStorage: NotifyCompletion {

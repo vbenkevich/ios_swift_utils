@@ -197,6 +197,38 @@ class ViewModelTests: XCTestCase {
 
         XCTAssertEqual(viewModel.loadDataCallCount, 2)
     }
+
+    func testReload() {
+        let success = expectation(description: "canceled")
+        let task = Task<Int>(execute: {
+            return 123
+        }).onSuccess { _ in
+            success.fulfill()
+        }
+
+        viewModel.addTask(task)
+        viewModel.reload()
+        DispatchQueue.main.async(task)
+
+        wait(success)
+    }
+
+    func testForceReload() {
+        let canceled = expectation(description: "canceled")
+        let task = Task<Int>(execute: {
+            return 123
+        }).onCancel {
+            canceled.fulfill()
+        }
+
+        viewModel.addTask(task)
+
+
+        viewModel.reload()
+        viewModel.reload(force: true)
+
+        wait(canceled)
+    }
 }
 
 class BaseTestView: View, DataLoadingPresenter {
