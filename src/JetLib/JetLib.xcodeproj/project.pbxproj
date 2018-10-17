@@ -43,6 +43,8 @@
 		BAC4452D2137FCE0005AB974 /* TaskGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4452C2137FCE0005AB974 /* TaskGroupTests.swift */; };
 		BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC82013210F7AAC0011DCF3 /* HttpClient.swift */; };
 		BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC820222111F0AF0011DCF3 /* TaskExecutionTests.swift */; };
+		BACD957D21763AED008396D5 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACD957C21763AED008396D5 /* Observable.swift */; };
+		BACD958021775E94008396D5 /* ObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACD957F21775E94008396D5 /* ObservableTests.swift */; };
 		BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA7217001D500F0B451 /* AsyncCommand.swift */; };
 		BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */; };
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
@@ -100,6 +102,8 @@
 		BAC4452C2137FCE0005AB974 /* TaskGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGroupTests.swift; sourceTree = "<group>"; };
 		BAC82013210F7AAC0011DCF3 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		BAC820222111F0AF0011DCF3 /* TaskExecutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExecutionTests.swift; sourceTree = "<group>"; };
+		BACD957C21763AED008396D5 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		BACD957F21775E94008396D5 /* ObservableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTests.swift; sourceTree = "<group>"; };
 		BAD07BA7217001D500F0B451 /* AsyncCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommand.swift; sourceTree = "<group>"; };
 		BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommandTests.swift; sourceTree = "<group>"; };
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				BA6666872163B4EA0004D41B /* UIViewController+View.swift */,
 				BA66667E216371120004D41B /* ViewModel.swift */,
 				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
+				BACD957C21763AED008396D5 /* Observable.swift */,
 			);
 			path = AppArchitecture;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 		BA666684216384E50004D41B /* AppArchitecture */ = {
 			isa = PBXGroup;
 			children = (
+				BACD957E21775E78008396D5 /* Bindings */,
 				BA6666852163850B0004D41B /* ViewModelTests.swift */,
 				BA6666892163C3940004D41B /* ViewLifecycleTests.swift */,
 			);
@@ -286,6 +292,14 @@
 				BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */,
 			);
 			path = Command;
+			sourceTree = "<group>";
+		};
+		BACD957E21775E78008396D5 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				BACD957F21775E94008396D5 /* ObservableTests.swift */,
+			);
+			path = Bindings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,6 +430,7 @@
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
+				BACD957D21763AED008396D5 /* Observable.swift in Sources */,
 				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,
 				BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */,
 				BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */,
@@ -435,6 +450,7 @@
 				BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */,
 				BA6666862163850B0004D41B /* ViewModelTests.swift in Sources */,
 				BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */,
+				BACD958021775E94008396D5 /* ObservableTests.swift in Sources */,
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
