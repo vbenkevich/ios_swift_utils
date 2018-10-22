@@ -14,15 +14,13 @@ public extension DataTaskTag {
     public static var singleTaskTag: DataTaskTag { return "singleTaskTag" }
 }
 
-open class ViewModel<TView: View>: ViewLifecycleDelegate {
+open class ViewModel: ViewLifecycleDelegate {
 
     private let taskStorage: TaskStorage
 
     public init() {
         self.taskStorage = TaskStorage(workQueue: dataLoaderQueue)
     }
-
-    public weak var view: TView?
 
     open var loading: Bool {
         return !taskStorage.all.isEmpty

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol UpdateInitiator: class {
 
@@ -35,15 +36,16 @@ public extension ViewModel {
 
 extension ViewModel: UpdateInitiator {
 
+    @objc
     open func updateAborted() {
     }
 
+    @objc
     open func updateStarted() {
-        (view as? DataLoadingPresenter)?.showLoading(true)
     }
 
+    @objc
     open func updateCompleted() {
-        (view as? DataLoadingPresenter)?.showLoading(false)
     }
 }
 
@@ -60,5 +62,34 @@ extension ViewModel: Updatable {
         self.loadData().notify(DispatchQueue.main) { _ in
             initiator.updateCompleted()
         }
+    }
+}
+
+extension DispatchGroup: UpdateInitiator {
+
+    public func updateStarted() {
+        self.enter()
+    }
+
+    public func updateCompleted() {
+        self.leave()
+    }
+
+    public func updateAborted() {
+    }
+}
+
+extension UIRefreshControl: UpdateInitiator {
+
+    public func updateStarted() {
+        self.beginRefreshing()
+    }
+
+    public func updateCompleted() {
+        self.endRefreshing()
+    }
+
+    public func updateAborted() {
+        self.endRefreshing()
     }
 }
