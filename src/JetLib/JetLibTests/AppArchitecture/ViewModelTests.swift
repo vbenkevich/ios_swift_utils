@@ -240,7 +240,9 @@ class BaseTestView: View, DataLoadingPresenter {
     }
 }
 
-class BaseTestViewModel: ViewModel<BaseTestView> {
+class BaseTestViewModel: ViewModel {
+
+    weak var view: BaseTestView?
 
     private var loadings: [(BaseTestViewModel) -> Void] = []
 
@@ -265,6 +267,10 @@ class BaseTestViewModel: ViewModel<BaseTestView> {
         }
 
         return super.loadData()
+    }
+
+    override func updateAborted() {
+
     }
 
     override func loadDataCompleted() {
