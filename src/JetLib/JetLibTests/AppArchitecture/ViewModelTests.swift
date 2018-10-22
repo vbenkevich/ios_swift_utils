@@ -269,10 +269,6 @@ class BaseTestViewModel: ViewModel {
         return super.loadData()
     }
 
-    override func updateAborted() {
-
-    }
-
     override func loadDataCompleted() {
         super.loadDataCompleted()
         loadDataCompletedCount += 1
