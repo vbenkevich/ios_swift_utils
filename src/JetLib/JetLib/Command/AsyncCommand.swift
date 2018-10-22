@@ -33,13 +33,7 @@ open class AsyncCommand: SerialCommand {
     open var executeQueue: DispatchQueue = DispatchQueue.main
 
     open override func executeImpl(parameter: Any?) -> DispatchWorkItem {
-        let workItem = taskFactory(parameter).workItem!
-
-        defer {
-            executeQueue.async(execute: workItem)
-        }
-
-        return workItem
+        return taskFactory(parameter).workItem!
     }
 
     open override func canExecuteImpl(parameter: Any?) -> Bool {

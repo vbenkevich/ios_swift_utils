@@ -240,7 +240,9 @@ class BaseTestView: View, DataLoadingPresenter {
     }
 }
 
-class BaseTestViewModel: ViewModel<BaseTestView> {
+class BaseTestViewModel: ViewModel {
+
+    weak var view: BaseTestView?
 
     private var loadings: [(BaseTestViewModel) -> Void] = []
 
