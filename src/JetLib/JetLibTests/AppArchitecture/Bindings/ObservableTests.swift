@@ -34,23 +34,23 @@ class ObservableTests: XCTestCase {
         let newValue = "1234"
         let stringObservable = Observable<String>()
         let notify = expectation(description: "notify")
-        let notify2 = expectation(description: "notify2")
+        notify.expectedFulfillmentCount = 2
 
         stringObservable.notify(self) { _,_ in
             notify.fulfill()
         }
 
         stringObservable.notify(self) { _,_ in
-            notify2.fulfill()
+            notify.fulfill()
         }
 
         stringObservable.value = newValue
 
-        wait(notify, notify2)
+        wait(notify)
     }
 
     func testNotifyMultipleValues() {
-        let stringObservable = Observable<Int>()
+        let observable = Observable<Int>()
         let semaphore = DispatchSemaphore(value: 0)
         let queue = DispatchQueue.global(qos: .userInitiated)
 
@@ -61,14 +61,14 @@ class ObservableTests: XCTestCase {
 
         let target = Target()
 
-        stringObservable.notify(target, queue) {
+        observable.notify(target, queue) {
             XCTAssertEqual(target.expected[target.counter], $1)
             $0.counter += 1
             semaphore.signal()
         }
 
         while target.counter < target.expected.count {
-            stringObservable.value = target.expected[target.counter]
+            observable.value = target.expected[target.counter]
 
             if semaphore.wait(timeout: .now() + .milliseconds(100)) == .timedOut {
                 break
@@ -79,6 +79,24 @@ class ObservableTests: XCTestCase {
     }
 
     func testWeakTarget() {
-        XCTAssertTrue(false)
+        class Target {}
+
+        let observable = Observable<Int>()
+        let exp = expectation(description: "notify shouldn't trigger")
+
+        var targetStrong: Target! = Target()
+        weak var targetWeak = targetStrong
+
+        observable.notify(targetStrong, callBack: { _, _ in
+            exp.fulfill()
+        })
+
+        // faster than exp.isInverted = true
+        exp.fulfill()
+        targetStrong = nil
+        XCTAssertNil(targetWeak)
+        observable.value = 10
+
+        wait(exp)
     }
 }
