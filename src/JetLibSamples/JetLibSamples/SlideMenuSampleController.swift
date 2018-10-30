@@ -37,7 +37,7 @@ class MenuListController: UITableViewController, MenuController {
         (name: "Item1", create: { return UIViewController(title: "Item1", color: UIColor.red) }),
         (name: "Item2", create: { return UIViewController(title: "Item2", color: UIColor.green) }),
         (name: "Item3", create: { return UIViewController(title: "Item3", color: UIColor.blue) }),
-        ]
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
