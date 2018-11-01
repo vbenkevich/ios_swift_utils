@@ -5,11 +5,39 @@
 
 import Foundation
 
-public class Observable<Value> {
+public class Observable<Value: Equatable> {
+
+    public init(_ value: Value? = nil, throttling: DispatchTimeInterval? = nil) {
+        self.value = value
+        self.throttling = throttling
+    }
 
     public var value: Value? {
         didSet {
-            fireNotifications(old: oldValue, new: value)
+            guard oldValue != value else {
+                return
+            }
+
+            fireNotificationWorkItem = DispatchWorkItem { [value, weak self] in
+                self?.fireNotifications(old: oldValue, new: value)
+            }
+        }
+    }
+
+    public var throttling: DispatchTimeInterval?
+
+    fileprivate var fireNotificationWorkItem: DispatchWorkItem? {
+        didSet {
+            oldValue?.cancel()
+            guard let workItem = fireNotificationWorkItem else {
+                return
+            }
+
+            if let delay = throttling {
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + delay, execute: workItem)
+            } else {
+                workItem.perform()
+            }
         }
     }
 
@@ -21,7 +49,6 @@ public class Observable<Value> {
         return self
     }
 
-    // TODO: check value changing
     fileprivate func fireNotifications(old: Value?, new: Value?) {
         var shouldClean = false
 

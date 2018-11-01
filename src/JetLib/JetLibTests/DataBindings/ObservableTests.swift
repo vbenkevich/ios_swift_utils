@@ -82,21 +82,15 @@ class ObservableTests: XCTestCase {
         class Target {}
 
         let observable = Observable<Int>()
-        let exp = expectation(description: "notify shouldn't trigger")
-
         var targetStrong: Target! = Target()
         weak var targetWeak = targetStrong
 
         observable.notify(targetStrong, callBack: { _, _ in
-            exp.fulfill()
+            XCTFail()
         })
 
-        // faster than exp.isInverted = true
-        exp.fulfill()
         targetStrong = nil
         XCTAssertNil(targetWeak)
         observable.value = 10
-
-        wait(exp)
     }
 }
