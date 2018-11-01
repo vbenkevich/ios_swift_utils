@@ -46,7 +46,7 @@ public extension BindingTarget {
 
     fileprivate var observableSetter: ObservableSetter<Value>? {
         get { return objc_getAssociatedObject(self, &AssociatedKeys.observableSetterKey) as? ObservableSetter<Value> }
-        set { objc_setAssociatedObject(self, &AssociatedKeys.observableSetterKey, newValue, .OBJC_ASSOCIATION_ASSIGN) }
+        set { objc_setAssociatedObject(self, &AssociatedKeys.observableSetterKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
     }
 
     func bind<Value>(to observable: Observable<Value>, mode: BindingMode? = nil,
@@ -82,9 +82,7 @@ public extension BindingTarget {
                 throw BindingError.convertIsRequired
             }
 
-
-            let setter = ObservableSetter(origin: observable, converter: convert)
-            observableSetter = setter
+            observableSetter = ObservableSetter(owner: self, origin: observable, converter: convert)
             control.addTarget(setter, action: #selector(ObservableSetter<Value>.valueChanged), for: [.editingChanged, .valueChanged])
         }
     }
@@ -112,7 +110,8 @@ private class ObservableSetter<T> {
     private let setter: (T?) -> Void
     weak var owner: BindingTargetBase?
 
-    init<Value>(origin: Observable<Value>, converter: @escaping (T?) -> Value?) {
+    init<Value>(owner: BindingTargetBase, origin: Observable<Value>, converter: @escaping (T?) -> Value?) {
+        self.owner = owner
         setter = { [weak origin] in
             origin?.value = converter($0)
         }
