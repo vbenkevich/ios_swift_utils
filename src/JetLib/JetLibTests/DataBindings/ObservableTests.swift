@@ -78,6 +78,26 @@ class ObservableTests: XCTestCase {
         XCTAssertEqual(target.counter, target.expected.count)
     }
 
+    func testThrottling() {
+        let values = [1, 2, 3, 4, 5, 6]
+        let observable = Observable(0)
+        let notify = expectation(description: "notify")
+        notify.expectedFulfillmentCount = 1
+
+        observable.throttling = .milliseconds(100)
+
+        observable.notify(self) {
+            XCTAssertEqual($1, values.last!)
+            notify.fulfill()
+        }
+
+        for value in values {
+            observable.value = value
+        }
+
+        wait(notify)
+    }
+
     func testWeakTarget() {
         class Target {}
 

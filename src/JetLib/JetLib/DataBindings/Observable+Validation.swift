@@ -5,8 +5,32 @@
 
 import Foundation
 
-public typealias ValidationResult = (isValid: Bool, error: String?)
+public struct ValidationResult: Equatable {
 
+    public init() {
+        self.isValid = true
+        self.error = nil
+    }
+
+    public init(_ error: String? = nil) {
+        self.isValid = false
+        self.error = error
+    }
+
+    public init(_ isValid: Bool, _ error: String? = nil) {
+        self.isValid = isValid
+        self.error = error
+    }
+
+    public let isValid: Bool
+
+    public let error: String?
+}
+
+protocol Invalidatable: class {
+
+    func invalidate()
+}
 
 public protocol ValidationRule {
     associatedtype Data
@@ -23,25 +47,30 @@ open class DefaultValidationResultMerger: ValidationResultMerger {
 
     open func merge(results: [ValidationResult]) -> ValidationResult {
         let failed = results.filter{ !$0.isValid }
-        return (isValid: failed.isEmpty, error: failed.reduce("", { $0 + ($1.error ?? "") }))
+        return ValidationResult(failed.isEmpty, failed.reduce("", { $0 + ($1.error ?? "") }))
     }
 }
 
-public class ObservableValueValidation<Value: Equatable> {
+public enum ValidationMode {
+    case onValueChanged
+    case onEditingEnded
+}
+
+public class ObservableValueValidation<Value: Equatable>: Invalidatable {
 
     private var validationRules: [(Value?) -> ValidationResult] = []
+    private var stateObserver = Observable(ValidationResult())
     private weak var valueSource: Observable<Value>?
-    private var stateObserver = Observable(ValidationResult(isValid: true, error: nil), throttling: DispatchTimeInterval.milliseconds(50))
 
     public var resultsMerger: ValidationResultMerger = DefaultValidationResultMerger()
 
-    public var validateOnValueChange: Bool = false {
+    public var mode: ValidationMode = ValidationMode.onEditingEnded {
         didSet {
-            guard oldValue == validateOnValueChange, let observable = valueSource else {
+            guard oldValue != mode, let observable = valueSource else {
                 return
             }
 
-            if validateOnValueChange {
+            if mode == .onValueChanged {
                 self.attach(to: observable)
             } else {
                 self.detach(from: observable)
@@ -51,13 +80,34 @@ public class ObservableValueValidation<Value: Equatable> {
 
     public var result: ValidationResult? {
         didSet {
-
+            stateObserver.value = result
         }
+    }
+
+    public var throttling: DispatchTimeInterval? {
+        get { return stateObserver.throttling }
+        set { stateObserver.throttling = newValue }
+    }
+
+    lazy var editingDelegate = ControlEditingDelegate(self)
+
+    public func mode(_ mode: ValidationMode) -> ObservableValueValidation {
+        self.mode = mode
+        return self
     }
 
     @discardableResult
     public func addRule<Validator: ValidationRule>(_ rule: Validator) -> ObservableValueValidation where Validator.Data == Value  {
         validationRules.append({ [rule] in rule.check($0) })
+        return self
+    }
+
+    @discardableResult
+    public func notify<Target: AnyObject>(_ target: Target, _ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Target, ValidationResult?) -> Void) -> ObservableValueValidation<Value> {
+        stateObserver.notify(target, queue, callBack: callBack)
+
+        callBack(target, result)
+
         return self
     }
 
@@ -71,7 +121,7 @@ public class ObservableValueValidation<Value: Equatable> {
 
     @discardableResult
     func attach(to observable: Observable<Value>) -> ObservableValueValidation {
-        if validateOnValueChange {
+        if mode == .onValueChanged {
             observable.notify(self) { $0.result = $0.check(value: $1) }
         }
 
@@ -83,10 +133,28 @@ public class ObservableValueValidation<Value: Equatable> {
     }
 }
 
-extension Observable {
+public extension Observable {
 
-    public func withValidation() -> Observable {
-        validation = validation ?? ObservableValueValidation().attach(to: self)
+    @discardableResult
+    public func addValidation(mode: ValidationMode? = nil) -> Observable {
+        validation = validation ?? ObservableValueValidation()
+
+        if let mode = mode {
+            validation?.mode = mode
+        }
+
+        validation?.detach(from: self)
+        validation?.attach(to: self)
+
+        return self
+    }
+
+    @discardableResult
+    public func addValidationRule<Validator: ValidationRule>(_ rule: Validator) -> Observable where Validator.Data == Value  {
+        addValidation().validation?.addRule(rule)
+
+        validation?.detach(from: self)
+        validation?.attach(to: self)
         return self
     }
 
@@ -96,4 +164,19 @@ extension Observable {
     }
 }
 
+class ControlEditingDelegate {
 
+    init(_ source: Invalidatable) {
+        self.source = source
+    }
+
+    weak var source: Invalidatable?
+
+    @objc func editingDidEnd() {
+        source?.invalidate()
+    }
+
+    @objc func editingDidBegin() {
+        source?.invalidate()
+    }
+}

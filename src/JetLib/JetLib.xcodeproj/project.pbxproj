@@ -60,6 +60,8 @@
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
 		BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */; };
 		BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE6485721384CC9000BB449 /* XCTestCase.swift */; };
+		BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */; };
+		BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2512218CD7DF00F68E96 /* Binding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,8 @@
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
 		BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonCommandTests.swift; sourceTree = "<group>"; };
 		BAE6485721384CC9000BB449 /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
+		BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BindingTarget+Validation.swift"; sourceTree = "<group>"; };
+		BAED2512218CD7DF00F68E96 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,7 +302,9 @@
 				BACD957C21763AED008396D5 /* Observable.swift */,
 				BA7BF569218CB20000647286 /* Observable+Validation.swift */,
 				BAA652D5218A127200E4BDC3 /* ValueConverter.swift */,
+				BAED2512218CD7DF00F68E96 /* Binding.swift */,
 				BAA652D3218A124200E4BDC3 /* BindingTarget.swift */,
+				BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */,
 				BAA652D12189DBEA00E4BDC3 /* UIControls+BindingTarget.swift */,
 			);
 			path = DataBindings;
@@ -521,12 +527,14 @@
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
 				BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */,
+				BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
 				BA6666812163711D0004D41B /* View.swift in Sources */,
+				BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,

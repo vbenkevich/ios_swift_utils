@@ -48,7 +48,7 @@ public class Observable<Value: Equatable> {
 
     @discardableResult
     public func notify<Target: AnyObject>(_ target: Target, _ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Target, Value?) -> Void) -> Observable {
-        targets.append(TargetWrapper(target, setter: callBack, setterQueue: queue))
+        targets.append(TargetWrapper(target, setter: callBack, queue: queue))
         return self
     }
 
@@ -60,7 +60,7 @@ public class Observable<Value: Equatable> {
         var shouldClean = false
 
         for target in targets {
-            target.value = new
+            target.setValue(new)
             shouldClean = shouldClean || !target.isAlive
         }
 
@@ -75,12 +75,11 @@ public class Observable<Value: Equatable> {
             preconditionFailure("abstr")
         }
 
-        var value: Value? {
-            get { preconditionFailure("abstr") }
-            set { preconditionFailure("abstr") }
+        func same(with object: AnyObject) -> Bool {
+            preconditionFailure("abstr")
         }
 
-        func same(with object: AnyObject) -> Bool {
+        func setValue(_ value: Value?) {
             preconditionFailure("abstr")
         }
     }
@@ -88,53 +87,40 @@ public class Observable<Value: Equatable> {
     fileprivate class TargetWrapper<Target: AnyObject>: TargetWrapperAbstract {
 
         private let setter: ((Target, Value?) -> Void)?
-        private let getter: ((Target) -> Value?)?
-
-        private let setterQueue: DispatchQueue
-        private let getterQueue: DispatchQueue
+        private let queue: DispatchQueue
 
         weak var target: Target?
 
-        init(_ target: Target,
-             setter: ((Target, Value?) -> Void)? = nil,
-             getter: ((Target) -> Value?)? = nil,
-             setterQueue: DispatchQueue = DispatchQueue.main,
-             getterQueue: DispatchQueue = DispatchQueue.main)
-        {
+        init(_ target: Target, setter: ((Target, Value?) -> Void)? = nil, queue: DispatchQueue = DispatchQueue.main) {
             self.setter = setter
-            self.getter = getter
             self.target = target
-            self.setterQueue = setterQueue
-            self.getterQueue = getterQueue
+            self.queue = queue
         }
 
         override var isAlive: Bool {
             return target != nil
         }
 
-        override var value: Value? {
-            get {
-                guard let from = target else {
-                    return nil
-                }
-
-                return getterQueue.sync {
-                    return getter?(from)
-                }
+        override func setValue(_ value: Value?) {
+            guard let to = target else {
+                return
             }
-            set {
-                guard let to = target else {
-                    return
-                }
 
-                setterQueue.async {
-                    self.setter?(to, newValue)
-                }
+            queue.async {
+                self.setter?(to, value)
             }
         }
 
         override func same(with object: AnyObject) -> Bool {
             return target === object
         }
+    }
+}
+
+public extension Observable {
+
+    func addThrottling(_ throttling: DispatchTimeInterval) -> Observable {
+        self.throttling = throttling
+        return self
     }
 }
