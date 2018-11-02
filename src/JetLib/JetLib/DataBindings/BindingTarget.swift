@@ -83,7 +83,7 @@ public extension BindingTarget {
             }
 
             observableSetter = ObservableSetter(owner: self, origin: observable, converter: convert)
-            control.addTarget(setter, action: #selector(ObservableSetter<Value>.valueChanged), for: [.editingChanged, .valueChanged])
+            control.addTarget(observableSetter, action: #selector(ObservableSetter<Value>.valueChanged), for: [.editingChanged, .valueChanged])
         }
     }
 

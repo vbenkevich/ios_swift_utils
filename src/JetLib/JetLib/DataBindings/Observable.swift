@@ -10,6 +10,7 @@ public class Observable<Value: Equatable> {
     public init(_ value: Value? = nil, throttling: DispatchTimeInterval? = nil) {
         self.value = value
         self.throttling = throttling
+        self.validation = nil
     }
 
     public var value: Value? {
@@ -23,6 +24,8 @@ public class Observable<Value: Equatable> {
             }
         }
     }
+
+    public var validation: ObservableValueValidation<Value>?
 
     public var throttling: DispatchTimeInterval?
 
@@ -49,6 +52,10 @@ public class Observable<Value: Equatable> {
         return self
     }
 
+    public func unsubscribe<Target: AnyObject>(_ target: Target) {
+        targets = targets.filter { !$0.same(with: target) }
+    }
+
     fileprivate func fireNotifications(old: Value?, new: Value?) {
         var shouldClean = false
 
@@ -72,6 +79,10 @@ public class Observable<Value: Equatable> {
             get { preconditionFailure("abstr") }
             set { preconditionFailure("abstr") }
         }
+
+        func same(with object: AnyObject) -> Bool {
+            preconditionFailure("abstr")
+        }
     }
 
     fileprivate class TargetWrapper<Target: AnyObject>: TargetWrapperAbstract {
@@ -82,7 +93,7 @@ public class Observable<Value: Equatable> {
         private let setterQueue: DispatchQueue
         private let getterQueue: DispatchQueue
 
-        private weak var target: Target?
+        weak var target: Target?
 
         init(_ target: Target,
              setter: ((Target, Value?) -> Void)? = nil,
@@ -120,6 +131,10 @@ public class Observable<Value: Equatable> {
                     self.setter?(to, newValue)
                 }
             }
+        }
+
+        override func same(with object: AnyObject) -> Bool {
+            return target === object
         }
     }
 }
