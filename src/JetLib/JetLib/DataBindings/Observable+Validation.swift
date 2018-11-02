@@ -60,23 +60,39 @@ public class ObservableValueValidation<Value: Equatable>: Invalidatable {
 
     private var validationRules: [(Value?) -> ValidationResult] = []
     private var stateObserver = Observable(ValidationResult())
-    private weak var valueSource: Observable<Value>?
 
-    public var resultsMerger: ValidationResultMerger = DefaultValidationResultMerger()
+
+    private weak var valueSource: Observable<Value>? {
+        didSet {
+            guard oldValue !== valueSource else {
+                return
+            }
+
+            oldValue?.unsubscribe(self)
+
+            if mode == .onValueChanged {
+                subscribe()
+            } else {
+                unsubscribe()
+            }
+        }
+    }
 
     public var mode: ValidationMode = ValidationMode.onEditingEnded {
         didSet {
-            guard oldValue != mode, let observable = valueSource else {
+            guard oldValue != mode else {
                 return
             }
 
             if mode == .onValueChanged {
-                self.attach(to: observable)
+                subscribe()
             } else {
-                self.detach(from: observable)
+                unsubscribe()
             }
         }
     }
+
+    public var resultsMerger: ValidationResultMerger = DefaultValidationResultMerger()
 
     public var result: ValidationResult? {
         didSet {
@@ -121,15 +137,22 @@ public class ObservableValueValidation<Value: Equatable>: Invalidatable {
 
     @discardableResult
     func attach(to observable: Observable<Value>) -> ObservableValueValidation {
-        if mode == .onValueChanged {
-            observable.notify(self) { $0.result = $0.check(value: $1) }
-        }
-
+        valueSource = observable
         return self
     }
 
-    func detach(from observable: Observable<Value>) {
-        observable.unsubscribe(self)
+    @discardableResult
+    func detach() -> ObservableValueValidation {
+        valueSource = nil
+        return self
+    }
+
+    func subscribe() {
+        valueSource?.notify(self) { $0.result = $0.check(value: $1) }
+    }
+
+    func unsubscribe() {
+        valueSource?.unsubscribe(self)
     }
 }
 
@@ -143,7 +166,6 @@ public extension Observable {
             validation?.mode = mode
         }
 
-        validation?.detach(from: self)
         validation?.attach(to: self)
 
         return self
@@ -152,14 +174,11 @@ public extension Observable {
     @discardableResult
     public func addValidationRule<Validator: ValidationRule>(_ rule: Validator) -> Observable where Validator.Data == Value  {
         addValidation().validation?.addRule(rule)
-
-        validation?.detach(from: self)
-        validation?.attach(to: self)
         return self
     }
 
     public func removeValidation() {
-        validation?.detach(from: self)
+        validation?.detach()
         validation = nil
     }
 }

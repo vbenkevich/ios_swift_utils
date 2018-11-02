@@ -12,17 +12,13 @@ import JetLib
 
 class BindingControllerViewModel: ViewModel {
 
-    var property = Observable("")
-        .addThrottling(DispatchTimeInterval.milliseconds(500))
+    var property = Observable<String>(nil)
+        .addThrottling(DispatchTimeInterval.milliseconds(200))
         .addValidation(mode: .onValueChanged)
         .addValidationRule(PropertyValidator())
 
     override func viewWillAppear(_ animated: Bool) {
-        property.value = "viewWillAppear"
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        property.value = "viewDidAppear"
+        property.value = nil
     }
 
     struct PropertyValidator: ValidationRule {
@@ -48,6 +44,8 @@ class BindingSampleController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        add(viewModel)
 
         try! textField.bind(to: viewModel.property).with(errorPresenter: errorLabel)
         try! titleLabel.bind(to: viewModel.property)
