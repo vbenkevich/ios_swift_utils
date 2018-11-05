@@ -71,17 +71,10 @@ public class Observable<Value: Equatable> {
 
     fileprivate class TargetWrapperAbstract {
 
-        var isAlive: Bool {
-            preconditionFailure("abstr")
-        }
-
-        func same(with object: AnyObject) -> Bool {
-            preconditionFailure("abstr")
-        }
-
-        func setValue(_ value: Value?) {
-            preconditionFailure("abstr")
-        }
+        var isAlive: Bool { return false }
+        
+        func same(with object: AnyObject) -> Bool { return false }
+        func setValue(_ value: Value?) {}
     }
 
     fileprivate class TargetWrapper<Target: AnyObject>: TargetWrapperAbstract {

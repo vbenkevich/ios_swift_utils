@@ -63,6 +63,7 @@
 		BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */; };
 		BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2512218CD7DF00F68E96 /* Binding.swift */; };
 		BAF27E8F219046AA0075B6F1 /* ViewModelUpdatingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF27E8E219046AA0075B6F1 /* ViewModelUpdatingTests.swift */; };
+		BAF27E9321906E390075B6F1 /* BindingValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +145,7 @@
 		BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BindingTarget+Validation.swift"; sourceTree = "<group>"; };
 		BAED2512218CD7DF00F68E96 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		BAF27E8E219046AA0075B6F1 /* ViewModelUpdatingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelUpdatingTests.swift; sourceTree = "<group>"; };
+		BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingValidationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,6 +373,7 @@
 			children = (
 				BACD957F21775E94008396D5 /* ObservableTests.swift */,
 				BAA652D7218AFD2900E4BDC3 /* BindingTargetTests.swift */,
+				BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */,
 			);
 			path = DataBindings;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				BAA652D8218AFD2900E4BDC3 /* BindingTargetTests.swift in Sources */,
 				BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */,
 				BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */,
+				BAF27E9321906E390075B6F1 /* BindingValidationTests.swift in Sources */,
 				BAF27E8F219046AA0075B6F1 /* ViewModelUpdatingTests.swift in Sources */,
 				BAC4451921357BEC005AB974 /* TestError.swift in Sources */,
 				BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */,

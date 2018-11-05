@@ -61,7 +61,6 @@ public class ObservableValueValidation<Value: Equatable>: Invalidatable {
     private var validationRules: [(Value?) -> ValidationResult] = []
     private var stateObserver = Observable(ValidationResult())
 
-
     private weak var valueSource: Observable<Value>? {
         didSet {
             guard oldValue !== valueSource else {
@@ -163,7 +162,7 @@ public extension Observable {
         validation = validation ?? ObservableValueValidation()
 
         if let mode = mode {
-            validation?.mode = mode
+            validation = validation?.mode(mode)
         }
 
         validation?.attach(to: self)

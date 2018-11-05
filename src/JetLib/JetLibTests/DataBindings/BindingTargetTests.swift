@@ -36,20 +36,17 @@ class BindingTargetTests: XCTestCase {
         let newText = "Test text 2"
         let field = UITextField()
         let observable = Observable(text)
-        let exp = expectation(description: "binding triggered")
 
         try! field.bind(to: observable, mode: BindingMode.oneWay)
         XCTAssertEqual(text, field.text)
         XCTAssertEqual(text, observable.value)
 
         observable.value = newText
-        DispatchQueue.main.async {
-            XCTAssertEqual(newText, field.text)
-            XCTAssertEqual(newText, observable.value)
-            exp.fulfill()
-        }
 
-        wait(exp)
+        sync()
+
+        XCTAssertEqual(newText, field.text)
+        XCTAssertEqual(newText, observable.value)
     }
 
     func testTwoWay() {
@@ -58,22 +55,20 @@ class BindingTargetTests: XCTestCase {
         let newText2 = "Test text 2"
         let field = UITextField()
         let observable = Observable(text)
-        let exp = expectation(description: "binding triggered")
 
         try! field.bind(to: observable, mode: BindingMode.twoWay)
         XCTAssertEqual(text, field.text)
         XCTAssertEqual(text, observable.value)
 
         observable.value = newText
-        DispatchQueue.main.async {
-            XCTAssertEqual(newText, field.text)
-            XCTAssertEqual(newText, observable.value)
-            exp.fulfill()
-        }
 
-        wait(exp)
+        sync()
+
+        XCTAssertEqual(newText, field.text)
+        XCTAssertEqual(newText, observable.value)
 
         field.text = newText2
+
         XCTAssertEqual(newText2, field.text)
         XCTAssertEqual(newText2, observable.value)
     }

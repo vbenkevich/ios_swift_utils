@@ -60,12 +60,12 @@ public extension BindingError {
 
 extension UILabel: ErrorPresenter {
 
-    public func showError(message: String?) {
+    @objc public func showError(message: String?) {
         text = message
         isHidden = false
     }
 
-    public func hideError() {
+    @objc public func hideError() {
         isHidden = true
     }
 }

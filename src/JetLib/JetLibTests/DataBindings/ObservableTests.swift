@@ -30,6 +30,23 @@ class ObservableTests: XCTestCase {
         wait(notify)
     }
 
+    func testSameValuesOneNotify() {
+        let newValue = "123"
+        let stringObservable = Observable<String>()
+        let notify = expectation(description: "notify")
+
+        stringObservable.notify(self) {
+            XCTAssertEqual($0, self)
+            XCTAssertEqual($1, newValue)
+            notify.fulfill()
+        }
+
+        stringObservable.value = newValue
+        stringObservable.value = newValue
+
+        wait(notify)
+    }
+
     func testNotifyManyListeners() {
         let newValue = "1234"
         let stringObservable = Observable<String>()
@@ -80,11 +97,10 @@ class ObservableTests: XCTestCase {
 
     func testThrottling() {
         let values = [1, 2, 3, 4, 5, 6]
-        let observable = Observable(0)
+        let observable = Observable(0).addThrottling(.milliseconds(100))
+
         let notify = expectation(description: "notify")
         notify.expectedFulfillmentCount = 1
-
-        observable.throttling = .milliseconds(100)
 
         observable.notify(self) {
             XCTAssertEqual($1, values.last!)
