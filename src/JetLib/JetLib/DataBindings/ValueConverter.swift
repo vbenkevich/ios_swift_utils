@@ -12,3 +12,4 @@ public protocol ValueConverter {
     func convertForward(_ value: From?) -> To?
     func convertBack(_ value: To?) -> From?
 }
+

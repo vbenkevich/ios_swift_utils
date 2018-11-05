@@ -16,18 +16,4 @@ extension SpinLock {
     mutating func unlock() {
         os_unfair_lock_unlock(&self)
     }
-
-    mutating func sync(block: () -> Void) {
-        lock()
-        block()
-        unlock()
-    }
-
-    mutating func sync<T>(block: () -> T) -> T {
-        lock()
-        defer {
-            unlock()
-        }
-        return block()
-    }
 }

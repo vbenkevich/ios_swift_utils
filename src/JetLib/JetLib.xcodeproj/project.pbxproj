@@ -30,6 +30,7 @@
 		BA66668A2163C3940004D41B /* ViewLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666892163C3940004D41B /* ViewLifecycleTests.swift */; };
 		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
 		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
+		BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7BF569218CB20000647286 /* Observable+Validation.swift */; };
 		BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDF7211C954000C81653 /* Task+Source.swift */; };
 		BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFA211C95C700C81653 /* Task+Status.swift */; };
 		BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */; };
@@ -59,6 +60,10 @@
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
 		BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */; };
 		BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE6485721384CC9000BB449 /* XCTestCase.swift */; };
+		BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */; };
+		BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2512218CD7DF00F68E96 /* Binding.swift */; };
+		BAF27E8F219046AA0075B6F1 /* ViewModelUpdatingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF27E8E219046AA0075B6F1 /* ViewModelUpdatingTests.swift */; };
+		BAF27E9321906E390075B6F1 /* BindingValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +109,7 @@
 		BA6666892163C3940004D41B /* ViewLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLifecycleTests.swift; sourceTree = "<group>"; };
 		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
 		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
+		BA7BF569218CB20000647286 /* Observable+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Validation.swift"; sourceTree = "<group>"; };
 		BA7CEDF7211C954000C81653 /* Task+Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Source.swift"; sourceTree = "<group>"; };
 		BA7CEDFA211C95C700C81653 /* Task+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Status.swift"; sourceTree = "<group>"; };
 		BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSourceTests.swift; sourceTree = "<group>"; };
@@ -136,6 +142,10 @@
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
 		BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonCommandTests.swift; sourceTree = "<group>"; };
 		BAE6485721384CC9000BB449 /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
+		BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BindingTarget+Validation.swift"; sourceTree = "<group>"; };
+		BAED2512218CD7DF00F68E96 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		BAF27E8E219046AA0075B6F1 /* ViewModelUpdatingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelUpdatingTests.swift; sourceTree = "<group>"; };
+		BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingValidationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				BA6666852163850B0004D41B /* ViewModelTests.swift */,
+				BAF27E8E219046AA0075B6F1 /* ViewModelUpdatingTests.swift */,
 				BA6666892163C3940004D41B /* ViewLifecycleTests.swift */,
 			);
 			path = Mvvm;
@@ -294,8 +305,11 @@
 			isa = PBXGroup;
 			children = (
 				BACD957C21763AED008396D5 /* Observable.swift */,
+				BA7BF569218CB20000647286 /* Observable+Validation.swift */,
 				BAA652D5218A127200E4BDC3 /* ValueConverter.swift */,
+				BAED2512218CD7DF00F68E96 /* Binding.swift */,
 				BAA652D3218A124200E4BDC3 /* BindingTarget.swift */,
+				BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */,
 				BAA652D12189DBEA00E4BDC3 /* UIControls+BindingTarget.swift */,
 			);
 			path = DataBindings;
@@ -359,6 +373,7 @@
 			children = (
 				BACD957F21775E94008396D5 /* ObservableTests.swift */,
 				BAA652D7218AFD2900E4BDC3 /* BindingTargetTests.swift */,
+				BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */,
 			);
 			path = DataBindings;
 			sourceTree = "<group>";
@@ -442,10 +457,11 @@
 				TargetAttributes = {
 					BA54B81B210B70DF00A5F22F = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1010;
 					};
 					BA54B824210B70E000A5F22F = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1010;
 						TestTargetID = BAA652BB2188B77400E4BDC3;
 					};
 					BAA652BB2188B77400E4BDC3 = {
@@ -518,11 +534,14 @@
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
 				BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */,
+				BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
+				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
 				BA6666812163711D0004D41B /* View.swift in Sources */,
+				BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
@@ -544,6 +563,8 @@
 				BAA652D8218AFD2900E4BDC3 /* BindingTargetTests.swift in Sources */,
 				BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */,
 				BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */,
+				BAF27E9321906E390075B6F1 /* BindingValidationTests.swift in Sources */,
+				BAF27E8F219046AA0075B6F1 /* ViewModelUpdatingTests.swift in Sources */,
 				BAC4451921357BEC005AB974 /* TestError.swift in Sources */,
 				BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */,
 				BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */,
@@ -745,7 +766,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -770,7 +791,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jetlib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -789,7 +810,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jetlib-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fakeTestApp.app/fakeTestApp";
 			};
@@ -809,7 +830,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jetlib-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fakeTestApp.app/fakeTestApp";
 			};

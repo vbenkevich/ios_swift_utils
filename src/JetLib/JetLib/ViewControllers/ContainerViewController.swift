@@ -24,18 +24,18 @@ open class ContainerViewController: UIViewController, ControllerPresenter {
                 }
             }
 
-            oldValue?.willMove(toParentViewController: nil)
+            oldValue?.willMove(toParent: nil)
 
             if let newValue = currentController {
-                addChildViewController(newValue)
+                addChild(newValue)
                 newValue.view.frame = view.bounds
                 view.addSubview(newValue.view)
             }
             title = currentController?.title
             oldValue?.view.removeFromSuperview()
 
-            oldValue?.removeFromParentViewController()
-            currentController?.didMove(toParentViewController: self)
+            oldValue?.removeFromParent()
+            currentController?.didMove(toParent: self)
         }
     }
 }

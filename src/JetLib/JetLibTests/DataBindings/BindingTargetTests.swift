@@ -43,6 +43,8 @@ class BindingTargetTests: XCTestCase {
 
         observable.value = newText
 
+        sync()
+
         XCTAssertEqual(newText, field.text)
         XCTAssertEqual(newText, observable.value)
     }
@@ -59,11 +61,33 @@ class BindingTargetTests: XCTestCase {
         XCTAssertEqual(text, observable.value)
 
         observable.value = newText
+
+        sync()
+
         XCTAssertEqual(newText, field.text)
         XCTAssertEqual(newText, observable.value)
 
         field.text = newText2
+
         XCTAssertEqual(newText2, field.text)
         XCTAssertEqual(newText2, observable.value)
+    }
+
+    func testUpdateObservableErrors() {
+        let observable = Observable("100500")
+        let field = UITextField()
+        let label = UILabel()
+
+        XCTAssertThrowsError(try field.bind(to: observable, mode: .updateObservable, convert: {$0}, convertBack: nil))
+        XCTAssertThrowsError(try label.bind(to: observable, mode: .updateObservable))
+        XCTAssertThrowsError(try field.bind(to: observable, mode: .immediatelyUpdateObservable, convert: {$0}, convertBack: nil))
+        XCTAssertThrowsError(try label.bind(to: observable, mode: .immediatelyUpdateObservable))
+    }
+
+    func testDefaultBindingModes() {
+        let observable = Observable("100500")
+        
+        XCTAssertEqual(try! UITextField().bind(to: observable).mode, BindingMode.twoWay)
+        XCTAssertEqual(try! UILabel().bind(to: observable).mode, BindingMode.oneWay)
     }
 }

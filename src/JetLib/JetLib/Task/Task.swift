@@ -120,3 +120,17 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         try linked?.cancel()
     }
 }
+
+public extension Task {
+
+    static func cancelled() -> Task {
+        return Task(status: .cancelled)
+    }
+}
+
+public extension Task where T == Void {
+
+    convenience init() {
+        self.init(Void())
+    }
+}
