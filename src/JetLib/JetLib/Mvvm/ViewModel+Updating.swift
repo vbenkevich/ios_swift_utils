@@ -12,7 +12,7 @@ public protocol UpdateInitiator: class {
 
     func updateCompleted()
 
-    func updateAborted()
+    func updateNotStarted()
 }
 
 public protocol Updatable {
@@ -37,7 +37,7 @@ public extension ViewModel {
 extension ViewModel: UpdateInitiator {
 
     @objc
-    open func updateAborted() {
+    open func updateNotStarted() {
     }
 
     @objc
@@ -53,7 +53,7 @@ extension ViewModel: Updatable {
 
     public func dataUpdateRequested(initiator: UpdateInitiator) {
         guard canLoadData else {
-            initiator.updateAborted()
+            initiator.updateNotStarted()
             return
         }
 
@@ -75,7 +75,7 @@ extension DispatchGroup: UpdateInitiator {
         self.leave()
     }
 
-    public func updateAborted() {
+    public func updateNotStarted() {
     }
 }
 
@@ -89,7 +89,38 @@ extension UIRefreshControl: UpdateInitiator {
         self.endRefreshing()
     }
 
-    public func updateAborted() {
+    public func updateNotStarted() {
         self.endRefreshing()
+    }
+}
+
+extension Array: Updatable where Element == Updatable {
+
+    public func dataUpdateRequested(initiator: UpdateInitiator) {
+        guard initiator.associatedGroup == nil else {
+            return
+        }
+        let group = DispatchGroup()
+        initiator.associatedGroup = group
+
+        initiator.updateStarted()
+
+        for updatable in self {
+            updatable.dataUpdateRequested(initiator: group)
+        }
+
+        group.notify(queue: DispatchQueue.main) {
+            initiator.updateCompleted()
+        }
+    }
+}
+
+private var updateInitiatorKey = 0
+
+private extension UpdateInitiator {
+
+    var associatedGroup: DispatchGroup? {
+        get { return objc_getAssociatedObject(self, &updateInitiatorKey) as? DispatchGroup }
+        set { objc_setAssociatedObject(self, &updateInitiatorKey, newValue, .OBJC_ASSOCIATION_ASSIGN) }
     }
 }
