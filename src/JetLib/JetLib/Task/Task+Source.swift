@@ -5,6 +5,8 @@
 
 import Foundation
 
+public typealias TaskCompletionSource<T> = Task<T>.Source
+
 public extension Task {
 
     public class Source {
@@ -34,5 +36,12 @@ public extension Task {
             try task.setStatus(status)
             workItem.perform()
         }
+    }
+}
+
+public extension Task.Source where T == Void {
+
+    func complete() throws {
+        try self.complete(Void())
     }
 }
