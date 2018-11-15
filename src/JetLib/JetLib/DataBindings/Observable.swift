@@ -29,6 +29,8 @@ public class Observable<Value: Equatable> {
 
     public var throttling: DispatchTimeInterval?
 
+    var retainObjets: [AnyObject] = []
+
     fileprivate var fireNotificationWorkItem: DispatchWorkItem? {
         didSet {
             oldValue?.cancel()

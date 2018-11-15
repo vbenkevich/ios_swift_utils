@@ -78,7 +78,7 @@ class ObservableTests: XCTestCase {
 
         let target = Target()
 
-        observable.notify(target, queue) {
+        observable.notify(target, fireRightNow: false, queue) {
             XCTAssertEqual(target.expected[target.counter], $1)
             $0.counter += 1
             semaphore.signal()
@@ -129,4 +129,79 @@ class ObservableTests: XCTestCase {
         XCTAssertNil(targetWeak)
         observable.value = 10
     }
+
+    func testMergeObservablesInitialValueTest() {
+        let first = Observable<String>()
+        let second = Observable<Int>()
+        let notify = expectation(description: "merged")
+        let expected = Res(first: nil, second: nil)
+
+        let merged = first.merge(with: second).notify(self, fireRightNow: true) { _, mergedResult in
+            XCTAssertEqual(expected, mergedResult)
+            notify.fulfill()
+        }
+
+        wait(notify)
+    }
+
+    func testMergeObservablesUpdatesSequence() {
+        let first = Observable<String>()
+        let second = Observable<Int>()
+        let notify = [expectation(description: "first upd"),
+                      expectation(description: "second upd"),
+                      expectation(description: "second upd2")]
+        var index = 0
+        var expected = Res(first: nil, second: nil)
+
+        let merged = first.merge(with: second).notify(self, fireRightNow: false) { _, mergedResult in
+            XCTAssertEqual(expected, mergedResult)
+            notify[index].fulfill()
+            index += 1
+        }
+
+        expected = Res(first: "test value", second: expected.second)
+        first.value = expected.first
+
+        wait(notify[index])
+
+        expected = Res(first: expected.first, second: 123)
+        second.value = expected.second
+
+        wait(notify[index])
+
+        expected = Res(first: expected.first, second: 321)
+        second.value = expected.second
+
+        wait(notify[index])
+    }
+
+    func testMergeObservablesRetainSelf() {
+        var first: Observable<String>! = Observable<String>()
+        var second: Observable<Int>! = Observable<Int>()
+        weak var firstRef = first
+        weak var secondRef = second
+
+        let merged = first?.merge(with: second, retainSelf: true, retainAnoher: false)
+        first = nil
+        second = nil
+
+        XCTAssertNotNil(firstRef)
+        XCTAssertNil(secondRef)
+    }
+
+    func testMergeObservablesRetainAnother() {
+        var first: Observable<String>! = Observable<String>()
+        var second: Observable<Int>! = Observable<Int>()
+        weak var firstRef = first
+        weak var secondRef = second
+
+        let merged = first?.merge(with: second, retainSelf: false, retainAnoher: true)
+        first = nil
+        second = nil
+
+        XCTAssertNil(firstRef)
+        XCTAssertNotNil(secondRef)
+    }
 }
+
+private typealias Res = Observable<String>.Merged<Int>
