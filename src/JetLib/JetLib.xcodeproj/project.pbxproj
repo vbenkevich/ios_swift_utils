@@ -55,6 +55,7 @@
 		BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC820222111F0AF0011DCF3 /* TaskExecutionTests.swift */; };
 		BACD957D21763AED008396D5 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACD957C21763AED008396D5 /* Observable.swift */; };
 		BACD958021775E94008396D5 /* ObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACD957F21775E94008396D5 /* ObservableTests.swift */; };
+		BAD07B2F219E10D4003111E9 /* Observable+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07B2E219E10D4003111E9 /* Observable+Merge.swift */; };
 		BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA7217001D500F0B451 /* AsyncCommand.swift */; };
 		BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */; };
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
@@ -137,6 +138,7 @@
 		BAC820222111F0AF0011DCF3 /* TaskExecutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExecutionTests.swift; sourceTree = "<group>"; };
 		BACD957C21763AED008396D5 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		BACD957F21775E94008396D5 /* ObservableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTests.swift; sourceTree = "<group>"; };
+		BAD07B2E219E10D4003111E9 /* Observable+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Merge.swift"; sourceTree = "<group>"; };
 		BAD07BA7217001D500F0B451 /* AsyncCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommand.swift; sourceTree = "<group>"; };
 		BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommandTests.swift; sourceTree = "<group>"; };
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 			children = (
 				BACD957C21763AED008396D5 /* Observable.swift */,
 				BA7BF569218CB20000647286 /* Observable+Validation.swift */,
+				BAD07B2E219E10D4003111E9 /* Observable+Merge.swift */,
 				BAA652D5218A127200E4BDC3 /* ValueConverter.swift */,
 				BAED2512218CD7DF00F68E96 /* Binding.swift */,
 				BAA652D3218A124200E4BDC3 /* BindingTarget.swift */,
@@ -548,6 +551,7 @@
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
 				BAA652D4218A124200E4BDC3 /* BindingTarget.swift in Sources */,
 				BACD957D21763AED008396D5 /* Observable.swift in Sources */,
+				BAD07B2F219E10D4003111E9 /* Observable+Merge.swift in Sources */,
 				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,
 				BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */,
 				BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */,

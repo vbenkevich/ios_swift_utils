@@ -33,7 +33,9 @@ class BindingValidationTests: XCTestCase {
         try! field.bind(to: observable)
             .with(errorPresenter: errorLabel)
 
-        errorLabel.onHideError = { correct.fulfill() }
+        errorLabel.onHideError = {
+            correct.fulfill()
+        }
 
         wait(correct)
 

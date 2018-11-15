@@ -54,7 +54,7 @@ public extension BindingTarget {
         }
 
         if mode.contains(.updateTarget) {
-            observable.notify(self, callBack: setter)
+            observable.notify(self, fireRightNow: false, callBack: setter)
         }
 
         if mode.contains(.updateObservable) {
