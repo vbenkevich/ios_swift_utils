@@ -19,7 +19,7 @@ class ObservableTests: XCTestCase {
         let stringObservable = Observable<String>()
         let notify = expectation(description: "notify")
 
-        stringObservable.notify(self) {
+        stringObservable.notify(self, fireRightNow: false) {
             XCTAssertEqual($0, self)
             XCTAssertEqual($1, newValue)
             notify.fulfill()
@@ -35,7 +35,7 @@ class ObservableTests: XCTestCase {
         let stringObservable = Observable<String>()
         let notify = expectation(description: "notify")
 
-        stringObservable.notify(self) {
+        stringObservable.notify(self, fireRightNow: false) {
             XCTAssertEqual($0, self)
             XCTAssertEqual($1, newValue)
             notify.fulfill()
@@ -51,13 +51,13 @@ class ObservableTests: XCTestCase {
         let newValue = "1234"
         let stringObservable = Observable<String>()
         let notify = expectation(description: "notify")
-        notify.expectedFulfillmentCount = 2
+        notify.expectedFulfillmentCount = 3
 
-        stringObservable.notify(self) { _,_ in
+        stringObservable.notify(self, fireRightNow: false) { _,_ in
             notify.fulfill()
         }
 
-        stringObservable.notify(self) { _,_ in
+        stringObservable.notify(self, fireRightNow: true) { _,_ in
             notify.fulfill()
         }
 
@@ -102,7 +102,7 @@ class ObservableTests: XCTestCase {
         let notify = expectation(description: "notify")
         notify.expectedFulfillmentCount = 1
 
-        observable.notify(self) {
+        observable.notify(self, fireRightNow: false) {
             XCTAssertEqual($1, values.last!)
             notify.fulfill()
         }
@@ -121,7 +121,7 @@ class ObservableTests: XCTestCase {
         var targetStrong: Target! = Target()
         weak var targetWeak = targetStrong
 
-        observable.notify(targetStrong, callBack: { _, _ in
+        observable.notify(targetStrong, fireRightNow: false, callBack: { _, _ in
             XCTFail()
         })
 

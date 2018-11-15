@@ -119,8 +119,7 @@ public class ObservableValueValidation<Value: Equatable>: Invalidatable {
 
     @discardableResult
     public func notify<Target: AnyObject>(_ target: Target, _ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Target, ValidationResult?) -> Void) -> ObservableValueValidation<Value> {
-        stateObserver.notify(target, queue, callBack: callBack)
-
+        stateObserver.notify(target, fireRightNow: false, queue, callBack: callBack)
         callBack(target, result)
 
         return self

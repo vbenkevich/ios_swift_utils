@@ -47,7 +47,11 @@ public class Observable<Value: Equatable> {
     fileprivate var targets = [TargetWrapperAbstract]()
 
     @discardableResult
-    public func notify<Target: AnyObject>(_ target: Target, _ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Target, Value?) -> Void) -> Observable {
+    public func notify<Target: AnyObject>(_ target: Target, fireRightNow: Bool = true, _ queue: DispatchQueue = DispatchQueue.main, callBack: @escaping (Target, Value?) -> Void) -> Observable {
+        if fireRightNow {
+            queue.async { [value] in callBack(target, value) }
+        }
+
         targets.append(TargetWrapper(target, setter: callBack, queue: queue))
         return self
     }
