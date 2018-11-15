@@ -113,6 +113,26 @@ class ViewModelUpdatingTests: XCTestCase {
         wait(completed)
     }
 
+    func testDispatchGroupAsUpdateInitiatorSecondUpdateDoesntCrash() {
+        let completed1 = expectation(description: "completed1")
+        let completed2 = expectation(description: "completed2")
+
+        initiator.started = { }
+        initiator.completed = { completed1.fulfill() }
+        initiator.aborted = { }
+
+        let secondViewModel = TestViewModel()
+        secondViewModel.loadingTask = Task()
+        viewModel.loadingTask = Task()
+
+        [viewModel, secondViewModel].dataUpdateRequested(initiator: initiator)
+        wait(completed1)
+
+        initiator.completed = { completed2.fulfill() }
+        [viewModel, secondViewModel].dataUpdateRequested(initiator: initiator)
+        wait(completed2)
+    }
+
     func testRefreshControl() {
         let control = TestUIRefreshControl()
         let begin = expectation(description: "started")

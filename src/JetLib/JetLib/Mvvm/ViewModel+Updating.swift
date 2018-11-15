@@ -111,6 +111,7 @@ extension Array: Updatable where Element == Updatable {
 
         group.notify(queue: DispatchQueue.main) {
             initiator.updateCompleted()
+            initiator.associatedGroup = nil
         }
     }
 }
@@ -121,6 +122,6 @@ private extension UpdateInitiator {
 
     var associatedGroup: DispatchGroup? {
         get { return objc_getAssociatedObject(self, &updateInitiatorKey) as? DispatchGroup }
-        set { objc_setAssociatedObject(self, &updateInitiatorKey, newValue, .OBJC_ASSOCIATION_ASSIGN) }
+        set { objc_setAssociatedObject(self, &updateInitiatorKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
     }
 }
