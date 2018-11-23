@@ -6,9 +6,10 @@
 import Foundation
 import UIKit
 
-open class SlideMenu {
+open class SlideMenu: NSObject {
 
-    public init() {
+    public override init() {
+        super.init()
         slideGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePanGesture))
             .set(edges: .left)
     }
