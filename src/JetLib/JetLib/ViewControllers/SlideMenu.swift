@@ -1,30 +1,36 @@
 //
-//  Created on 29/09/2018
+//  Created on 23/11/2018
 //  Copyright © Vladimir Benkevich 2018
 //
 
+import Foundation
 import UIKit
 
-public protocol MenuController {
+open class SlideMenu {
 
-    var presenter: ControllerPresenter? { get set }
-}
+    public init() {
+        slideGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+            .set(edges: .left)
+    }
 
-open class SlideMenuViewController: ContainerViewController {
-
-    open var menuController: (UIViewController & MenuController)! {
+    public var hostController: UIViewController? {
         didSet {
-            menuController?.presenter = self
+            if let gesture = slideGesture {
+                oldValue?.view.removeGestureRecognizer(gesture)
+                hostController?.view.addGestureRecognizer(gesture)
+            }
         }
     }
 
-    public var panMenuFromLeft: Bool = true {
+    public var menuController: UIViewController!
+
+    public var slideGesture: UIScreenEdgePanGestureRecognizer? {
         didSet {
-            if panMenuFromLeft {
-                edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePanGesture))
-                edgePanGesture?.edges = .left
-            } else {
-                edgePanGesture = nil
+            if let old = oldValue {
+                hostController?.view.removeGestureRecognizer(old)
+            }
+            if let gesture = slideGesture {
+                hostController?.view.addGestureRecognizer(gesture)
             }
         }
     }
@@ -50,8 +56,7 @@ open class SlideMenuViewController: ContainerViewController {
     }
 
     public var menuSize: CGSize {
-        loadViewIfNeeded()
-        return menuTransitioningDelegate.menuSize(for: view.bounds.size)
+        return menuTransitioningDelegate.menuSize(for: hostController!.view.bounds.size)
     }
 
     fileprivate var menuTransitioningDelegate = TransitioningDelegate()
@@ -61,39 +66,15 @@ open class SlideMenuViewController: ContainerViewController {
         set { menuTransitioningDelegate.interactivePresent = newValue }
     }
 
-    fileprivate var edgePanGesture: UIScreenEdgePanGestureRecognizer? {
-        didSet {
-            guard isViewLoaded else {
-                return
-            }
-
-            if let old = oldValue {
-                view.removeGestureRecognizer(old)
-            }
-
-            if let new = edgePanGesture {
-                view.addGestureRecognizer(new)
-            }
-        }
-    }
-
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-
-        if let panGesture = edgePanGesture {
-            view.addGestureRecognizer(panGesture)
-        }
-    }
-
-    public func showMenu(completion: (() -> Void)? = nil) {
+    public func show(animated: Bool = true, completion: (() -> Void)? = nil) {
         menuController.modalPresentationStyle = .custom
         menuController.transitioningDelegate = menuTransitioningDelegate
 
-        present(menuController, animated: true, completion: completion)
+        hostController!.present(menuController, animated: true, completion: completion)
     }
 
-    public func hideMenu() {
-        menuController.dismiss(animated: true)
+    public func hide(animated: Bool = true, completion: (() -> Void)? = nil) {
+        menuController.dismiss(animated: animated, completion: completion)
     }
 
     @objc func handlePanGesture(gesture: UIScreenEdgePanGestureRecognizer) {
@@ -103,12 +84,13 @@ open class SlideMenuViewController: ContainerViewController {
             $0.x
         }, beginTransition: {
             self.interativePresent = UIPercentDrivenInteractiveTransition()
-            self.showMenu { self.interativePresent = nil }
+            self.show { self.interativePresent = nil }
         })
     }
 }
 
-extension SlideMenuViewController {
+
+extension SlideMenu {
 
     class TransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
@@ -306,6 +288,14 @@ extension SlideMenuViewController {
                 self.presentedViewController.dismiss(animated: true) { self.interactiveTransition = nil }
             })
         }
+    }
+}
+
+extension UIScreenEdgePanGestureRecognizer {
+
+    func set(edges: UIRectEdge) -> UIScreenEdgePanGestureRecognizer {
+        self.edges = edges
+        return self
     }
 }
 

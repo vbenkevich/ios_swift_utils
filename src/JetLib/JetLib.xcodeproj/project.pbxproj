@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BA0845342168F1A6009DDB72 /* JetLib.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA0845332168F1A5009DDB72 /* JetLib.podspec */; };
 		BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2043DC212D896000343D45 /* HttpResponse.swift */; };
-		BA436E74215FCE19000A59D1 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E73215FCE19000A59D1 /* SlideMenuViewController.swift */; };
 		BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */; };
 		BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */; };
 		BA4E95BB212F1B64009B2154 /* HttpClient+Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4E95BA212F1B64009B2154 /* HttpClient+Json.swift */; };
@@ -60,6 +59,7 @@
 		BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */; };
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
 		BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */; };
+		BADE86F421A828D600282B1B /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE86F321A828D600282B1B /* SlideMenu.swift */; };
 		BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE6485721384CC9000BB449 /* XCTestCase.swift */; };
 		BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */; };
 		BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2512218CD7DF00F68E96 /* Binding.swift */; };
@@ -87,7 +87,6 @@
 /* Begin PBXFileReference section */
 		BA0845332168F1A5009DDB72 /* JetLib.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = JetLib.podspec; path = ../../../JetLib.podspec; sourceTree = "<group>"; };
 		BA2043DC212D896000343D45 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
-		BA436E73215FCE19000A59D1 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
 		BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Requests.swift"; sourceTree = "<group>"; };
 		BA4E95BA212F1B64009B2154 /* HttpClient+Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Json.swift"; sourceTree = "<group>"; };
@@ -143,6 +142,7 @@
 		BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommandTests.swift; sourceTree = "<group>"; };
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
 		BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonCommandTests.swift; sourceTree = "<group>"; };
+		BADE86F321A828D600282B1B /* SlideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		BAE6485721384CC9000BB449 /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
 		BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BindingTarget+Validation.swift"; sourceTree = "<group>"; };
 		BAED2512218CD7DF00F68E96 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */,
-				BA436E73215FCE19000A59D1 /* SlideMenuViewController.swift */,
+				BADE86F321A828D600282B1B /* SlideMenu.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -530,7 +530,6 @@
 				BA4E95BB212F1B64009B2154 /* HttpClient+Json.swift in Sources */,
 				BAA652D6218A127200E4BDC3 /* ValueConverter.swift in Sources */,
 				BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */,
-				BA436E74215FCE19000A59D1 /* SlideMenuViewController.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BAA652D22189DBEA00E4BDC3 /* UIControls+BindingTarget.swift in Sources */,
 				BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */,
@@ -541,6 +540,7 @@
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
+				BADE86F421A828D600282B1B /* SlideMenu.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
 				BA6666812163711D0004D41B /* View.swift in Sources */,

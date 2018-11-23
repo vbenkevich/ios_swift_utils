@@ -9,7 +9,9 @@
 import UIKit
 import JetLib
 
-class SlideMenuSampleController: SlideMenuViewController {
+class SlideMenuSampleController: ContainerViewController {
+
+    var slideMenu = SlideMenu()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,18 +19,18 @@ class SlideMenuSampleController: SlideMenuViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .done, target: self, action: #selector(handleShowMenu))
 
         let menu = MenuListController()
-        menuController = menu
+        menu.presenter = self
+        slideMenu.hostController = self
+        slideMenu.menuController = menu
         currentController = menu.items[0].create()
-
-        panMenuFromLeft = true
     }
 
     @objc func handleShowMenu(_ sender: Any) {
-        self.showMenu()
+        slideMenu.show()
     }
 }
 
-class MenuListController: UITableViewController, MenuController {
+class MenuListController: UITableViewController {
 
     weak var presenter: ControllerPresenter?
 
