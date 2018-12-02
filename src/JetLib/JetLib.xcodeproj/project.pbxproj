@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BA0845342168F1A6009DDB72 /* JetLib.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA0845332168F1A5009DDB72 /* JetLib.podspec */; };
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
+		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
 		BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */; };
 		BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2043DC212D896000343D45 /* HttpResponse.swift */; };
 		BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */; };
@@ -89,6 +90,7 @@
 /* Begin PBXFileReference section */
 		BA0845332168F1A5009DDB72 /* JetLib.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = JetLib.podspec; path = ../../../JetLib.podspec; sourceTree = "<group>"; };
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
+		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
 		BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+TaskStorage.swift"; sourceTree = "<group>"; };
 		BA2043DC212D896000343D45 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				BA6666872163B4EA0004D41B /* UIViewController+View.swift */,
 				BA66667E216371120004D41B /* ViewModel.swift */,
 				BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */,
+				BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */,
 				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
 			);
 			path = Mvvm;
@@ -558,6 +561,7 @@
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
 				BAA652D4218A124200E4BDC3 /* BindingTarget.swift in Sources */,
 				BA18413B21B2D34600253718 /* Exception.swift in Sources */,
+				BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */,
 				BACD957D21763AED008396D5 /* Observable.swift in Sources */,
 				BAD07B2F219E10D4003111E9 /* Observable+Merge.swift in Sources */,
 				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,

@@ -28,7 +28,7 @@ public extension ViewModel {
             return
         }
 
-        cancelAll().notify(queue: DispatchQueue.main) {
+        cancelAll().notify { _ in
             self.dataUpdateRequested(initiator: self)
         }
     }
@@ -59,7 +59,7 @@ extension ViewModel: Updatable {
 
         initiator.updateStarted()
 
-        self.loadData().notify(DispatchQueue.main) { _ in
+        self.startLoadData().notify(DispatchQueue.main) { _ in
             initiator.updateCompleted()
         }
     }
