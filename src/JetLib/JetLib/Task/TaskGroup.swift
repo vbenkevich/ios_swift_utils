@@ -10,7 +10,7 @@ public protocol TaskGroupDelegate: class {
     func taskFinished(group: TaskGroup, task: NotifyCompletion)
 }
 
-public extension Array where Element: NotifyCompletion {
+public extension Array where Element: NotifyCompletion & Cancellable {
 
     func whenAll() -> Task<TaskGroup> {
         return TaskGroup(self).whenAll()
@@ -48,11 +48,11 @@ public extension TaskGroup {
     }
 }
 
-public final class TaskGroup {
+public final class TaskGroup: Cancellable {
 
     private let workQueue = DispatchQueue(label: "taskGroup")
 
-    public init(_ tasks: [NotifyCompletion]) {
+    public init(_ tasks: [NotifyCompletion & Cancellable]) {
         self.tasks = tasks
 
         if tasks.isEmpty {
@@ -66,7 +66,7 @@ public final class TaskGroup {
         subscribe(tasks)
     }
 
-    public let tasks: [NotifyCompletion]
+    public let tasks: [NotifyCompletion & Cancellable]
 
     public weak var delegate: TaskGroupDelegate?
 
@@ -102,12 +102,18 @@ public final class TaskGroup {
         return tcs.task
     }
 
+    public func cancel() {
+        for task in tasks {
+            try? task.cancel()
+        }
+    }
+
     private func onCompleted(_ task: NotifyCompletion) {
         completed += 1
 
         if completed == 1 {
             for tcs in anyQueue! {
-                try! tcs.complete(self)
+                try? tcs.complete(self)
             }
 
             anyQueue = nil
@@ -115,7 +121,7 @@ public final class TaskGroup {
 
         if completed == tasks.count {
             for tcs in allQueue! {
-                try! tcs.complete(self)
+                try? tcs.complete(self)
             }
 
             allQueue = nil

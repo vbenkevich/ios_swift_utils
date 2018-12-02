@@ -17,7 +17,7 @@ public extension HttpClient {
 
     public func request<TResponse: HttpResponse>(_ url: URL, body: Data?, method: String, adapter: URLRequestAdapter?) throws -> Task<TResponse> {
         guard URLComponents(url: url, resolvingAgainstBaseURL: true) != nil else {
-            throw HttpError.badUrlFormat
+            throw HttpException.badUrlFormat
         }
 
         var request = URLRequest(url: url)
@@ -29,7 +29,7 @@ public extension HttpClient {
 
     public func get<TResponse: HttpResponse>(_ url: URL, params: [String: CustomStringConvertible] = [:], adapter: URLRequestAdapter? = nil) throws -> Task<TResponse> {
         guard let old = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            throw HttpError.badUrlFormat
+            throw HttpException.badUrlFormat
         }
 
         var components = old
@@ -38,7 +38,7 @@ public extension HttpClient {
         }
 
         guard let url = components.url else {
-            throw HttpError.badParametersFormat
+            throw HttpException.badParametersFormat
         }
 
         return try self.request(url, body: nil, method: HttpMethod.get, adapter: adapter)

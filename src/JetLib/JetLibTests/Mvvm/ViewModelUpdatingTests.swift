@@ -138,6 +138,8 @@ class ViewModelUpdatingTests: XCTestCase {
         let begin = expectation(description: "started")
         let end = expectation(description: "ended")
 
+        begin.isInverted = true
+
         control.begin = { begin.fulfill() }
         control.end = { end.fulfill() }
 

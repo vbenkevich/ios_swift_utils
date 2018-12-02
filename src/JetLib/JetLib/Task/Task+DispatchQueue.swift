@@ -15,11 +15,11 @@ public extension DispatchQueue {
         case .success(let result):
             return result
         case .cancelled:
-            throw TaskError.taskCancelled
+            throw TaskException.taskAlreadyCancelled
         case .failed(let error):
             throw error
         default:
-            throw TaskError.inconsistentState(message: "Unable to complete task")
+            throw TaskException.cantCompleteTask
         }
     }
 
@@ -34,4 +34,11 @@ public extension DispatchQueue {
         self.asyncAfter(deadline: .now() + interval, execute: task.workItem)
         return task
     }
+}
+
+public class TaskException: Exception {
+
+    static let taskAlreadyCompleted = TaskException("Task has been completed")
+    static let taskAlreadyCancelled = TaskException("Task has been cancelled")
+    static let cantCompleteTask = TaskException("Unable to complete task")
 }

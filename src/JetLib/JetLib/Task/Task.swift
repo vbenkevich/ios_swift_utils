@@ -22,12 +22,11 @@ public extension NotifyCompletion {
     func notify(callBack: @escaping (Self) -> Void) -> Self {
         return notify(DispatchQueue.main, callBack: callBack)
     }
-}
 
-public enum TaskError: Swift.Error {
-
-    case taskCancelled
-    case inconsistentState(message: String)
+    @discardableResult
+    func notify(queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self {
+        return notify(queue, callBack: callBack)
+    }
 }
 
 public final class Task<T>: Cancellable, NotifyCompletion {
@@ -90,7 +89,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         }
 
         guard !_status.isCompleted else {
-            throw TaskError.inconsistentState(message: "task has completed state")
+            throw TaskException.taskAlreadyCompleted
         }
 
         _status = status
