@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BA0845342168F1A6009DDB72 /* JetLib.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA0845332168F1A5009DDB72 /* JetLib.podspec */; };
+		BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */; };
 		BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2043DC212D896000343D45 /* HttpResponse.swift */; };
 		BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */; };
 		BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */; };
@@ -86,6 +87,7 @@
 
 /* Begin PBXFileReference section */
 		BA0845332168F1A5009DDB72 /* JetLib.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = JetLib.podspec; path = ../../../JetLib.podspec; sourceTree = "<group>"; };
+		BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+TaskStorage.swift"; sourceTree = "<group>"; };
 		BA2043DC212D896000343D45 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Requests.swift"; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				BA6666802163711D0004D41B /* View.swift */,
 				BA6666872163B4EA0004D41B /* UIViewController+View.swift */,
 				BA66667E216371120004D41B /* ViewModel.swift */,
+				BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */,
 				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
 			);
 			path = Mvvm;
@@ -530,6 +533,7 @@
 				BA4E95BB212F1B64009B2154 /* HttpClient+Json.swift in Sources */,
 				BAA652D6218A127200E4BDC3 /* ValueConverter.swift in Sources */,
 				BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */,
+				BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BAA652D22189DBEA00E4BDC3 /* UIControls+BindingTarget.swift in Sources */,
 				BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */,
