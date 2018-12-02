@@ -192,7 +192,12 @@ class ViewModelTests: XCTestCase {
 
         viewModel.viewWillAppear(true)
         viewModel.viewDidDisappear(true)
+
         wait(completed)
+        XCTAssert(task.isCancelled)
+
+        viewModel.cleanTasks()
+        viewModel.addTask(Task(execute: { return 123 }))
         viewModel.viewWillAppear(true)
 
         XCTAssertEqual(viewModel.loadDataCallCount, 2)
