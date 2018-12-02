@@ -113,7 +113,7 @@ public final class TaskGroup: Cancellable {
 
         if completed == 1 {
             for tcs in anyQueue! {
-                try! tcs.complete(self)
+                try? tcs.complete(self)
             }
 
             anyQueue = nil
@@ -121,7 +121,7 @@ public final class TaskGroup: Cancellable {
 
         if completed == tasks.count {
             for tcs in allQueue! {
-                try! tcs.complete(self)
+                try? tcs.complete(self)
             }
 
             allQueue = nil
