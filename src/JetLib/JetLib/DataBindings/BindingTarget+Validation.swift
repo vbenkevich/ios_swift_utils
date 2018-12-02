@@ -18,7 +18,7 @@ public extension Binding {
     @discardableResult
     func with(errorPresenter: ErrorPresenter) throws -> Binding {
         guard let validation = observable.validation else {
-            throw BindingError.noValidationAtObservable
+            throw Exception.noValidationAtObservable
         }
 
         target.errorPresenter = errorPresenter
@@ -53,11 +53,6 @@ public extension BindingTarget {
     }
 }
 
-public extension BindingError {
-
-    public static let noValidationAtObservable = BindingError(message: "Observable has no validation. Call observable.withValidation() or observable.addValidationRule() before setting ErrorPresenter")
-}
-
 extension UILabel: ErrorPresenter {
 
     @objc public func showError(message: String?) {
@@ -72,4 +67,9 @@ extension UILabel: ErrorPresenter {
 
 private struct AssociatedKeys {
     static var errorPresenterKey = 0
+}
+
+private extension Exception {
+
+    static let noValidationAtObservable = Exception("Observable has no validation. Call observable.withValidation() or observable.addValidationRule() before setting ErrorPresenter")
 }

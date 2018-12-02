@@ -5,20 +5,6 @@
 
 import Foundation
 
-public class HttpError: Swift.Error, CustomStringConvertible {
-
-    public static let badUrlFormat = HttpError("HttpError: badUrlFormat")
-    public static let badParametersFormat = HttpError("HttpError: badParametersFormat")
-    public static let badResponseType = HttpError("HttpError: badResponseType")
-    public static let responseEmptyBody = HttpError("HttpError: responseEmptyBody")
-
-    public init(_ description: String) {
-        self.description = description
-    }
-
-    public var description: String
-}
-
 open class HttpResponse {
 
     required public init(_ request: URLRequest) {
@@ -49,10 +35,22 @@ public extension URLResponse {
 
     func checkHttpSuccess(range: CountableRange<Int> = 200..<300) throws -> Bool {
         guard let httpResponse = self as? HTTPURLResponse  else {
-            throw HttpError.badResponseType
+            throw HttpException.badResponseType
         }
 
         let code = httpResponse.statusCode
         return range.contains(code)
     }
+}
+
+
+public class HttpException: Exception {
+}
+
+extension HttpException {
+
+    static let badUrlFormat = HttpException("Bad url format")
+    static let badParametersFormat = HttpException("Bad parameters format")
+    static let badResponseType = HttpException("Bad response type")
+    static let responseEmptyBody = HttpException("Empty response body")
 }

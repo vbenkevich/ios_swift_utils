@@ -29,12 +29,6 @@ public extension NotifyCompletion {
     }
 }
 
-public enum TaskError: Swift.Error {
-
-    case taskCancelled
-    case inconsistentState(message: String)
-}
-
 public final class Task<T>: Cancellable, NotifyCompletion {
 
     private var lock = SpinLock()
@@ -95,7 +89,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         }
 
         guard !_status.isCompleted else {
-            throw TaskError.inconsistentState(message: "task has completed state")
+            throw TaskException.taskAlreadyCompleted
         }
 
         _status = status

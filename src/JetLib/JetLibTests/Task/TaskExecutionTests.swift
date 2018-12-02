@@ -223,7 +223,7 @@ class TaskExecutionTests: XCTestCase {
         notifyQueue.async {
             do {
                 try self.executeQueue.await(task: task)
-            } catch TaskError.taskCancelled {
+            } catch is TaskException {
                 XCTAssertEqual(task.status, .cancelled)
                 cancelledError.fulfill()
             } catch {}

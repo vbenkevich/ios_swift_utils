@@ -15,15 +15,6 @@ public protocol BindingTarget: BindingTargetBase {
     associatedtype Value
 }
 
-public struct BindingError: Error {
-
-    public let message: String
-
-    public static let convertIsRequired = BindingError(message: "\(BindingMode.updateObservable) and \(BindingMode.updateObservable) is only supported by UIControl")
-
-    public static let updateObservableUIControlOnly = BindingError(message: "convert is requeired for \(BindingMode.updateObservable) and \(BindingMode.updateObservable)")
-}
-
 public extension BindingTarget {
 
     fileprivate var observableSetter: ObservableSetter<Value>? {
@@ -44,10 +35,10 @@ public extension BindingTarget {
 
         if mode.contains(.immediatelyUpdateObservable) {
             guard self is UIControl else {
-                throw BindingError.updateObservableUIControlOnly
+                throw Exception.updateObservableUIControlOnly
             }
             guard let convert = convert else {
-                throw BindingError.convertIsRequired
+                throw Exception.convertIsRequired
             }
 
             observable.value = convert(self.bindableValue as? Self.Value)
@@ -59,11 +50,11 @@ public extension BindingTarget {
 
         if mode.contains(.updateObservable) {
             guard let control = self as? UIControl else {
-                throw BindingError.updateObservableUIControlOnly
+                throw Exception.updateObservableUIControlOnly
             }
 
             guard let convert = convert else {
-                throw BindingError.convertIsRequired
+                throw Exception.convertIsRequired
             }
 
             observableSetter = ObservableSetter(owner: self, origin: observable, converter: convert)
@@ -112,4 +103,11 @@ private class ObservableSetter<T> {
     @objc fileprivate func valueChanged() {
         setValue(owner?.bindableValue as? T)
     }
+}
+
+private extension Exception {
+
+    static let convertIsRequired = Exception("\(BindingMode.updateObservable) and \(BindingMode.updateObservable) is only supported by UIControl")
+
+    static let updateObservableUIControlOnly = Exception("Convert is requeired for \(BindingMode.updateObservable) and \(BindingMode.updateObservable)")
 }

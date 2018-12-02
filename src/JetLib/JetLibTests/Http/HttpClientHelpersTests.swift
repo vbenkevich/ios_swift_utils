@@ -160,7 +160,7 @@ class HttpClientHelpersTests: XCTestCase {
 
     func testErrorInit() {
         let descr = "O.o"
-        let error = HttpError(descr)
+        let error = HttpException(descr)
         XCTAssertEqual(error.description, descr)
     }
 
