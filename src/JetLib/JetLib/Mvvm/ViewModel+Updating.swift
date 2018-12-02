@@ -82,7 +82,6 @@ extension DispatchGroup: UpdateInitiator {
 extension UIRefreshControl: UpdateInitiator {
 
     public func updateStarted() {
-        self.beginRefreshing()
     }
 
     public func updateCompleted() {
