@@ -7,7 +7,7 @@ import Foundation
 
 extension ViewModel {
 
-    final class TaskStorage: NotifyCompletion {
+    final class TaskStorage {
 
         private let workQueue: DispatchQueue
 
@@ -32,14 +32,6 @@ extension ViewModel {
             }
         }
 
-        func notify(_ queue: DispatchQueue, callBack: @escaping (TaskStorage) -> Void) -> TaskStorage {
-            workItem.notify(queue: queue) {
-                callBack(self)
-            }
-
-            return self
-        }
-
         func append<T>(task: Task<T>, tag: DataTaskTag? = nil) -> Task<T> {
             workQueue.sync {
                 all.append(task)
@@ -61,14 +53,5 @@ extension ViewModel {
                 storage.all = storage.all.filter { return $0 !== task }
             }
         }
-
-        func tryCancelAll() {
-            workQueue.sync {
-                for task in self.all {
-                    try? task.cancel()
-                }
-            }
-        }
     }
-
 }
