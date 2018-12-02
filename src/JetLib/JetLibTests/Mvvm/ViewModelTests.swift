@@ -66,8 +66,8 @@ class ViewModelTests: XCTestCase {
         let task1 = Task(execute: { return true }).onCancel { task1Exp.fulfill() }
         let task2 = Task(execute: { return "123" }).onSuccess { _ in task2Exp.fulfill() }
 
-        viewModel.load(task: task1, tag: tag1)
-        viewModel.load(task: task2, tag: tag1)
+        viewModel.submit(task: task1, tag: tag1)
+        viewModel.submit(task: task2, tag: tag1)
 
         DispatchQueue.global().async(task2)
 
@@ -82,8 +82,8 @@ class ViewModelTests: XCTestCase {
         let task1 = Task(execute: { return true }).onSuccess { _ in task1Exp.fulfill() }
         let task2 = Task(execute: { return "123" }).onSuccess { _ in task2Exp.fulfill() }
 
-        viewModel.load(task: task1, tag: tag1)
-        viewModel.load(task: task2, tag: tag2)
+        viewModel.submit(task: task1, tag: tag1)
+        viewModel.submit(task: task2, tag: tag2)
 
         DispatchQueue.global().async(task1)
         DispatchQueue.global().async(task2)
