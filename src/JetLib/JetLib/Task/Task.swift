@@ -22,6 +22,11 @@ public extension NotifyCompletion {
     func notify(callBack: @escaping (Self) -> Void) -> Self {
         return notify(DispatchQueue.main, callBack: callBack)
     }
+
+    @discardableResult
+    func notify(queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self {
+        return notify(queue, callBack: callBack)
+    }
 }
 
 public enum TaskError: Swift.Error {
