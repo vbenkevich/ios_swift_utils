@@ -25,15 +25,101 @@ public struct BindingMode: RawRepresentable, OptionSet {
 
 public class Binding<Target: BindingTarget, Value: Equatable> {
 
-    init(_ observable: Observable<Value>, _ target: Target, _ mode: BindingMode) {
-        self.observable = observable
+    init(target: Target, mode: BindingMode, observable: Observable<Value>) {
         self.target = target
         self.mode = mode
+        self.observable = observable
     }
+
+    public weak var target: Target!
+
+    public let mode: BindingMode
 
     public let observable: Observable<Value>
 
-    public let target: Target
+    public var converterBack: ((Target.Value?) -> Value?)?
 
-    public let mode: BindingMode
+    public var targetSetter: ((Target, Value?) -> Void)?
+
+    var targetValue: Target.Value? {
+        return target.bindableValue as? Target.Value
+    }
+
+    var observableValue: Value? {
+        return observable.value
+    }
+
+    public func forceUpdateObservble() {
+        observable.value = converterBack?(targetValue)
+    }
+
+    public func forceUpdateTarget() {
+        targetSetter?(target, observableValue)
+    }
+
+    func commit() throws {
+        let control = target as? UIControl
+
+        if mode.contains(.immediatelyUpdateObservable) || mode.contains(.updateObservable) {
+            guard control != nil else { throw Exception.updateObservableUIControlOnly }
+            guard converterBack != nil else { throw Exception.convertIsRequired}
+        }
+
+        if mode.contains(.immediatelyUpdateTarget) {
+            forceUpdateTarget()
+        }
+
+        if mode.contains(.immediatelyUpdateObservable) {
+            forceUpdateObservble()
+        }
+
+        if mode.contains(.updateTarget) {
+            observable.notify(self, fireRightNow: false) { $0.targetSetter?($0.target, $1) }
+        }
+
+        if mode.contains(.updateObservable) {
+            control?.addTarget(self, action: #selector(controlValueChanged), for: [.valueChanged, .editingChanged])
+            control?.addTarget(self, action: #selector(controlEditingEnded), for: [.editingDidEnd])
+        }
+
+        target.addBinding(self)
+    }
+
+    @objc func controlValueChanged() {
+        if mode.contains(.updateObservable) {
+            forceUpdateObservble()
+        }
+    }
+
+    @objc func controlEditingEnded() {
+        if mode.contains(.updateObservable) {
+            forceUpdateObservble()
+        }
+    }
+}
+
+extension BindingTarget {
+
+    fileprivate var bindings: [AnyObject]? {
+        get { return objc_getAssociatedObject(self, &AssociatedKeys.bindingsKey) as? [AnyObject] }
+        set { objc_setAssociatedObject(self, &AssociatedKeys.bindingsKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
+    }
+
+    func addBinding(_ binding: AnyObject) {
+        if bindings == nil {
+            bindings = []
+        }
+        bindings?.append(binding)
+    }
+}
+
+private struct AssociatedKeys {
+    static var bindingsKey = 1
+}
+
+private extension Exception {
+
+    static let convertIsRequired = Exception("\(BindingMode.updateObservable) and \(BindingMode.updateObservable) is only supported by UIControl")
+
+    static let updateObservableUIControlOnly = Exception("Convert is requeired for \(BindingMode.updateObservable) and \(BindingMode.updateObservable)")
 }
