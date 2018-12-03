@@ -16,6 +16,9 @@ public extension DataTaskTag {
 
 open class ViewModel: ViewLifecycleDelegate {
 
+    public init() {
+    }
+
     private let submitedTasks = TaskStorage(workQueue: dataLoaderQueue)
 
     private var loader = DataLoader(syncQueue: dataLoaderQueue) {
