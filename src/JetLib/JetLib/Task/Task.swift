@@ -82,6 +82,8 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         return _status
     }
 
+    var retainedObjects = [AnyObject]()
+
     func setStatus(_ status: Status) throws {
         lock.lock()
         defer {

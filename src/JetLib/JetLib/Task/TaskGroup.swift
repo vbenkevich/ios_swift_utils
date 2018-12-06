@@ -76,6 +76,7 @@ public final class TaskGroup: Cancellable {
 
     public func whenAll() -> Task<TaskGroup> {
         let tcs = Task<TaskGroup>.Source()
+        tcs.task.retainedObjects.append(self)
 
         workQueue.sync {
             if allQueue != nil {
@@ -90,6 +91,7 @@ public final class TaskGroup: Cancellable {
 
     public func whenAny() -> Task<TaskGroup> {
         let tcs = Task<TaskGroup>.Source()
+        tcs.task.retainedObjects.append(self)
 
         workQueue.sync {
             if anyQueue != nil {
@@ -132,8 +134,8 @@ public final class TaskGroup: Cancellable {
 
     private func subscribe(_ tasks: [NotifyCompletion]) {
         for task in tasks {
-            task.notify(workQueue) {
-                self.onCompleted($0)
+            task.notify(workQueue) { [weak self] in
+                self?.onCompleted($0)
             }
         }
     }
