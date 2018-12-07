@@ -55,88 +55,45 @@ public final class TaskGroup: Cancellable {
     public init(_ tasks: [NotifyCompletion & Cancellable]) {
         self.tasks = tasks
 
-        if tasks.isEmpty {
-            allQueue = nil
-            anyQueue = nil
-        } else {
-            allQueue = []
-            anyQueue = []
+        for task in tasks {
+            group.enter()
+
+            task.notify(workQueue) { _ in
+                self.group.leave()
+                self.delegate?.taskFinished(group: self, task: task)
+            }
         }
 
-        subscribe(tasks)
+        whenAllSource.task.retainedObjects.append(self)
+
+        group.notify(queue: workQueue) {
+            try? self.whenAllSource.complete(self)
+        }
     }
+
+    private let whenAllSource = Task<TaskGroup>.Source()
+    private let group = DispatchGroup()
 
     public let tasks: [NotifyCompletion & Cancellable]
 
     public weak var delegate: TaskGroupDelegate?
 
-    private var completed: Int = 0
-    private var allQueue: [Task<TaskGroup>.Source]?
-    private var anyQueue: [Task<TaskGroup>.Source]?
-
     public func whenAll() -> Task<TaskGroup> {
-        let tcs = Task<TaskGroup>.Source()
-        tcs.task.retainedObjects.append(self)
-
-        workQueue.sync {
-            if allQueue != nil {
-                allQueue?.append(tcs)
-            } else {
-                try! tcs.complete(self)
-            }
-        }
-
-        return tcs.task
+        return whenAllSource.task
     }
 
     public func whenAny() -> Task<TaskGroup> {
         let tcs = Task<TaskGroup>.Source()
         tcs.task.retainedObjects.append(self)
-
-        workQueue.sync {
-            if anyQueue != nil {
-                anyQueue?.append(tcs)
-            } else {
-                try! tcs.complete(self)
-            }
-        }
-
+        //TODO
         return tcs.task
     }
 
     public func cancel() {
+        try? whenAllSource.cancel()
+
         for task in tasks {
             try? task.cancel()
-        }
-    }
-
-    private func onCompleted(_ task: NotifyCompletion) {
-        completed += 1
-
-        if completed == 1 {
-            for tcs in anyQueue! {
-                try? tcs.complete(self)
-            }
-
-            anyQueue = nil
-        }
-
-        if completed == tasks.count {
-            for tcs in allQueue! {
-                try? tcs.complete(self)
-            }
-
-            allQueue = nil
-        }
-
-        delegate?.taskFinished(group: self, task: task)
-    }
-
-    private func subscribe(_ tasks: [NotifyCompletion]) {
-        for task in tasks {
-            task.notify(workQueue) { [weak self] in
-                self?.onCompleted($0)
-            }
         }
     }
 }
