@@ -11,10 +11,10 @@ public extension Task {
 
     public class Source {
 
-        private var wrapper: WorkItemWrapper = WorkItemWrapper(DispatchWorkItem {})
+        private var item = DispatchWorkItem {}
 
         public init() {
-            task = Task(wrapper.workItem)
+            task = Task(item)
             try! task.setStatus(.executing)
         }
 
@@ -34,7 +34,7 @@ public extension Task {
 
         func setStatus(_ status: Task<T>.Status) throws {
             try task.setStatus(status)
-            wrapper.perform()
+            item.perform()
         }
     }
 }

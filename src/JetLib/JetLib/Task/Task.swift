@@ -32,7 +32,7 @@ public extension NotifyCompletion {
 public final class Task<T>: Cancellable, NotifyCompletion {
 
     private var lock = SpinLock()
-    private (set) var wrapper: WorkItemWrapper!
+    private (set) var item: DispatchWorkItem!
 
     convenience public init(_ result: T) {
         self.init(status: .success(result))
@@ -43,7 +43,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     }
 
     public init(execute: @escaping () throws -> T) {
-        wrapper = WorkItemWrapper(DispatchWorkItem {
+        item = DispatchWorkItem {
             do {
                 try self.setStatus(.executing)
                 let data = try execute()
@@ -51,17 +51,17 @@ public final class Task<T>: Cancellable, NotifyCompletion {
             } catch {
                 try? self.setStatus(.failed(error))
             }
-        })
+        }
     }
 
     init(status: Task.Status) {
         _status = status
-        wrapper = WorkItemWrapper(DispatchWorkItem {})
+        item = DispatchWorkItem {}
         workItem.perform()
     }
 
     init(_ workItem: DispatchWorkItem) {
-        wrapper = WorkItemWrapper(workItem)
+        item = workItem
     }
 
     public var result: T? {
@@ -83,10 +83,8 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     }
 
     var workItem: DispatchWorkItem! {
-        return wrapper.workItem
+        return item
     }
-
-    var retainedObjects = [AnyObject]()
 
     func setStatus(_ status: Status) throws {
         lock.lock()
@@ -112,7 +110,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
             return self
         }
 
-        wrapper.notify(queue: queue) {
+        item.notify(queue: queue) {
             callBack(self)
         }
 
@@ -121,7 +119,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
 
     public func cancel() throws {
         try setStatus(.cancelled)
-        wrapper.cancel()
+        item.perform()
         try linked?.cancel()
     }
 }
@@ -140,35 +138,35 @@ public extension Task where T == Void {
     }
 }
 
-class WorkItemWrapper {
-
-    init(_ workItem: DispatchWorkItem) {
-        self.workItem = workItem
-    }
-
-    let workItem: DispatchWorkItem
-
-    private (set) var isCancelled: Bool = false
-
-    private (set) var isPerformed: Bool = false
-
-    func cancel() {
-        if !isPerformed && !isCancelled {
-            workItem.perform()
-        }
-
-        isCancelled = true
-    }
-
-    func perform() {
-        if !isPerformed && !isCancelled {
-            workItem.perform()
-        }
-
-        isPerformed = true
-    }
-
-    func notify(queue: DispatchQueue, execute: @escaping @convention(block) () -> Void) {
-        workItem.notify(queue: queue, execute: execute)
-    }
-}
+//class WorkItemWrapper {
+//
+//    init(_ workItem: DispatchWorkItem) {
+//        self.workItem = workItem
+//    }
+//
+//    let workItem: DispatchWorkItem
+//
+//    private (set) var isCancelled: Bool = false
+//
+//    private (set) var isPerformed: Bool = false
+//
+//    func cancel() {
+//        if !isPerformed && !isCancelled {
+//            workItem.perform()
+//        }
+//
+//        isCancelled = true
+//    }
+//
+//    func perform() {
+//        if !isPerformed && !isCancelled {
+//            workItem.perform()
+//        }
+//
+//        isPerformed = true
+//    }
+//
+//    func notify(queue: DispatchQueue, execute: @escaping @convention(block) () -> Void) {
+//        workItem.notify(queue: queue, execute: execute)
+//    }
+//}

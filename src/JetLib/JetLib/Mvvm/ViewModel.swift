@@ -21,14 +21,14 @@ open class ViewModel: ViewLifecycleDelegate {
 
     private let submitedTasks = TaskStorage(workQueue: dataLoaderQueue)
 
-    private var loader = DataLoader(syncQueue: dataLoaderQueue) {
+    private var loader: DataLoader? {
         didSet {
-            oldValue.abort()
+            oldValue?.abort()
         }
     }
 
     open var loading: Bool {
-        return !submitedTasks.all.isEmpty || loader.isLoading
+        return !submitedTasks.all.isEmpty || loader != nil
     }
 
     open var canLoadData: Bool {
@@ -46,14 +46,14 @@ open class ViewModel: ViewLifecycleDelegate {
     }
 
     open func viewDidDisappear(_ animated: Bool) {
-        loader.abort()
+        loader?.abort()
     }
 
     open func willLoadData(loader: DataLoader) {
     }
 
     public func startLoadData() -> NotifyCompletion {
-        loader = DataLoader(syncQueue: dataLoaderQueue)
+        let loader = DataLoader(syncQueue: dataLoaderQueue)
         willLoadData(loader: loader)
         return loadData()
     }
@@ -61,7 +61,11 @@ open class ViewModel: ViewLifecycleDelegate {
     @discardableResult
     @available(*, deprecated, message: "use willLoadData instead")
     open func loadData() -> NotifyCompletion {
-        return performDataLoading()
+        if loader == nil {
+            loader = DataLoader(syncQueue: dataLoaderQueue)
+        }
+
+        return performDataLoading(loader: loader!)
     }
 
     open func loadDataCompleted() {
@@ -74,16 +78,26 @@ open class ViewModel: ViewLifecycleDelegate {
 
     @discardableResult
     public func load<TData>(task: Task<TData>) -> Task<TData> {
-        return try! loader.append(task)
+        if loader == nil {
+            loader = DataLoader(syncQueue: dataLoaderQueue)
+        }
+
+        return try! loader!.append(task)
     }
 
     @discardableResult
     public func cancelAll() -> NotifyCompletion {
-        return loader.abort()
+        return loader?.abort() ?? Task()
     }
 
-    func performDataLoading() -> NotifyCompletion {
+    func performDataLoading(loader: DataLoader) -> NotifyCompletion {
+        self.loader = loader
+
         return loader.load().notify { [weak self] (_) in
+            if self?.loader === loader {
+                self?.loader = nil
+            }
+
             self?.loadDataCompleted()
         }
     }

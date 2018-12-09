@@ -23,11 +23,9 @@ class TaskGroupTests: XCTestCase {
         let group = TaskGroup([])
 
         group.whenAny {
-            XCTAssertTrue(group === $0)
             whenAny.fulfill()
         }
         group.whenAll {
-            XCTAssertTrue(group === $0)
             whenAll.fulfill()
         }
 
@@ -53,12 +51,8 @@ class TaskGroupTests: XCTestCase {
         }
 
         let group = TaskGroup([tcs1.task, tcs2.task])
-        group.whenAll { _ in
-            expAll.fulfill()
-        }
-        group.whenAny { _ in
-            expAny.fulfill()
-        }
+        group.whenAll { expAll.fulfill() }
+        group.whenAny { expAny.fulfill() }
 
         try! tcs1.complete(1)
 
@@ -73,11 +67,11 @@ class TaskGroupTests: XCTestCase {
         let tcsCancel = Task<String>.Source()
         let tcsError = Task<String>.Source()
 
-        [tcsCompl.task, tcsError.task, tcsCancel.task].whenAll { _ in
+        [tcsCompl.task, tcsError.task, tcsCancel.task].whenAll {
             expAll.fulfill()
         }
 
-        [tcsCompl.task, tcsError.task, tcsCancel.task].whenAny { _ in
+        [tcsCompl.task, tcsError.task, tcsCancel.task].whenAny {
             expAny.fulfill()
         }
 
@@ -108,10 +102,10 @@ class TaskGroupTests: XCTestCase {
         }
 
         let group = TaskGroup([tcs1.task, tcs2.task])
-        group.whenAll { _ in
+        group.whenAll {
             expAll.fulfill()
         }
-        group.whenAny { _ in
+        group.whenAny {
             expAny.fulfill()
         }
 
