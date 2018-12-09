@@ -16,10 +16,10 @@ public extension ViewModel {
         }
 
         private var tasks = [NotifyCompletion & Cancellable]()
-        private var loading: Task<TaskGroup>!
+        private var loading: TaskGroup!
 
         var isLoading: Bool {
-            return loading != nil && !loading.isCompleted
+            return loading != nil && !loading.whenAll().isCompleted
         }
 
         @discardableResult
@@ -36,23 +36,26 @@ public extension ViewModel {
         }
 
         @discardableResult
-        func load() -> Task<TaskGroup> {
+        func load() -> Task<Void> {
             return syncQueue.sync {
                 if loading == nil {
-                    let group = TaskGroup(tasks)
-                    loading = group.whenAll()
-                    loading.linked = group
+                    loading = TaskGroup(tasks)
+                    loading.whenAll().linked = loading
                 }
 
-                return loading!
+                return loading.whenAll()
             }
         }
 
         @discardableResult
         func abort() -> NotifyCompletion {
-            let task = load()
-            try? task.cancel()
-            return task
+            return syncQueue.sync {
+                if loading == nil {
+                    return Task()
+                }
+                loading.cancel()
+                return loading.whenAll()
+            }
         }
     }
 }
