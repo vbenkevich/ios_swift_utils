@@ -58,10 +58,16 @@ public final class TaskGroup: Cancellable {
         for task in tasks {
             group.enter()
 
-            task.notify(workQueue) { _ in
+            task.notify(workQueue) {
+                try? self.whenAnySource.complete(self)
+
                 self.group.leave()
-                self.delegate?.taskFinished(group: self, task: task)
+                self.delegate?.taskFinished(group: self, task: $0)
             }
+        }
+
+        if tasks.isEmpty {
+            try? whenAnySource.complete(self)
         }
 
         whenAllSource.task.retainedObjects.append(self)
@@ -71,6 +77,7 @@ public final class TaskGroup: Cancellable {
         }
     }
 
+    private let whenAnySource = Task<TaskGroup>.Source()
     private let whenAllSource = Task<TaskGroup>.Source()
     private let group = DispatchGroup()
 
@@ -83,14 +90,12 @@ public final class TaskGroup: Cancellable {
     }
 
     public func whenAny() -> Task<TaskGroup> {
-        let tcs = Task<TaskGroup>.Source()
-        tcs.task.retainedObjects.append(self)
-        //TODO
-        return tcs.task
+        return whenAnySource.task
     }
 
     public func cancel() {
         try? whenAllSource.cancel()
+        try? whenAnySource.cancel()
 
         for task in tasks {
             try? task.cancel()
