@@ -31,17 +31,19 @@ class ViewModelTests: XCTestCase {
         let completed = expectation(description: "completed")
         var task: Task? = Task(1)
         viewModel.addTask(task!)
-        viewModel.loadData().notify { _ in
-            completed.fulfill()
-        }
+        viewModel.onLoadCompleted = { completed.fulfill() }
+
 
         weak var weakTask = task
         task = nil
 
         XCTAssertNotNil(weakTask)
 
-        viewModel = nil
+        viewModel.loadData()
+
         wait(completed)
+        
+        viewModel.cleanTasks()
 
         XCTAssertNil(weakTask)
     }
