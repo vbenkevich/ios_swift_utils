@@ -36,7 +36,7 @@ public extension ViewModel {
         }
 
         @discardableResult
-        func load() -> Task<TaskGroup> {
+        func load() -> Task<Void> {
             return syncQueue.sync {
                 if loading == nil {
                     loading = TaskGroup(tasks)

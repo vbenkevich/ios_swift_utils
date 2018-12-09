@@ -12,39 +12,35 @@ public protocol TaskGroupDelegate: class {
 
 public extension Array where Element: NotifyCompletion & Cancellable {
 
-    func whenAll() -> Task<TaskGroup> {
+    func whenAll() -> Task<Void> {
         return TaskGroup(self).whenAll()
     }
 
-    func whenAny() -> Task<TaskGroup> {
+    func whenAny() -> Task<Void> {
         return TaskGroup(self).whenAny()
     }
 
-    public func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping (TaskGroup) -> Void) {
-        self.whenAll().notify(queue) {
-            callback($0.result!)
+    public func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+        self.whenAll().notify(queue) { _ in
+            callback()
         }
     }
 
-    public func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping (TaskGroup) -> Void) {
-        self.whenAny().notify(queue) {
-            callback($0.result!)
+    public func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+        self.whenAny().notify(queue) { _ in
+            callback()
         }
     }
 }
 
 public extension TaskGroup {
 
-    public func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping (TaskGroup) -> Void) {
-        self.whenAll().notify(queue) {
-            callback($0.result!)
-        }
+    public func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+        self.whenAll().notify(queue) { _ in callback() }
     }
 
-    public func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping (TaskGroup) -> Void) {
-        self.whenAny().notify(queue) {
-            callback($0.result!)
-        }
+    public func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+        self.whenAny().notify(queue) { _ in callback() }
     }
 }
 
@@ -58,38 +54,38 @@ public final class TaskGroup: Cancellable {
         for task in tasks {
             group.enter()
 
-            task.notify(workQueue) {
-                try? self.whenAnySource.complete(self)
+            task.notify(workQueue) { [whenAnySource, group, weak self] in
+                try? whenAnySource.complete()
+                group.leave()
 
-                self.group.leave()
-                self.delegate?.taskFinished(group: self, task: $0)
+                if let gr = self {
+                    gr.delegate?.taskFinished(group: gr, task: $0)
+                }
             }
         }
 
         if tasks.isEmpty {
-            try? whenAnySource.complete(self)
+            try? whenAnySource.complete()
         }
 
-        whenAllSource.task.retainedObjects.append(self)
-
-        group.notify(queue: workQueue) {
-            try? self.whenAllSource.complete(self)
+        group.notify(queue: workQueue) { [whenAllSource] in
+            try? whenAllSource.complete()
         }
     }
 
-    private let whenAnySource = Task<TaskGroup>.Source()
-    private let whenAllSource = Task<TaskGroup>.Source()
+    private let whenAnySource = Task<Void>.Source()
+    private let whenAllSource = Task<Void>.Source()
     private let group = DispatchGroup()
 
     public let tasks: [NotifyCompletion & Cancellable]
 
     public weak var delegate: TaskGroupDelegate?
 
-    public func whenAll() -> Task<TaskGroup> {
+    public func whenAll() -> Task<Void> {
         return whenAllSource.task
     }
 
-    public func whenAny() -> Task<TaskGroup> {
+    public func whenAny() -> Task<Void> {
         return whenAnySource.task
     }
 
