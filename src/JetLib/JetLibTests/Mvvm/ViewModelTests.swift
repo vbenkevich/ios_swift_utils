@@ -230,7 +230,6 @@ class ViewModelTests: XCTestCase {
 
         viewModel.addTask(task)
 
-
         viewModel.reload()
         viewModel.reload(force: true)
 
@@ -251,7 +250,7 @@ class BaseTestViewModel: ViewModel {
 
     weak var view: BaseTestView?
 
-    private var loadings: [(BaseTestViewModel) -> Void] = []
+    private var loadings: [(ViewModel.DataLoader) -> Void] = []
 
     var loadDataCallCount: Int = 0
     var loadDataCompletedCount: Int = 0
@@ -259,21 +258,19 @@ class BaseTestViewModel: ViewModel {
     var onLoadCompleted: (() -> Void)? = nil
 
     func addTask<TData>(_ task: Task<TData>) {
-        loadings.append({ $0.load(task: task)})
+        loadings.append({ try! $0.append(task)})
     }
 
     func cleanTasks() {
         loadings = []
     }
 
-    override func loadData() -> NotifyCompletion {
+    override func willLoadData(loader: ViewModel.DataLoader) {
         loadDataCallCount += 1
 
         for loading in loadings {
-            loading(self)
+            loading(loader)
         }
-
-        return super.loadData()
     }
 
     override func loadDataCompleted() {

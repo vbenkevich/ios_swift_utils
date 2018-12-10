@@ -82,9 +82,8 @@ open class ViewModel: ViewLifecycleDelegate {
         return try! loader!.append(task)
     }
 
-    @discardableResult
-    public func cancelAll() -> NotifyCompletion {
-        return loader?.abort() ?? Task()
+    public func cancelAll() {
+        loader = nil
     }
 
     func performDataLoading(loader: DataLoader) -> NotifyCompletion {
