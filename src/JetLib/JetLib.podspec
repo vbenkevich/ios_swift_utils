@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "10.0"
   s.swift_version = "4.2"
 
-  s.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", tag: "0.2.0" }
-  s.source_files  = "src/JetLib/JetLib/**/*.swift"
+  s.source       =  { path: "." }
+  s.source_files  = "JetLib/**/*.swift"
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

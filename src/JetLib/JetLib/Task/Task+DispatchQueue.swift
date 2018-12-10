@@ -9,29 +9,36 @@ public extension DispatchQueue {
 
     @discardableResult
     func await<T>(task: Task<T>) throws -> T {
-        self.sync(execute: task.workItem)
+        self.sync { task.item.perform() }
 
         switch task.status {
         case .success(let result):
             return result
         case .cancelled:
-            throw TaskError.taskCancelled
+            throw TaskException.taskAlreadyCancelled
         case .failed(let error):
             throw error
         default:
-            throw TaskError.inconsistentState(message: "Unable to complete task")
+            throw TaskException.cantCompleteTask
         }
     }
 
     @discardableResult
     func async<T>(_ task: Task<T>) -> Task<T> {
-        self.async(execute: task.workItem)
+        self.async { task.item.perform() }
         return task
     }
 
     @discardableResult
     func async<T>(_ task: Task<T>, after interval: DispatchTimeInterval) -> Task<T> {
-        self.asyncAfter(deadline: .now() + interval, execute: task.workItem)
+        self.asyncAfter(deadline: .now() + interval) { task.item.perform() }
         return task
     }
+}
+
+public class TaskException: Exception {
+
+    static let taskAlreadyCompleted = TaskException("Task has been completed")
+    static let taskAlreadyCancelled = TaskException("Task has been cancelled")
+    static let cantCompleteTask = TaskException("Unable to complete task")
 }

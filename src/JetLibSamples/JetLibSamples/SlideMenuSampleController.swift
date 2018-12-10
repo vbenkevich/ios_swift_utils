@@ -9,7 +9,9 @@
 import UIKit
 import JetLib
 
-class SlideMenuSampleController: SlideMenuViewController {
+class SlideMenuSampleController: ContainerViewController {
+
+    var slideMenu = SlideMenu()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,27 +19,28 @@ class SlideMenuSampleController: SlideMenuViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .done, target: self, action: #selector(handleShowMenu))
 
         let menu = MenuListController()
-        menuController = menu
+        menu.presenter = self
+        slideMenu.hostController = self
+        slideMenu.menuController = menu
         currentController = menu.items[0].create()
-
-        panMenuFromLeft = true
     }
 
     @objc func handleShowMenu(_ sender: Any) {
-        self.showMenu()
+        slideMenu.show()
     }
 }
 
-class MenuListController: UITableViewController, MenuController {
+class MenuListController: UITableViewController {
 
     weak var presenter: ControllerPresenter?
 
     let items: [(name: String, create: () -> UIViewController)] = [
+        (name: "BindingSample", create: { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "bindingSample")}),
         (name: "CommandSample", create: { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "commandSample")}),
         (name: "Item1", create: { return UIViewController(title: "Item1", color: UIColor.red) }),
         (name: "Item2", create: { return UIViewController(title: "Item2", color: UIColor.green) }),
         (name: "Item3", create: { return UIViewController(title: "Item3", color: UIColor.blue) }),
-        ]
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()

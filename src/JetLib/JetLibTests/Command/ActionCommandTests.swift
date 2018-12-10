@@ -22,7 +22,7 @@ class ActionCommandTests: XCTestCase {
         let created = expectation(description: "created")
         let execute = expectation(description: "execute")
 
-        let command = ActionCommand {
+        let command = ActionCommand() {
             execute.fulfill()
         }
 
@@ -130,6 +130,125 @@ class ActionCommandTests: XCTestCase {
         command.execute(parameter: 1)
 
         wait(execute)
+    }
+
+    func testCommandSource() {
+        let execute = expectation(description: "execute")
+        let source = CommandSource()
+
+        let command = ActionCommand(source) {
+            XCTAssertEqual(source, $0)
+            execute.fulfill()
+        }
+
+        command.execute()
+
+        wait(execute)
+    }
+
+    func testCommandSourceGeneric() {
+        let execute = expectation(description: "execute")
+        let source = CommandSource()
+        let parameter = CommandParameter()
+
+        let command = ActionCommand(source) { (src: CommandSource, param: CommandParameter) in
+            XCTAssertEqual(source, src)
+            XCTAssertEqual(parameter, param)
+            execute.fulfill()
+        }
+
+        command.execute(parameter: parameter)
+
+        wait(execute)
+    }
+
+    func testCommandSourceIsWeak() {
+        let execute = expectation(description: "execute")
+        var source: CommandSource? = CommandSource()
+
+        weak var sourceRef = source
+        execute.fulfill()
+
+        let command = ActionCommand(source!) { (source: CommandSource, param: CommandParameter) in
+            execute.fulfill()
+        }
+
+        source = nil
+        command.execute(parameter: CommandParameter())
+
+        XCTAssertNil(sourceRef)
+        wait(execute)
+    }
+
+    func testCommandDelegate() {
+
+        class Delegate: CommandDelegate {
+            var executing: XCTestExpectation!
+            var completed: XCTestExpectation!
+
+            func stateChanged(_ command: Command) {
+                if command.executing {
+                    XCTAssertFalse(command.canExecute(parameter: nil))
+                    executing.fulfill()
+                } else {
+                    XCTAssertTrue(command.canExecute(parameter: nil))
+                    completed.fulfill()
+                }
+            }
+        }
+
+        let delegate = Delegate()
+        let executing = expectation(description: "executeing")
+        let completed = expectation(description: "completed")
+        let command = ActionCommand() {}
+
+        delegate.executing = executing
+        delegate.completed = completed
+
+        command.delegate = delegate
+        command.execute()
+
+        wait(for: [executing, completed], timeout: 1, enforceOrder: true)
+    }
+
+    func testCommandDelegateWeak() {
+        class Delegate: CommandDelegate {
+            func stateChanged(_ command: Command) {
+            }
+        }
+
+        var delegateStrong: Delegate? = Delegate()
+        weak var delegateWeak: Delegate? = delegateStrong
+
+        let command = ActionCommand() {}
+        command.delegate = delegateStrong
+
+        delegateStrong = nil
+        XCTAssertNil(delegateWeak)
+    }
+
+    func testCommandInvalidateFireDelegateChanged() {
+        class Delegate: CommandDelegate {
+            var exp: XCTestExpectation!
+            func stateChanged(_ command: Command) {
+                exp.fulfill()
+            }
+        }
+
+        let delegate = Delegate()
+        let command = ActionCommand{}
+
+        delegate.exp = expectation(description: "delegate")
+        command.delegate = delegate
+        command.invalidate()
+
+        wait(delegate.exp)
+    }
+
+    class CommandSource: Equatable {
+        static func == (lhs: ActionCommandTests.CommandSource, rhs: ActionCommandTests.CommandSource) -> Bool {
+            return rhs === lhs
+        }
     }
 
     class CommandParameter: Equatable {

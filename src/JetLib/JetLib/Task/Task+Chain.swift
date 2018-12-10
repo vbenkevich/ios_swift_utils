@@ -22,10 +22,14 @@ public extension Task {
     }
 
     @discardableResult
-    public func chainOnSuccess<K>(nextTask: @escaping (Task<T>) -> Task<K>) -> Task<K>{
+    public func chainOnSuccess<K>(nextTask: @escaping (T) throws -> Task<K>) -> Task<K>{
         return chain {
             if $0.isSuccess {
-                return nextTask($0)
+                do {
+                    return try nextTask($0.result!)
+                } catch {
+                    return Task<K>(error)
+                }
             } else if $0.isCancelled {
                 return Task<K>(status: .cancelled)
             } else if $0.isFailed {
@@ -66,7 +70,7 @@ public extension Task {
     public func map<K>(mapper: @escaping (T) throws -> K) -> Task<K> {
         return chainOnSuccess {
             do {
-                return Task<K>(try mapper($0.result!))
+                return Task<K>(try mapper($0))
             } catch {
                 return Task<K>(error)
             }

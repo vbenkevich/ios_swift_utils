@@ -212,6 +212,12 @@ class TaskSourceTests: XCTestCase {
         wait(for: [notify1, notify2, notify3], timeout: 1)
     }
 
+    func testVoidTaskSource() {
+        let tcs = TaskCompletionSource<Void>()
+        XCTAssertNoThrow(try tcs.complete())
+        XCTAssertEqual(tcs.task.status, Task.Status.success(Void()))
+    }
+
     class TestError: Error {
     }
 }

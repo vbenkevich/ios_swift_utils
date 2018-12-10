@@ -31,17 +31,19 @@ class ViewModelTests: XCTestCase {
         let completed = expectation(description: "completed")
         var task: Task? = Task(1)
         viewModel.addTask(task!)
-        viewModel.loadData().notify { _ in
-            completed.fulfill()
-        }
+        viewModel.onLoadCompleted = { completed.fulfill() }
+
 
         weak var weakTask = task
         task = nil
 
         XCTAssertNotNil(weakTask)
 
-        viewModel = nil
+        viewModel.loadData()
+
         wait(completed)
+        
+        viewModel.cleanTasks()
 
         XCTAssertNil(weakTask)
     }
@@ -66,8 +68,8 @@ class ViewModelTests: XCTestCase {
         let task1 = Task(execute: { return true }).onCancel { task1Exp.fulfill() }
         let task2 = Task(execute: { return "123" }).onSuccess { _ in task2Exp.fulfill() }
 
-        viewModel.load(task: task1, tag: tag1)
-        viewModel.load(task: task2, tag: tag1)
+        viewModel.submit(task: task1, tag: tag1)
+        viewModel.submit(task: task2, tag: tag1)
 
         DispatchQueue.global().async(task2)
 
@@ -82,8 +84,8 @@ class ViewModelTests: XCTestCase {
         let task1 = Task(execute: { return true }).onSuccess { _ in task1Exp.fulfill() }
         let task2 = Task(execute: { return "123" }).onSuccess { _ in task2Exp.fulfill() }
 
-        viewModel.load(task: task1, tag: tag1)
-        viewModel.load(task: task2, tag: tag2)
+        viewModel.submit(task: task1, tag: tag1)
+        viewModel.submit(task: task2, tag: tag2)
 
         DispatchQueue.global().async(task1)
         DispatchQueue.global().async(task2)
@@ -192,10 +194,46 @@ class ViewModelTests: XCTestCase {
 
         viewModel.viewWillAppear(true)
         viewModel.viewDidDisappear(true)
+
         wait(completed)
+        XCTAssert(task.isCancelled)
+
+        viewModel.cleanTasks()
+        viewModel.addTask(Task(execute: { return 123 }))
         viewModel.viewWillAppear(true)
 
         XCTAssertEqual(viewModel.loadDataCallCount, 2)
+    }
+
+    func testReload() {
+        let success = expectation(description: "canceled")
+        let task = Task<Int>(execute: {
+            return 123
+        }).onSuccess { _ in
+            success.fulfill()
+        }
+
+        viewModel.addTask(task)
+        viewModel.reload()
+        DispatchQueue.main.async(task)
+
+        wait(success)
+    }
+
+    func testForceReload() {
+        let canceled = expectation(description: "canceled")
+        let task = Task<Int>(execute: {
+            return 123
+        }).onCancel {
+            canceled.fulfill()
+        }
+
+        viewModel.addTask(task)
+
+        viewModel.reload()
+        viewModel.reload(force: true)
+
+        wait(canceled)
     }
 }
 
@@ -208,9 +246,11 @@ class BaseTestView: View, DataLoadingPresenter {
     }
 }
 
-class BaseTestViewModel: ViewModel<BaseTestView> {
+class BaseTestViewModel: ViewModel {
 
-    private var loadings: [(BaseTestViewModel) -> Void] = []
+    weak var view: BaseTestView?
+
+    private var loadings: [(ViewModel.DataLoader) -> Void] = []
 
     var loadDataCallCount: Int = 0
     var loadDataCompletedCount: Int = 0
@@ -218,21 +258,19 @@ class BaseTestViewModel: ViewModel<BaseTestView> {
     var onLoadCompleted: (() -> Void)? = nil
 
     func addTask<TData>(_ task: Task<TData>) {
-        loadings.append({ $0.load(task: task)})
+        loadings.append({ try! $0.append(task)})
     }
 
     func cleanTasks() {
         loadings = []
     }
 
-    override func loadData() -> NotifyCompletion {
+    override func willLoadData(loader: ViewModel.DataLoader) {
         loadDataCallCount += 1
 
         for loading in loadings {
-            loading(self)
+            loading(loader)
         }
-
-        return super.loadData()
     }
 
     override func loadDataCompleted() {

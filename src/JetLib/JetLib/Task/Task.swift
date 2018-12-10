@@ -22,18 +22,17 @@ public extension NotifyCompletion {
     func notify(callBack: @escaping (Self) -> Void) -> Self {
         return notify(DispatchQueue.main, callBack: callBack)
     }
-}
 
-public enum TaskError: Swift.Error {
-
-    case taskCancelled
-    case inconsistentState(message: String)
+    @discardableResult
+    func notify(queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self {
+        return notify(queue, callBack: callBack)
+    }
 }
 
 public final class Task<T>: Cancellable, NotifyCompletion {
 
     private var lock = SpinLock()
-    private (set) var workItem: DispatchWorkItem!
+    private (set) var item: DispatchWorkItem!
 
     convenience public init(_ result: T) {
         self.init(status: .success(result))
@@ -44,7 +43,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     }
 
     public init(execute: @escaping () throws -> T) {
-        workItem = DispatchWorkItem {
+        item = DispatchWorkItem {
             do {
                 try self.setStatus(.executing)
                 let data = try execute()
@@ -57,12 +56,12 @@ public final class Task<T>: Cancellable, NotifyCompletion {
 
     init(status: Task.Status) {
         _status = status
-        workItem = DispatchWorkItem {}
+        item = DispatchWorkItem {}
         workItem.perform()
     }
 
     init(_ workItem: DispatchWorkItem) {
-        self.workItem = workItem
+        item = workItem
     }
 
     public var result: T? {
@@ -83,6 +82,10 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         return _status
     }
 
+    var workItem: DispatchWorkItem! {
+        return item
+    }
+
     func setStatus(_ status: Status) throws {
         lock.lock()
         defer {
@@ -90,7 +93,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         }
 
         guard !_status.isCompleted else {
-            throw TaskError.inconsistentState(message: "task has completed state")
+            throw TaskException.taskAlreadyCompleted
         }
 
         _status = status
@@ -107,7 +110,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
             return self
         }
 
-        workItem.notify(queue: queue) {
+        item.notify(queue: queue) {
             callBack(self)
         }
 
@@ -116,7 +119,54 @@ public final class Task<T>: Cancellable, NotifyCompletion {
 
     public func cancel() throws {
         try setStatus(.cancelled)
-        workItem.perform()
+        item.perform()
         try linked?.cancel()
     }
 }
+
+public extension Task {
+
+    static func cancelled() -> Task {
+        return Task(status: .cancelled)
+    }
+}
+
+public extension Task where T == Void {
+
+    convenience init() {
+        self.init(Void())
+    }
+}
+
+//class WorkItemWrapper {
+//
+//    init(_ workItem: DispatchWorkItem) {
+//        self.workItem = workItem
+//    }
+//
+//    let workItem: DispatchWorkItem
+//
+//    private (set) var isCancelled: Bool = false
+//
+//    private (set) var isPerformed: Bool = false
+//
+//    func cancel() {
+//        if !isPerformed && !isCancelled {
+//            workItem.perform()
+//        }
+//
+//        isCancelled = true
+//    }
+//
+//    func perform() {
+//        if !isPerformed && !isCancelled {
+//            workItem.perform()
+//        }
+//
+//        isPerformed = true
+//    }
+//
+//    func notify(queue: DispatchQueue, execute: @escaping @convention(block) () -> Void) {
+//        workItem.notify(queue: queue, execute: execute)
+//    }
+//}

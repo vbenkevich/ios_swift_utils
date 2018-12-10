@@ -14,6 +14,7 @@
 		BA54B881210B754C00A5F22F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA54B880210B754C00A5F22F /* Assets.xcassets */; };
 		BA54B884210B754C00A5F22F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */; };
 		BAA4E790216EB64E00A60DC0 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; };
+		BAED2515218CEB5700F68E96 /* BindingSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2514218CEB5700F68E96 /* BindingSampleController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		BA54B883210B754C00A5F22F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA54B885210B754C00A5F22F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAA4E78F216EB64E00A60DC0 /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAED2514218CEB5700F68E96 /* BindingSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingSampleController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				BA54B879210B754A00A5F22F /* AppDelegate.swift */,
+				BAED2514218CEB5700F68E96 /* BindingSampleController.swift */,
 				BA54B87B210B754A00A5F22F /* CommandSampleController.swift */,
 				BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */,
 				BA54B87D210B754A00A5F22F /* Main.storyboard */,
@@ -165,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */,
+				BAED2515218CEB5700F68E96 /* BindingSampleController.swift in Sources */,
 				BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */,
 				BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */,
 			);

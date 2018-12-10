@@ -19,14 +19,15 @@ class CommandSampleController: UIViewController {
         super.viewDidLoad()
 
         viewModel = CommandSampleViewModel()
-        viewModel.view = self
         add(viewModel)
+
+        try! label.bind(to: viewModel.textProperty)
 
         button.command = viewModel.command
     }
 }
 
-class CommandSampleViewModel: ViewModel<CommandSampleController> {
+class CommandSampleViewModel: ViewModel {
 
     override init() {
         super.init()
@@ -40,19 +41,15 @@ class CommandSampleViewModel: ViewModel<CommandSampleController> {
 
     var command: ActionCommand!
 
-    var text: String? {
-        didSet {
-            view?.label.text = text
-        }
-    }
+    var textProperty = Observable("")
 
     func doSomething() {
         let complexRequest = submit(task:  Service().fetchDataQueue(test: "1").notify(DispatchQueue.main) {
-            self.text = $0.result!
+            self.textProperty.value = $0.result
         }.chain { _ in
             return Service().fetchDataTcs(test: "2")
         }.notify(DispatchQueue.main) {
-            self.text = $0.result!
+            self.textProperty.value = $0.result
         })
 
         complexRequest.notify { [weak self] (_) in

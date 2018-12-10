@@ -5,14 +5,16 @@
 
 import Foundation
 
+public typealias TaskCompletionSource<T> = Task<T>.Source
+
 public extension Task {
 
     public class Source {
 
-        private var workItem: DispatchWorkItem = DispatchWorkItem {}
+        private var item = DispatchWorkItem {}
 
         public init() {
-            task = Task(workItem)
+            task = Task(item)
             try! task.setStatus(.executing)
         }
 
@@ -32,7 +34,14 @@ public extension Task {
 
         func setStatus(_ status: Task<T>.Status) throws {
             try task.setStatus(status)
-            workItem.perform()
+            item.perform()
         }
+    }
+}
+
+public extension Task.Source where T == Void {
+
+    func complete() throws {
+        try self.complete(Void())
     }
 }
