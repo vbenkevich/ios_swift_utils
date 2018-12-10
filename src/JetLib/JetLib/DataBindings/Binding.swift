@@ -93,15 +93,11 @@ public class Binding<Target: BindingTarget, Value: Equatable> {
     }
 
     @objc func controlValueChanged() {
-        if mode.contains(.updateObservable) {
-            forceUpdateObservble()
-        }
+        forceUpdateObservble()
     }
 
     @objc func controlEditingEnded() {
-        if mode.contains(.updateObservable) {
-            forceUpdateObservble()
-        }
+        forceUpdateObservble()
     }
 }
 
