@@ -23,14 +23,11 @@ public protocol Updatable {
 public extension ViewModel {
 
     func reload(force: Bool = false) {
-        guard force else {
-            self.dataUpdateRequested(initiator: self)
-            return
+        if force {
+            cancelAll()
         }
 
-        cancelAll().notify { _ in
-            self.dataUpdateRequested(initiator: self)
-        }
+        self.dataUpdateRequested(initiator: self)
     }
 }
 
