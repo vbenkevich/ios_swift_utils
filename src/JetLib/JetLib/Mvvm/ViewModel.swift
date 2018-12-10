@@ -55,17 +55,14 @@ open class ViewModel: ViewLifecycleDelegate {
     public func startLoadData() -> NotifyCompletion {
         let loader = DataLoader(syncQueue: dataLoaderQueue)
         willLoadData(loader: loader)
-        return loadData()
+        return loadData(loader: loader)
     }
 
     @discardableResult
     @available(*, deprecated, message: "use willLoadData instead")
-    open func loadData() -> NotifyCompletion {
-        if loader == nil {
-            loader = DataLoader(syncQueue: dataLoaderQueue)
-        }
-
-        return performDataLoading(loader: loader!)
+    open func loadData(loader: DataLoader? = nil) -> NotifyCompletion {
+        let currentLoader = loader ?? self.loader ?? DataLoader(syncQueue: dataLoaderQueue)
+        return performDataLoading(loader: currentLoader)
     }
 
     open func loadDataCompleted() {
