@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol BindingTargetBase: NSObjectProtocol {
 
@@ -17,51 +18,18 @@ public protocol BindingTarget: BindingTargetBase {
 
 public extension BindingTarget {
 
-    fileprivate var observableSetter: ObservableSetter<Value>? {
-        get { return objc_getAssociatedObject(self, &AssociatedKeys.observableSetterKey) as? ObservableSetter<Value> }
-        set { objc_setAssociatedObject(self, &AssociatedKeys.observableSetterKey, newValue, .OBJC_ASSOCIATION_RETAIN) }
-    }
-
-    // TODO: extract main part of logic into Binding
     @discardableResult
     func bind<Value>(to observable: Observable<Value>, mode: BindingMode? = nil,
                      setter: @escaping (Self, Value?) -> Void,
                      convert: ((Self.Value?) -> Value?)? = nil) throws -> Binding<Self, Value> {
         let mode = mode ?? (self is UIControl ? .twoWay : .oneWay)
+        let binding = Binding<Self, Value>(target: self, mode: mode, observable: observable)
+        binding.converterBack = convert
+        binding.targetSetter = setter
 
-        if mode.contains(.immediatelyUpdateTarget) {
-            setter(self, observable.value)
-        }
+        try binding.commit()
 
-        if mode.contains(.immediatelyUpdateObservable) {
-            guard self is UIControl else {
-                throw Exception.updateObservableUIControlOnly
-            }
-            guard let convert = convert else {
-                throw Exception.convertIsRequired
-            }
-
-            observable.value = convert(self.bindableValue as? Self.Value)
-        }
-
-        if mode.contains(.updateTarget) {
-            observable.notify(self, fireRightNow: false, callBack: setter)
-        }
-
-        if mode.contains(.updateObservable) {
-            guard let control = self as? UIControl else {
-                throw Exception.updateObservableUIControlOnly
-            }
-
-            guard let convert = convert else {
-                throw Exception.convertIsRequired
-            }
-
-            observableSetter = ObservableSetter(owner: self, origin: observable, converter: convert)
-            control.addTarget(observableSetter, action: #selector(ObservableSetter<Value>.valueChanged), for: [.editingChanged, .valueChanged])
-        }
-
-        return Binding(observable, self, mode)
+        return binding
     }
 
     @discardableResult
@@ -78,36 +46,4 @@ public extension BindingTarget where Value: Equatable {
     func bind(to observable: Observable<Value>, mode: BindingMode? = nil) throws  -> Binding<Self, Value> {
         return try bind(to: observable, mode: mode, convert: { $0 }, convertBack: { $0 })
     }
-}
-
-private struct AssociatedKeys {
-    static var observableSetterKey = 0
-}
-
-private class ObservableSetter<T> {
-
-    private let setter: (T?) -> Void
-    weak var owner: BindingTargetBase?
-
-    init<Value>(owner: BindingTargetBase, origin: Observable<Value>, converter: @escaping (T?) -> Value?) {
-        self.owner = owner
-        setter = { [weak origin] in
-            origin?.value = converter($0)
-        }
-    }
-
-    func setValue(_ value: T?) {
-        setter(value)
-    }
-
-    @objc fileprivate func valueChanged() {
-        setValue(owner?.bindableValue as? T)
-    }
-}
-
-private extension Exception {
-
-    static let convertIsRequired = Exception("\(BindingMode.updateObservable) and \(BindingMode.updateObservable) is only supported by UIControl")
-
-    static let updateObservableUIControlOnly = Exception("Convert is requeired for \(BindingMode.updateObservable) and \(BindingMode.updateObservable)")
 }

@@ -90,4 +90,28 @@ class BindingTargetTests: XCTestCase {
         XCTAssertEqual(try! UITextField().bind(to: observable).mode, BindingMode.twoWay)
         XCTAssertEqual(try! UILabel().bind(to: observable).mode, BindingMode.oneWay)
     }
+
+    func testModeTwoWayLostFocus() {
+        let initialValue = "100500"
+        let editedValue = "105001"
+
+        let observable = Observable(initialValue)
+        let field = UITextField()
+
+        XCTAssertNoThrow(try field.bind(to: observable, mode: .twoWayLostFocus))
+        XCTAssertEqual(field.text, initialValue)
+
+        field.text = editedValue
+
+        sync()
+
+        XCTAssertEqual(observable.value, initialValue)
+
+        field.sendActions(for: .editingDidEnd)
+
+        sync()
+
+        XCTAssertEqual(field.text, editedValue)
+        XCTAssertEqual(observable.value, editedValue)
+    }
 }
