@@ -189,7 +189,8 @@ class ViewModelUpdatingTests: XCTestCase {
 
     class TestViewModel: ViewModel {
         var loadingTask: Task<Void>!
-        override func loadData() -> NotifyCompletion {
+
+        func loadData() -> NotifyCompletion {
             load(task: loadingTask)
             return super.loadData()
         }
