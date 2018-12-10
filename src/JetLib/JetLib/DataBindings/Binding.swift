@@ -14,13 +14,17 @@ public struct BindingMode: RawRepresentable, OptionSet {
 
     public let rawValue: UInt8
 
-    public static let updateTarget: BindingMode = BindingMode(rawValue: 0x01)
-    public static let updateObservable: BindingMode = BindingMode(rawValue: 0x02)
-    public static let immediatelyUpdateTarget: BindingMode = BindingMode(rawValue: 0x04)
-    public static let immediatelyUpdateObservable: BindingMode = BindingMode(rawValue: 0x08)
+    public static let updateTarget: BindingMode =                   BindingMode(rawValue: 1 << 0)
+    public static let immediatelyUpdateTarget: BindingMode =        BindingMode(rawValue: 1 << 1)
+    public static let immediatelyUpdateObservable: BindingMode =    BindingMode(rawValue: 1 << 2)
+    public static let updateObservableOnValueChanged: BindingMode = BindingMode(rawValue: 1 << 3)
+    public static let updateObservableOnLostFocus: BindingMode =    BindingMode(rawValue: 1 << 4)
+
+    public static let updateObservable: BindingMode = [.updateObservableOnValueChanged, .updateObservableOnLostFocus]
 
     public static let oneWay: BindingMode = [.updateTarget, .immediatelyUpdateTarget]
     public static let twoWay: BindingMode = [.updateTarget, .updateObservable, .immediatelyUpdateTarget]
+    public static let twoWayLostFocus: BindingMode = [.updateTarget, .immediatelyUpdateTarget, .updateObservableOnLostFocus]
 }
 
 public class Binding<Target: BindingTarget, Value: Equatable> {
@@ -77,8 +81,11 @@ public class Binding<Target: BindingTarget, Value: Equatable> {
             observable.notify(self, fireRightNow: false) { $0.targetSetter?($0.target, $1) }
         }
 
-        if mode.contains(.updateObservable) {
+        if mode.contains(.updateObservableOnValueChanged) {
             control?.addTarget(self, action: #selector(controlValueChanged), for: [.valueChanged, .editingChanged])
+        }
+
+        if mode.contains(.updateObservableOnLostFocus) {
             control?.addTarget(self, action: #selector(controlEditingEnded), for: [.editingDidEnd])
         }
 
