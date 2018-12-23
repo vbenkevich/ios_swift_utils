@@ -22,7 +22,7 @@ class BindingControllerViewModel: ViewModel {
     }
 
     struct PropertyValidator: ValidationRule {
-        typealias Data = String
+        typealias Value = String
 
         func check(_ data: String?) -> ValidationResult {
             guard data == nil || data == "correct" else {

@@ -13,19 +13,32 @@ public class Observable<Value: Equatable> {
         self.validation = nil
     }
 
-    public var value: Value? {
+    private var _value: Value? {
         didSet {
-            guard oldValue != value else {
+            guard oldValue != _value else {
                 return
             }
 
-            fireNotificationWorkItem = DispatchWorkItem { [value, weak self] in
-                self?.fireNotifications(old: oldValue, new: value)
+            fireNotificationWorkItem = DispatchWorkItem { [_value, weak self] in
+                self?.fireNotifications(old: oldValue, new: _value)
             }
         }
     }
 
-    public var validation: ObservableValueValidation<Value>?
+    public var value: Value? {
+        get { return _value }
+        set {
+            if let correction = correction {
+                _value = correction.correct(oldValue: _value, newValue: newValue)
+            } else {
+                _value = newValue
+            }
+        }
+    }
+
+    public var correction: ObservableCorrection<Value>?
+
+    public var validation: ObservableValidation<Value>?
 
     public var throttling: DispatchTimeInterval?
 
