@@ -56,7 +56,7 @@ extension ViewModel: Updatable {
 
         initiator.updateStarted()
 
-        self.startLoadData().notify(DispatchQueue.main) { _ in
+        self.startLoadData().notify(queue: DispatchQueue.main) { _ in
             initiator.updateCompleted()
         }
     }

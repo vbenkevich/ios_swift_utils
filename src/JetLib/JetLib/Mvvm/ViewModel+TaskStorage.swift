@@ -41,14 +41,14 @@ extension ViewModel {
 
                     tagged[tag] = task
 
-                    task.notify(workQueue) { [weak self] (_) in
+                    task.notify(queue: workQueue) { [weak self] (_) in
                         guard let storage = self, let old = storage.tagged[tag], old === task else { return }
                         storage.tagged.removeValue(forKey: tag)
                     }
                 }
             }
 
-            return task.notify(workQueue) { [weak self] (_) in
+            return task.notify(queue: workQueue) { [weak self] (_) in
                 guard let storage = self else { return }
                 storage.all = storage.all.filter { return $0 !== task }
             }

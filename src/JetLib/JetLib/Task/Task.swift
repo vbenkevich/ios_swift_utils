@@ -13,19 +13,14 @@ public protocol Cancellable: class {
 public protocol NotifyCompletion: class {
 
     @discardableResult
-    func notify(_ queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self
+    func notify(queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self
 }
 
 public extension NotifyCompletion {
 
     @discardableResult
     func notify(callBack: @escaping (Self) -> Void) -> Self {
-        return notify(DispatchQueue.main, callBack: callBack)
-    }
-
-    @discardableResult
-    func notify(queue: DispatchQueue, callBack: @escaping (Self) -> Void) -> Self {
-        return notify(queue, callBack: callBack)
+        return notify(queue: DispatchQueue.main, callBack: callBack)
     }
 }
 
@@ -104,7 +99,7 @@ public final class Task<T>: Cancellable, NotifyCompletion {
     private var _status: Status = .new
 
     @discardableResult
-    public func notify(_ queue: DispatchQueue, callBack: @escaping (Task<T>) -> Void) -> Task<T> {
+    public func notify(queue: DispatchQueue, callBack: @escaping (Task<T>) -> Void) -> Task<T> {
         if status.isCompleted {
             callBack(self)
             return self
