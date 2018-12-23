@@ -32,10 +32,11 @@ public struct ValidationResult: Equatable {
     public let error: String?
 }
 
-//
+/// Data validation policy
 public protocol ValidationRule {
     associatedtype Value
 
+    /// perform validation of data
     func check(_ data: Value?) -> ValidationResult
 }
 

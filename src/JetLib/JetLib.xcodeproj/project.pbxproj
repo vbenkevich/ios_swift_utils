@@ -36,6 +36,8 @@
 		BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDF7211C954000C81653 /* Task+Source.swift */; };
 		BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFA211C95C700C81653 /* Task+Status.swift */; };
 		BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */; };
+		BA7D58CD21CFBFA3008A3177 /* Observable+Correction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7D58CC21CFBFA3008A3177 /* Observable+Correction.swift */; };
+		BA7D58CF21CFD9DA008A3177 /* Observable+Correction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7D58CE21CFD9DA008A3177 /* Observable+Correction.swift */; };
 		BA9EB30821135DDA0008C539 /* Task+Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB30721135DDA0008C539 /* Task+Chain.swift */; };
 		BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F254D211CA679009ABE47 /* TaskChainTests.swift */; };
 		BAA652BF2188B77400E4BDC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA652BE2188B77400E4BDC3 /* AppDelegate.swift */; };
@@ -119,6 +121,8 @@
 		BA7CEDF7211C954000C81653 /* Task+Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Source.swift"; sourceTree = "<group>"; };
 		BA7CEDFA211C95C700C81653 /* Task+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Status.swift"; sourceTree = "<group>"; };
 		BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSourceTests.swift; sourceTree = "<group>"; };
+		BA7D58CC21CFBFA3008A3177 /* Observable+Correction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Correction.swift"; sourceTree = "<group>"; };
+		BA7D58CE21CFD9DA008A3177 /* Observable+Correction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Correction.swift"; sourceTree = "<group>"; };
 		BA9EB304211351590008C539 /* SpinLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
 		BA9EB30721135DDA0008C539 /* Task+Chain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Chain.swift"; sourceTree = "<group>"; };
 		BA9F254D211CA679009ABE47 /* TaskChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskChainTests.swift; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 			children = (
 				BACD957C21763AED008396D5 /* Observable.swift */,
 				BA7BF569218CB20000647286 /* Observable+Validation.swift */,
+				BA7D58CC21CFBFA3008A3177 /* Observable+Correction.swift */,
 				BAD07B2E219E10D4003111E9 /* Observable+Merge.swift */,
 				BAA652D5218A127200E4BDC3 /* ValueConverter.swift */,
 				BAED2512218CD7DF00F68E96 /* Binding.swift */,
@@ -386,6 +391,7 @@
 				BACD957F21775E94008396D5 /* ObservableTests.swift */,
 				BAA652D7218AFD2900E4BDC3 /* BindingTargetTests.swift */,
 				BAF27E9221906E390075B6F1 /* BindingValidationTests.swift */,
+				BA7D58CE21CFD9DA008A3177 /* Observable+Correction.swift */,
 			);
 			path = DataBindings;
 			sourceTree = "<group>";
@@ -543,6 +549,7 @@
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BAA652D22189DBEA00E4BDC3 /* UIControls+BindingTarget.swift in Sources */,
 				BA6666832163717D0004D41B /* ViewModel+Updating.swift in Sources */,
+				BA7D58CD21CFBFA3008A3177 /* Observable+Correction.swift in Sources */,
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
 				BA2043DD212D896000343D45 /* HttpResponse.swift in Sources */,
@@ -589,6 +596,7 @@
 				BACD958021775E94008396D5 /* ObservableTests.swift in Sources */,
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
+				BA7D58CF21CFD9DA008A3177 /* Observable+Correction.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
 				BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */,
 				BA66668A2163C3940004D41B /* ViewLifecycleTests.swift in Sources */,
