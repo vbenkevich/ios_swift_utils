@@ -107,7 +107,7 @@ class TaskSourceTests: XCTestCase {
         let source = Task<String>.Source()
         let notify = expectation(description: "notify")
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify.fulfill()
         }
@@ -120,7 +120,7 @@ class TaskSourceTests: XCTestCase {
         let source = Task<String>.Source()
         let notify = expectation(description: "notify")
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify.fulfill()
         }
@@ -133,7 +133,7 @@ class TaskSourceTests: XCTestCase {
         let source = Task<String>.Source()
         let notify = expectation(description: "notify")
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify.fulfill()
         }
@@ -146,7 +146,7 @@ class TaskSourceTests: XCTestCase {
         let source = Task<String>.Source()
         let notify = expectation(description: "notify")
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify.fulfill()
         }
@@ -159,7 +159,7 @@ class TaskSourceTests: XCTestCase {
         let source = Task<String>.Source()
         let notify = expectation(description: "notify")
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify.fulfill()
         }
@@ -178,7 +178,7 @@ class TaskSourceTests: XCTestCase {
 
         XCTAssertNoThrow(try source.complete(expectedResult))
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify.fulfill()
         }
@@ -192,19 +192,19 @@ class TaskSourceTests: XCTestCase {
         let notify2 = expectation(description: "callback2")
         let notify3 = expectation(description: "callback after finish")
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify1.fulfill()
         }
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify2.fulfill()
         }
 
         XCTAssertNoThrow(try source.complete(expectedResult))
 
-        source.task.notify(notifyQueue) {
+        source.task.notify(queue: notifyQueue) {
             XCTAssert($0 === source.task)
             notify3.fulfill()
         }

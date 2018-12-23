@@ -150,7 +150,7 @@ class BindingValidationTests: XCTestCase {
 
     class TestRule: ValidationRule {
 
-        typealias Data = String
+        typealias Value = String
 
         var expected: String? = "expected value"
         var message = "fail"
