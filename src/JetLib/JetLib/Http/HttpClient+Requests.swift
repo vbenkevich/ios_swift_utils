@@ -15,40 +15,49 @@ public class HttpMethod {
 
 public extension HttpClient {
 
-    public func request<TResponse: HttpResponse>(_ url: URL, body: Data?, method: String, adapter: URLRequestAdapter?) throws -> Task<TResponse> {
-        guard URLComponents(url: url, resolvingAgainstBaseURL: true) != nil else {
+    public func request(url: URL, urlParams: [String: CustomStringConvertible]?, body: Data?, method: String, adapter: URLRequestAdapter?) throws -> Task<Response> {
+        guard let originUrlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             throw HttpException.badUrlFormat
         }
 
-        var request = URLRequest(url: url)
-        request.httpMethod = method
-        request.httpBody = body
+        var components = originUrlComponents
 
-        return self.request(request, adapter: adapter)
-    }
-
-    public func get<TResponse: HttpResponse>(_ url: URL, params: [String: CustomStringConvertible] = [:], adapter: URLRequestAdapter? = nil) throws -> Task<TResponse> {
-        guard let old = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            throw HttpException.badUrlFormat
+        if let params = urlParams {
+            components.queryItems = params.map {
+                URLQueryItem(name: $0.0, value: $0.1.description)
+            }
         }
 
-        var components = old
-        components.queryItems = params.map {
-            URLQueryItem(name: $0.0, value: $0.1.description)
-        }
-
-        guard let url = components.url else {
+        guard let resultUrl = components.url else {
             throw HttpException.badParametersFormat
         }
 
-        return try self.request(url, body: nil, method: HttpMethod.get, adapter: adapter)
+        var request = URLRequest(url: resultUrl)
+        request.httpMethod = method
+        request.httpBody = body
+
+        return self.send(request, adapter: adapter)
     }
 
-    public func post<TResponse: HttpResponse>(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<TResponse> {
-        return try request(url, body: body, method: HttpMethod.post, adapter: adapter)
+    public func get(_ url: URL, id: CustomStringConvertible? = nil, urlParams: [String: CustomStringConvertible]? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+        var resultUrl = url
+
+        if let id = id {
+            resultUrl = resultUrl.appendingPathComponent(id.description)
+        }
+
+        return try request(url: resultUrl, urlParams: urlParams, body: nil, method: HttpMethod.get, adapter: adapter)
     }
 
-    public func put<TResponse: HttpResponse>(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<TResponse> {
-        return try request(url, body: body, method: HttpMethod.put, adapter: adapter)
+    public func post(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+        return try request(url: url, urlParams: nil, body: body, method: HttpMethod.post, adapter: adapter)
+    }
+
+    public func put(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+        return try request(url: url, urlParams: nil, body: body, method: HttpMethod.put, adapter: adapter)
+    }
+
+    public func delete(_ url: URL, id: CustomStringConvertible, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+        return try request(url: url.appendingPathComponent(id.description), urlParams: nil, body: nil, method: HttpMethod.delete, adapter: adapter)
     }
 }
