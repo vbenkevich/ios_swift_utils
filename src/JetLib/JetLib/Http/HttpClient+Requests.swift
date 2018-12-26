@@ -22,7 +22,7 @@ public extension HttpClient {
 
         var components = originUrlComponents
 
-        if let params = urlParams {
+        if let params = urlParams, !params.isEmpty {
             components.queryItems = params.map {
                 URLQueryItem(name: $0.0, value: $0.1.description)
             }
