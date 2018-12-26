@@ -69,7 +69,7 @@ class HttpMocksTests: XCTestCase {
         session.setResult(response, data: data, error: error, for: WildCardPredicate.instance, lifetime: .oneRequest)
 
         try! client.get(testUrl1).notify {
-            XCTAssertEqual($0.result?.origin, response)
+            XCTAssertEqual($0.result?.response, response)
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.error as? TestError, error)
             exp.fulfill()
@@ -97,7 +97,7 @@ class HttpMocksTests: XCTestCase {
         wait(expectation1)
 
         try! client.get(testUrl1).notify {
-            XCTAssertNil($0.result?.origin)
+            XCTAssertNil($0.result?.response)
             XCTAssertNil($0.result?.content)
             XCTAssertNotNil($0.result?.error)
             expectation2.fulfill()
@@ -119,7 +119,7 @@ class HttpMocksTests: XCTestCase {
         session.setResult(response, data: data, error: error, for: WildCardPredicate.instance, lifetime: .thisSession)
 
         try! client.get(testUrl1).notify {
-            XCTAssertEqual($0.result?.origin, response)
+            XCTAssertEqual($0.result?.response, response)
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.error as? TestError, error)
             expectation1.fulfill()
@@ -128,7 +128,7 @@ class HttpMocksTests: XCTestCase {
         wait(expectation1)
 
         try! client.get(testUrl1).notify {
-            XCTAssertEqual($0.result?.origin, response)
+            XCTAssertEqual($0.result?.response, response)
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.error as? TestError, error)
             expectation2.fulfill()
@@ -153,14 +153,14 @@ class HttpMocksTests: XCTestCase {
         session.setResult(response, data: data, error: error, for: WildCardPredicate.instance, lifetime: .thisSession)
 
         try! client.get(testUrl1).notify {
-            XCTAssertEqual($0.result?.origin, response)
+            XCTAssertEqual($0.result?.response, response)
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.error as? TestError, error)
             expectation1.fulfill()
         }
 
         try! anotherClient.get(testUrl1).notify {
-            XCTAssertNil($0.result?.origin)
+            XCTAssertNil($0.result?.response)
             XCTAssertNil($0.result?.content)
             XCTAssertNotNil($0.result?.error)
             expectation2.fulfill()
@@ -186,14 +186,14 @@ class HttpMocksTests: XCTestCase {
         session.setResult(response, data: data, error: error, for: WildCardPredicate.instance, lifetime: .allSessions)
 
         try! client.get(testUrl1).notify {
-            XCTAssertEqual($0.result?.origin, response)
+            XCTAssertEqual($0.result?.response, response)
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.error as? TestError, error)
             expectation1.fulfill()
         }
 
         try! anotherClient.get(testUrl1).notify {
-            XCTAssertEqual($0.result?.origin, response)
+            XCTAssertEqual($0.result?.response, response)
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.error as? TestError, error)
             expectation2.fulfill()

@@ -25,7 +25,7 @@ class HttpClientBasicTests: XCTestCase {
     func testRequestExecution() {
         let callbackExp = expectation(description: "callback")
 
-        let requestTask: Task<HttpResponse> = client.request(testRequest)
+        let requestTask = client.send(testRequest)
         requestTask.notify { _ in
             callbackExp.fulfill()
         }
@@ -44,7 +44,7 @@ class HttpClientBasicTests: XCTestCase {
         mockSession.cleanResults()
         mockSession.setResult(response, data: data, error: error, for: ".", lifetime: .oneRequest)
 
-        let requestTask: Task<HttpResponse> = client.request(request)
+        let requestTask = client.send(request)
         requestTask.notify {
             XCTAssertEqual($0.result?.content, data)
             XCTAssertEqual($0.result?.request, request)
@@ -62,7 +62,7 @@ class HttpClientBasicTests: XCTestCase {
 
         let callbackExp = expectation(description: "callback")
 
-        let requestTask: Task<HttpResponse> = client.request(testRequest)
+        let requestTask = client.send(testRequest)
         requestTask.notify {
             XCTAssertEqual($0.result?.request.allHTTPHeaderFields![adapter.headerField], adapter.headerValue)
             callbackExp.fulfill()
@@ -75,7 +75,7 @@ class HttpClientBasicTests: XCTestCase {
         let adapter = TestRequestAdapter()
         let callbackExp = expectation(description: "callback")
 
-        let requestTask: Task<HttpResponse> = client.request(testRequest, adapter: adapter)
+        let requestTask = client.send(testRequest, adapter: adapter)
         requestTask.notify {
             XCTAssertEqual($0.result?.request.allHTTPHeaderFields![adapter.headerField], adapter.headerValue)
             callbackExp.fulfill()
@@ -93,7 +93,7 @@ class HttpClientBasicTests: XCTestCase {
         localAdapter.headerValue = "local value"
         client.requetAdapter = globalAdapter
 
-        let requestTask: Task<HttpResponse> = client.request(testRequest, adapter: localAdapter)
+        let requestTask = client.send(testRequest, adapter: localAdapter)
         requestTask.notify {
             XCTAssertEqual($0.result?.request.allHTTPHeaderFields![localAdapter.headerField], localAdapter.headerValue)
             XCTAssertNil($0.result?.request.allHTTPHeaderFields![globalAdapter.headerField])
@@ -109,7 +109,7 @@ class HttpClientBasicTests: XCTestCase {
         mockSession.delay = .seconds(2)
         mockSession.setResult(nil, for: testRequest.url!)
 
-        let requestTask: Task<HttpResponse> = client.request(testRequest)
+        let requestTask = client.send(testRequest)
         requestTask.notify {
             XCTAssertEqual($0.status, .cancelled)
             callbackExp.fulfill()
