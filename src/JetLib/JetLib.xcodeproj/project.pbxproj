@@ -30,6 +30,8 @@
 		BA66668A2163C3940004D41B /* ViewLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6666892163C3940004D41B /* ViewLifecycleTests.swift */; };
 		BA68135921D27C4A008BE2FA /* HttpClient+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68135821D27C4A008BE2FA /* HttpClient+Decoding.swift */; };
 		BA68135B21D29271008BE2FA /* HttpClient+Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68135A21D29271008BE2FA /* HttpClient+Exception.swift */; };
+		BA68136921D4D77C008BE2FA /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136821D4D77C008BE2FA /* Alerts.swift */; };
+		BA68136B21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */; };
 		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
 		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
 		BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7BF569218CB20000647286 /* Observable+Validation.swift */; };
@@ -115,6 +117,8 @@
 		BA6666892163C3940004D41B /* ViewLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLifecycleTests.swift; sourceTree = "<group>"; };
 		BA68135821D27C4A008BE2FA /* HttpClient+Decoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Decoding.swift"; sourceTree = "<group>"; };
 		BA68135A21D29271008BE2FA /* HttpClient+Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Exception.swift"; sourceTree = "<group>"; };
+		BA68136821D4D77C008BE2FA /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewContlroller+Alerts.swift"; sourceTree = "<group>"; };
 		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
 		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
 		BA7BF569218CB20000647286 /* Observable+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Validation.swift"; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 				BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */,
 				BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */,
 				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
+				BA68136821D4D77C008BE2FA /* Alerts.swift */,
+				BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */,
 			);
 			path = Mvvm;
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
 				BADE86F421A828D600282B1B /* SlideMenu.swift in Sources */,
+				BA68136921D4D77C008BE2FA /* Alerts.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
 				BA6666812163711D0004D41B /* View.swift in Sources */,
@@ -565,6 +572,7 @@
 				BA68135921D27C4A008BE2FA /* HttpClient+Decoding.swift in Sources */,
 				BAC82014210F7AAC0011DCF3 /* HttpClient.swift in Sources */,
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
+				BA68136B21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift in Sources */,
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
 				BAA652D4218A124200E4BDC3 /* BindingTarget.swift in Sources */,
 				BA18413B21B2D34600253718 /* Exception.swift in Sources */,
