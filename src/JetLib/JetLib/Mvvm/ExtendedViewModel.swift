@@ -17,9 +17,9 @@ public extension ViewModel {
 
 open class ExtendedViewModel: ViewModel {
 
-    public var loadingPresenter: LoadingPresenter? = nil
+    public weak var loadingPresenter: LoadingPresenter? = nil
 
-    public var alertPresenter: AlertPresenter? = nil
+    public weak var alertPresenter: AlertPresenter? = nil
 
     private var isLoading: Bool = false {
         didSet {

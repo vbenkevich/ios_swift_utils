@@ -6,7 +6,7 @@
 import Foundation
 
 /// Provide alert displaing feature
-public protocol AlertPresenter {
+public protocol AlertPresenter: class {
 
     /** displays an UIAlertViewController
      title, message an cancel are optional

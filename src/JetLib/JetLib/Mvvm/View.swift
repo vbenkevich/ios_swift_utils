@@ -5,11 +5,13 @@
 
 import Foundation
 
+@objc
 public protocol View: class {
 
     func sendViewAppearance(to delegate: ViewLifecycleDelegate, retain: Bool)
 }
 
+@objc
 public protocol ViewLifecycleDelegate: class {
 
     func viewWillAppear(_ animated: Bool)
@@ -21,7 +23,8 @@ public protocol ViewLifecycleDelegate: class {
     func viewDidDisappear(_ animated: Bool)
 }
 
-public protocol LoadingPresenter {
+@objc
+public protocol LoadingPresenter: class {
 
     func showLoading(_ loading: Bool)
 }
