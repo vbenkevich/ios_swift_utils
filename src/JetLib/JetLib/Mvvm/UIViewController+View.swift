@@ -8,6 +8,13 @@ import UIKit
 private var appeaarancesSwizzled: Int32 = 0
 private var lifecycleDelegatesKey = 1
 
+public extension View {
+
+    func sendViewAppearance(to delegate: ViewLifecycleDelegate) {
+        sendViewAppearance(to: delegate, retain: true)
+    }
+}
+
 extension UIViewController: View {
 
     var lifecycleDelegates: [LifecycleDelegeteHolder] {
@@ -37,9 +44,14 @@ extension UIViewController: View {
             class_getInstanceMethod(self, #selector(swizzled_viewDidDisappear(_:)))!)
     }
 
+    @available(*, deprecated, message: "use sendViewAppearance(to:retain:) instead")
     public func add(_ delegate: ViewLifecycleDelegate, strongReference: Bool = true) {
+        sendViewAppearance(to: delegate, retain: strongReference)
+    }
+
+    public func sendViewAppearance(to delegate: ViewLifecycleDelegate, retain: Bool) {
         if !lifecycleDelegates.contains(where: { $0.delegate === delegate }) {
-            lifecycleDelegates.append(strongReference ? Strong(delegate) : Weak(delegate))
+            lifecycleDelegates.append(retain ? Strong(delegate) : Weak(delegate))
         }
     }
 

@@ -5,9 +5,25 @@
 
 import Foundation
 
+public protocol ViewModelDataLoaderProtocol: class {
+
+    var isLoading: Bool { get }
+
+    @discardableResult
+    func append<T>(_ task: Task<T>) throws -> Task<T>
+
+    @discardableResult
+    func load() -> Task<Void>
+
+    @discardableResult
+    func abort() -> NotifyCompletion
+}
+
 public extension ViewModel {
 
-    public class DataLoader {
+    public typealias DataLoader = ViewModelDataLoaderProtocol
+
+    public class DefaultDataLoader: DataLoader {
 
         private let syncQueue: DispatchQueue
 
@@ -18,7 +34,7 @@ public extension ViewModel {
         private var tasks = [NotifyCompletion & Cancellable]()
         private var loading: TaskGroup!
 
-        var isLoading: Bool {
+        public var isLoading: Bool {
             return loading != nil && !loading.whenAll().isCompleted
         }
 
@@ -26,7 +42,7 @@ public extension ViewModel {
         public func append<T>(_ task: Task<T>) throws -> Task<T> {
             return try syncQueue.sync {
                 guard loading == nil else {
-                    throw Exception("Data loading has already been started ar cancelled.")
+                    throw Exception("Data loading has already been started or cancelled.")
                 }
 
                 tasks.append(task)
@@ -36,7 +52,7 @@ public extension ViewModel {
         }
 
         @discardableResult
-        func load() -> Task<Void> {
+        public func load() -> Task<Void> {
             return syncQueue.sync {
                 if loading == nil {
                     loading = TaskGroup(tasks)
@@ -48,7 +64,7 @@ public extension ViewModel {
         }
 
         @discardableResult
-        func abort() -> NotifyCompletion {
+        public func abort() -> NotifyCompletion {
             return syncQueue.sync {
                 if loading == nil {
                     return Task()
