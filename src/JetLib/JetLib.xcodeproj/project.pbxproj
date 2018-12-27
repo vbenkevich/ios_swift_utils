@@ -34,6 +34,8 @@
 		BA68136B21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */; };
 		BA68136D21D4E003008BE2FA /* ExtendedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136C21D4E003008BE2FA /* ExtendedViewModel.swift */; };
 		BA68136F21D4FD00008BE2FA /* UIViewController+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136E21D4FD00008BE2FA /* UIViewController+Loading.swift */; };
+		BA68137121D50B22008BE2FA /* ExtendedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68137021D50B22008BE2FA /* ExtendedViewModelTests.swift */; };
+		BA68137321D50CC8008BE2FA /* Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68137221D50CC8008BE2FA /* Stub.swift */; };
 		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
 		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
 		BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7BF569218CB20000647286 /* Observable+Validation.swift */; };
@@ -123,6 +125,8 @@
 		BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewContlroller+Alerts.swift"; sourceTree = "<group>"; };
 		BA68136C21D4E003008BE2FA /* ExtendedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedViewModel.swift; sourceTree = "<group>"; };
 		BA68136E21D4FD00008BE2FA /* UIViewController+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Loading.swift"; sourceTree = "<group>"; };
+		BA68137021D50B22008BE2FA /* ExtendedViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedViewModelTests.swift; sourceTree = "<group>"; };
+		BA68137221D50CC8008BE2FA /* Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stub.swift; sourceTree = "<group>"; };
 		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
 		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
 		BA7BF569218CB20000647286 /* Observable+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Validation.swift"; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 				BA6666852163850B0004D41B /* ViewModelTests.swift */,
 				BAF27E8E219046AA0075B6F1 /* ViewModelUpdatingTests.swift */,
 				BA6666892163C3940004D41B /* ViewLifecycleTests.swift */,
+				BA68137021D50B22008BE2FA /* ExtendedViewModelTests.swift */,
 			);
 			path = Mvvm;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				BAC4451821357BEC005AB974 /* TestError.swift */,
 				BAC4451A21357E19005AB974 /* HTTPURLResponse.swift */,
 				BAE6485721384CC9000BB449 /* XCTestCase.swift */,
+				BA68137221D50CC8008BE2FA /* Stub.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -599,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAC4452D2137FCE0005AB974 /* TaskGroupTests.swift in Sources */,
+				BA68137321D50CC8008BE2FA /* Stub.swift in Sources */,
 				BAA652D8218AFD2900E4BDC3 /* BindingTargetTests.swift in Sources */,
 				BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */,
 				BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */,
@@ -612,6 +619,7 @@
 				BACD958021775E94008396D5 /* ObservableTests.swift in Sources */,
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
+				BA68137121D50B22008BE2FA /* ExtendedViewModelTests.swift in Sources */,
 				BA7D58CF21CFD9DA008A3177 /* Observable+Correction.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
 				BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */,

@@ -17,7 +17,11 @@ extension UIViewController: AlertPresenter {
      */
     @discardableResult
     public func showAlert(title: String?, message: String?, ok: String, cancel: String?) -> Task<Void> {
-        return showAlertImpl(title: title, message: message, ok: ok, okStyle: .default, cancel: cancel)
+        let source = Task<Void>.Source()
+        showAlertImpl(title: title, message: message, ok: ok, okStyle: .default, cancel: cancel,
+                      handleOk: { try? source.complete() },
+                      handleCancel: { try? source.cancel() })
+        return source.task
     }
 
     /** displays an UIAlertViewController
@@ -29,22 +33,26 @@ extension UIViewController: AlertPresenter {
      */
     @discardableResult
     public func showAlert(title: String?, message: String?, delete: String, cancel: String?) -> Task<Void> {
-        return showAlertImpl(title: title, message: message, ok: delete, okStyle: .destructive, cancel: cancel)
+        let source = Task<Void>.Source()
+        showAlertImpl(title: title, message: message, ok: delete, okStyle: .destructive, cancel: cancel,
+                             handleOk: { try? source.complete() },
+                             handleCancel: { try? source.cancel() })
+        return source.task
     }
 
-    @discardableResult
-    private func showAlertImpl(title: String?, message: String?, ok: String, okStyle: UIAlertAction.Style, cancel: String?) -> Task<Void> {
-        let source = Task<Void>.Source()
+    @objc
+    func showAlertImpl(title: String?, message: String?, ok: String, okStyle: UIAlertAction.Style, cancel: String?,
+                       handleOk: @escaping () -> Void,
+                       handleCancel: @escaping () -> Void)
+    {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: ok, style: okStyle, handler: { _ in try? source.complete() }))
+        alert.addAction(UIAlertAction(title: ok, style: okStyle, handler: { _ in handleOk() }))
 
         if let cancel = cancel {
-            alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: { _ in try? source.cancel() }))
+            alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: { _ in handleCancel() }))
         }
 
         self.present(alert, animated: true, completion: nil)
-
-        return source.task
     }
 }

@@ -36,17 +36,18 @@ open class ExtendedViewModel: ViewModel {
         super.viewWillAppear(animated)
     }
 
+    @discardableResult
     override open func submit<TData>(task: Task<TData>, tag: DataTaskTag? = nil) -> Task<TData> {
         if !loading {
             self.updateStarted()
         }
 
-        return super.submit(task: task, tag: tag).notify { [weak self] (_) in
+        return super.submit(task: task, tag: tag).notify { [weak self] _ in
             if self?.loading == false {
                 self?.updateCompleted()
             }
         }.onFail { [weak self] in
-            self?.alertPresenter?.showAlert(error: $0)
+            self?.showAlert(error: $0)
         }
     }
 
@@ -80,7 +81,7 @@ open class ExtendedViewModel: ViewModel {
             let originTask = try decoree.append(task)
 
             originTask.onFail { [weak self] in
-                self?.viewModel?.alertPresenter?.showAlert(error: $0)
+                self?.viewModel?.showAlert(error: $0)
             }
 
             return originTask
@@ -101,7 +102,7 @@ public extension ExtendedViewModel {
     public typealias ExtendedView = View & AlertPresenter & LoadingPresenter
 
     @discardableResult
-    func loadings(presenter: LoadingPresenter) -> ExtendedViewModel {
+    func loadings(presenter: LoadingPresenter?) -> ExtendedViewModel {
         self.loadingPresenter = presenter
         return self
     }
@@ -112,8 +113,9 @@ public extension ExtendedViewModel {
         return self
     }
 
-    func wire(with view: ExtendedView) {
-        self.lifecycle(source: view)
+    @discardableResult
+    func wire(with view: ExtendedView) -> ExtendedViewModel {
+        return self.lifecycle(source: view)
             .loadings(presenter: view)
             .alerts(presenter: view)
     }
@@ -121,11 +123,13 @@ public extension ExtendedViewModel {
 
 extension ExtendedViewModel: AlertPresenter {
 
+    @discardableResult
     public func showAlert(title: String?, message: String?, ok: String, cancel: String?) -> Task<Void> {
         return self.alertPresenter?.showAlert(title: title, message: message, ok: ok, cancel: cancel)
             ?? Task(Exception("alertPresenter doesn't set"))
     }
 
+    @discardableResult
     public func showAlert(title: String?, message: String?, delete: String, cancel: String?) -> Task<Void> {
         return self.alertPresenter?.showAlert(title: title, message: message, delete: delete, cancel: cancel)
             ?? Task(Exception("alertPresenter doesn't set"))

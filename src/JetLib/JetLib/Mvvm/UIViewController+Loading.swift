@@ -8,6 +8,13 @@ import UIKit
 
 private var loadingPresenterKey: Int32 = 0
 
+extension UIViewController: LoadingPresenter {
+
+    public func showLoading(_ loading: Bool) {
+        getLoadingPresenter()?.showLoading(loading)
+    }
+}
+
 extension UIViewController {
 
     fileprivate var currentLoadingPresenter: LoadingPresenter? {
@@ -22,6 +29,7 @@ extension UIViewController {
         return currentLoadingPresenter
     }
 
+    @objc
     open func createAndAttachLoadingPresenter() -> LoadingPresenter? {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.backgroundColor = UIColor.black.withAlphaComponent(0.33)
@@ -57,10 +65,6 @@ extension UIViewController {
         }
 
         public var indicator: UIActivityIndicatorView
-
-        var current: UIActivityIndicatorView? {
-            return UIApplication.shared.keyWindow?.subviews.last(where: { $0 is UIActivityIndicatorView }) as? UIActivityIndicatorView
-        }
 
         public func showLoading(_ loading: Bool) {
             cleanOther()
