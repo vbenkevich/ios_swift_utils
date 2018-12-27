@@ -92,9 +92,16 @@ public extension AlertPresenter {
      */
     @discardableResult
     func showAlert(error: Error) -> Task<Void> {
-        return showAlert(title: AlertPresenterDefaults.instance.errorTitle,
-                         message: "\(error)",
-                         ok: AlertPresenterDefaults.instance.okButtonText,
-                         cancel: nil)
+        if (error as? Exception)?.handled != true {
+            let exception = error as? Exception
+            exception?.handled = true
+
+            return showAlert(title: AlertPresenterDefaults.instance.errorTitle,
+                             message: "\(error)",
+                             ok: AlertPresenterDefaults.instance.okButtonText,
+                             cancel: nil)
+        } else {
+            return Task()
+        }
     }
 }

@@ -16,7 +16,7 @@ open class Exception: Error, CustomStringConvertible, CustomDebugStringConvertib
 
     public let source: Error?
 
-    open var handeld: Bool = false
+    open var handled: Bool = false
 
     open var description: String {
         return message
