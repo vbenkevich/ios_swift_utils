@@ -237,12 +237,15 @@ class ViewModelTests: XCTestCase {
     }
 }
 
-class BaseTestView: View, DataLoadingPresenter {
+class BaseTestView: View, LoadingPresenter {
 
     var loading: Bool = false
 
     func showLoading(_ loading: Bool) {
         self.loading = loading
+    }
+
+    func sendViewAppearance(to delegate: ViewLifecycleDelegate, retain: Bool) {
     }
 }
 

@@ -6,6 +6,8 @@
 import Foundation
 
 public protocol View: class {
+
+    func sendViewAppearance(to delegate: ViewLifecycleDelegate, retain: Bool)
 }
 
 public protocol ViewLifecycleDelegate: class {
@@ -19,7 +21,7 @@ public protocol ViewLifecycleDelegate: class {
     func viewDidDisappear(_ animated: Bool)
 }
 
-public protocol DataLoadingPresenter {
+public protocol LoadingPresenter {
 
     func showLoading(_ loading: Bool)
 }

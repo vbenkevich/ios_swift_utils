@@ -32,6 +32,7 @@
 		BA68135B21D29271008BE2FA /* HttpClient+Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68135A21D29271008BE2FA /* HttpClient+Exception.swift */; };
 		BA68136921D4D77C008BE2FA /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136821D4D77C008BE2FA /* Alerts.swift */; };
 		BA68136B21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */; };
+		BA68136D21D4E003008BE2FA /* ExtendedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68136C21D4E003008BE2FA /* ExtendedViewModel.swift */; };
 		BA73AEEC21522D2C002AD0E9 /* HttpMocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */; };
 		BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */; };
 		BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7BF569218CB20000647286 /* Observable+Validation.swift */; };
@@ -119,6 +120,7 @@
 		BA68135A21D29271008BE2FA /* HttpClient+Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Exception.swift"; sourceTree = "<group>"; };
 		BA68136821D4D77C008BE2FA /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewContlroller+Alerts.swift"; sourceTree = "<group>"; };
+		BA68136C21D4E003008BE2FA /* ExtendedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedViewModel.swift; sourceTree = "<group>"; };
 		BA73AEEB21522D2C002AD0E9 /* HttpMocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMocksTests.swift; sourceTree = "<group>"; };
 		BA73AEED21522E44002AD0E9 /* HttpClient+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Mocks.swift"; sourceTree = "<group>"; };
 		BA7BF569218CB20000647286 /* Observable+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Validation.swift"; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				BA6666822163717D0004D41B /* ViewModel+Updating.swift */,
 				BA68136821D4D77C008BE2FA /* Alerts.swift */,
 				BA68136A21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift */,
+				BA68136C21D4E003008BE2FA /* ExtendedViewModel.swift */,
 			);
 			path = Mvvm;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				BACD957D21763AED008396D5 /* Observable.swift in Sources */,
 				BAD07B2F219E10D4003111E9 /* Observable+Merge.swift in Sources */,
 				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,
+				BA68136D21D4E003008BE2FA /* ExtendedViewModel.swift in Sources */,
 				BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */,
 				BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */,
 				BAC445282136A112005AB974 /* TaskGroup.swift in Sources */,
