@@ -52,8 +52,12 @@ open class ViewModel: ViewLifecycleDelegate {
     open func willLoadData(loader: DataLoader) {
     }
 
+    open func newLoader() -> DataLoader {
+        return DefaultDataLoader(syncQueue: dataLoaderQueue)
+    }
+
     public func startLoadData() -> NotifyCompletion {
-        let loader = DataLoader(syncQueue: dataLoaderQueue)
+        let loader = newLoader()
         willLoadData(loader: loader)
         return loadData(loader: loader)
     }
@@ -61,7 +65,7 @@ open class ViewModel: ViewLifecycleDelegate {
     @discardableResult
     @available(*, deprecated, message: "use willLoadData instead")
     open func loadData(loader: DataLoader? = nil) -> NotifyCompletion {
-        let currentLoader = loader ?? self.loader ?? DataLoader(syncQueue: dataLoaderQueue)
+        let currentLoader = loader ?? self.loader ?? newLoader()
         return performDataLoading(loader: currentLoader)
     }
 
@@ -74,9 +78,10 @@ open class ViewModel: ViewLifecycleDelegate {
     }
 
     @discardableResult
+    @available(*, deprecated, message: "use willLoadData instead")
     public func load<TData>(task: Task<TData>) -> Task<TData> {
         if loader == nil {
-            loader = DataLoader(syncQueue: dataLoaderQueue)
+            loader = newLoader()
         }
 
         return try! loader!.append(task)

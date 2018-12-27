@@ -7,7 +7,7 @@ import XCTest
 @testable import JetLib
 
 class HttpClientHelpersTests: XCTestCase {
-    
+
     var client: HttpClient!
     var session: HttpClient.URLSessionMockDecorator!
     var testUrl = URL(string: "http://apple.com")!
@@ -22,9 +22,9 @@ class HttpClientHelpersTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testRequestBuilding() {
-        let data = "test budy".data(using: .utf8)
+        let data = "test body".data(using: .utf8)
         let testMethod = "TEST"
         let requestAdapted = expectation(description: "adapted")
 
@@ -35,7 +35,7 @@ class HttpClientHelpersTests: XCTestCase {
             requestAdapted.fulfill()
         }
 
-        XCTAssertNoThrow(try _ = client.request(testUrl, body: data, method: testMethod, adapter: adapter))
+        XCTAssertNoThrow(try _ = client.request(url: testUrl, urlParams: nil, body: data, method: testMethod, adapter: adapter))
         wait(for: [requestAdapted], timeout: 1)
     }
 
@@ -78,7 +78,7 @@ class HttpClientHelpersTests: XCTestCase {
             "param3"                : "value"
         ]
 
-        let url = URL(string: "http://apple.com?%3E%3E%20%26?!%20%3D%22'%0A%09%0D%2509%3C%3C=%3E%3E%20%26?!%20%3D%22'%0A%09%0D%2520%3C%3C&param1=false&param3=value&param2=10.2")
+        let url = URL(string: "http://apple.com/id1?%3E%3E%20%26?!%20%3D%22'%0A%09%0D%2509%3C%3C=%3E%3E%20%26?!%20%3D%22'%0A%09%0D%2520%3C%3C&param1=false&param3=value&param2=10.2")
 
         let adapter = AssertRequestAdapter {
             XCTAssertNil($0.httpBody)
@@ -88,20 +88,34 @@ class HttpClientHelpersTests: XCTestCase {
             requestAdapted.fulfill()
         }
 
-        XCTAssertNoThrow(try _ = client.get(testUrl, params: params, adapter: adapter))
+        XCTAssertNoThrow(try _ = client.get(testUrl, id: "id1", urlParams: params, adapter: adapter))
         wait(for: [requestAdapted], timeout: 1)
+    }
+
+    func testDeleteRequest() {
+        let requestAdapted = expectation(description: "adapted")
+        let itemId = "item123"
+        let adapter = AssertRequestAdapter {
+            XCTAssertNil($0.httpBody)
+            XCTAssertEqual($0.httpMethod, HttpMethod.delete)
+            XCTAssertEqual($0.url, self.testUrl.appendingPathComponent(itemId))
+            requestAdapted.fulfill()
+        }
+
+        XCTAssertNoThrow(try _ = client.delete(testUrl, id: itemId, adapter: adapter))
+        wait(requestAdapted)
     }
 
     func testValidJsonResponse() {
         let callbackExp = expectation(description: "callback")
         let data = TestData(val1: UUID().uuidString)
 
-        session.setResult(HTTPURLResponse.success(testUrl), data: try! JSONEncoder().encode(data), error: nil, for: testUrl, lifetime: .allSessions)
+        client.mock.setJsonResult(data, for: testUrl)
 
-        let responseTask: Task<JsonResponse<TestData>> = client.request(URLRequest(url: testUrl))
+        let responseTask: Task<TestData> = client.send(URLRequest(url: testUrl)).decode()
         responseTask.notify {
-            XCTAssertEqual($0.result?.data, data)
-            XCTAssertNil($0.result?.error)
+            XCTAssertEqual($0.result, data)
+            XCTAssertNil($0.error)
             callbackExp.fulfill()
         }
 
@@ -112,12 +126,12 @@ class HttpClientHelpersTests: XCTestCase {
         let callbackExp = expectation(description: "callback")
         let data = TestData2(val2: UUID().uuidString)
 
-        session.setResult(HTTPURLResponse.success(testUrl), data: try! JSONEncoder().encode(data), error: nil, for: testUrl)
-
-        let responseTask: Task<JsonResponse<TestData>> = client.request(URLRequest(url: testUrl))
+        client.mock.setJsonResult(data, for: testUrl)
+        
+        let responseTask: Task<TestData> = client.send(URLRequest(url: testUrl)).decode()
         responseTask.notify {
-            XCTAssertNotNil($0.result?.error as? DecodingError)
-            XCTAssertNil($0.result?.data)
+            XCTAssertNotNil($0.error as? DecodingError)
+            XCTAssertNil($0.result)
             callbackExp.fulfill()
         }
 
@@ -154,6 +168,18 @@ class HttpClientHelpersTests: XCTestCase {
 
         XCTAssertNoThrow(try _ = client.put(testUrl, jsonBody: body, adapter: adapter))
         wait(for: [requestAdapted], timeout: 1)
+    }
+
+    func testJsonEmptyBodyDecoding() {
+        let decodeError = expectation(description: "error")
+        client.mock.setResult(HTTPURLResponse.success(testUrl), data: nil, error: nil, for: testUrl, lifetime: .oneRequest)
+
+        let task: Task<TestData> = client.send(URLRequest(url: testUrl)).decode().onFail {
+            XCTAssertTrue(HttpException.responseEmptyBody === $0 as? HttpException)
+            decodeError.fulfill()
+        }
+
+        wait(decodeError)
     }
 
     /// MARK coverage ;)
