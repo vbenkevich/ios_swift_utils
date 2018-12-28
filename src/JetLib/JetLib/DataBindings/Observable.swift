@@ -20,7 +20,7 @@ public class Observable<Value: Equatable> {
             }
 
             fireNotificationWorkItem = DispatchWorkItem { [_value, weak self] in
-                self?.fireNotifications(old: oldValue, new: _value)
+                self?.fireNotifications(new: _value)
             }
         }
     }
@@ -75,7 +75,11 @@ public class Observable<Value: Equatable> {
         targets = targets.filter { !$0.same(with: target) }
     }
 
-    fileprivate func fireNotifications(old: Value?, new: Value?) {
+    public func invalidateValue() {
+        fireNotifications(new: _value)
+    }
+
+    fileprivate func fireNotifications(new: Value?) {
         var shouldClean = false
 
         for target in targets {
