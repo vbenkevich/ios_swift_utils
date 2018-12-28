@@ -106,6 +106,29 @@ class ObservableCorrectionTests: XCTestCase {
         XCTAssertEqual(corrector.correct(oldValue: 40, newValue: 3000), 100)
     }
 
+    func testNotifyAfterCorrection() {
+        let exp = expectation(description: "correction")
+        let originValue = "origin"
+        let unexpectedValue = "correct me"
+        let observable = Observable(originValue)
+
+        observable.correction { old, new in
+            if new == unexpectedValue {
+                return old
+            }
+            return new
+        }
+
+        observable.notify(self, fireRightNow: false) { _, val in
+            XCTAssertEqual(val, originValue)
+            exp.fulfill()
+        }
+
+        observable.value = unexpectedValue
+
+        wait(exp)
+    }
+
     class TestCorrector<T>: ValueCorretor {
         typealias Value = T
 

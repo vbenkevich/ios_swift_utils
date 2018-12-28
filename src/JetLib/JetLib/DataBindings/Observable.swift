@@ -20,7 +20,7 @@ public class Observable<Value: Equatable> {
             }
 
             fireNotificationWorkItem = DispatchWorkItem { [_value, weak self] in
-                self?.fireNotifications(old: oldValue, new: _value)
+                self?.fireNotifications(new: _value)
             }
         }
     }
@@ -29,7 +29,7 @@ public class Observable<Value: Equatable> {
         get { return _value }
         set {
             if let correction = correction {
-                _value = correction.correct(oldValue: _value, newValue: newValue)
+                _value = performCorrection(newValue, corrector: correction)
             } else {
                 _value = newValue
             }
@@ -75,7 +75,22 @@ public class Observable<Value: Equatable> {
         targets = targets.filter { !$0.same(with: target) }
     }
 
-    fileprivate func fireNotifications(old: Value?, new: Value?) {
+    public func invalidateValue() {
+        fireNotifications(new: _value)
+    }
+
+    fileprivate func performCorrection<T: ValueCorretor>(_ new: Value?, corrector: T) -> Value? where T.Value == Value {
+        let old = value
+        let corrected = corrector.correct(oldValue: old, newValue: new)
+
+        if corrected == old && old != new {
+            self.invalidateValue()
+        }
+
+        return corrected
+    }
+    
+    fileprivate func fireNotifications(new: Value?) {
         var shouldClean = false
 
         for target in targets {
