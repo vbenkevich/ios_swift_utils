@@ -6,7 +6,7 @@
 import Foundation
 
 /// value correction policy
-public protocol ValueCorretor {
+public protocol ValueCorrector {
     associatedtype Value
 
     func correct(oldValue: Value?, newValue: Value?) -> Value?
@@ -17,7 +17,7 @@ public protocol ValueCorretor {
  It contains a collection of all correction policies
  Correction is performed before a new value would be set to the observable
  */
-public class ObservableCorrection<T: Equatable>: ValueCorretor {
+public class ObservableCorrection<T: Equatable>: ValueCorrector {
     public typealias Value = T
 
     public init() {
@@ -38,7 +38,7 @@ public class ObservableCorrection<T: Equatable>: ValueCorretor {
 
     /// append the corrector to correctors collection
     @discardableResult
-    public func append<Corrector: ValueCorretor>(_ corrector: Corrector) -> ObservableCorrection
+    public func append<Corrector: ValueCorrector>(_ corrector: Corrector) -> ObservableCorrection
         where Corrector.Value == Value {
             return append({ [corrector] in corrector.correct(oldValue: $0, newValue: $1) })
     }
@@ -55,7 +55,7 @@ public extension Observable {
 
     /// append the new correction to observable's corrections colletion
     @discardableResult
-    func correction<Corrector: ValueCorretor>(_ corrector: Corrector) -> Observable
+    func correction<Corrector: ValueCorrector>(_ corrector: Corrector) -> Observable
         where Corrector.Value == Value {
             getOrCreateCorrection().append(corrector)
             return self
@@ -79,7 +79,7 @@ public extension Observable {
 /**
  Simple correction for values in diapason
  */
-public struct RangeValueCorrector<T: Comparable>: ValueCorretor {
+public struct RangeValueCorrector<T: Comparable>: ValueCorrector {
     public typealias Value = T
 
     /// minimue value

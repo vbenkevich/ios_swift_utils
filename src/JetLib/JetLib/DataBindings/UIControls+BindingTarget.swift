@@ -23,3 +23,21 @@ extension UITextField: BindingTarget {
         set { self.text = newValue as? Value }
     }
 }
+
+extension UISlider: BindingTarget {
+    public typealias Value = Float
+
+    public var bindableValue: Any? {
+        get { return self.value }
+        set { self.value = newValue as? Value ?? self.minimumValue }
+    }
+}
+
+extension UISegmentedControl: BindingTarget {
+    public typealias Value = Int
+
+    public var bindableValue: Any? {
+        get { return selectedSegmentIndex }
+        set { self.selectedSegmentIndex = (newValue as? Value) ?? 0 }
+    }
+}

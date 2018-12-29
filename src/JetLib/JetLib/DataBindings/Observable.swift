@@ -79,7 +79,7 @@ public class Observable<Value: Equatable> {
         fireNotifications(new: _value)
     }
 
-    fileprivate func performCorrection<T: ValueCorretor>(_ new: Value?, corrector: T) -> Value? where T.Value == Value {
+    fileprivate func performCorrection<T: ValueCorrector>(_ new: Value?, corrector: T) -> Value? where T.Value == Value {
         let old = value
         let corrected = corrector.correct(oldValue: old, newValue: new)
 
