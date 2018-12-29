@@ -73,14 +73,30 @@ class BindingTargetTests: XCTestCase {
         XCTAssertEqual(newText2, observable.value)
     }
 
+
+    func testBindWithConverter() {
+        let observable = Observable(20.10)
+        let slider = UISlider(frame: CGRect(x: 0, y: 10, width: 10, height: 10))
+        slider.maximumValue = 100
+
+        let converter = DoubleToFloat()
+
+        XCTAssertNoThrow(try slider.bind(to: observable, mode: BindingMode.twoWay, converter: converter))
+        XCTAssertEqual(slider.value, converter.convertForward(observable.value))
+
+        slider.value = 30
+        slider.sendActions(for: .editingChanged)
+        XCTAssertEqual(slider.value, converter.convertForward(observable.value))
+    }
+
     func testUpdateObservableErrors() {
         let observable = Observable("100500")
         let field = UITextField()
         let label = UILabel()
 
-        XCTAssertThrowsError(try field.bind(to: observable, mode: .updateObservable, convert: {$0}, convertBack: nil))
+        XCTAssertThrowsError(try field.bind(to: observable, mode: .updateObservable, convertForward: {$0}, convertBack: nil))
         XCTAssertThrowsError(try label.bind(to: observable, mode: .updateObservable))
-        XCTAssertThrowsError(try field.bind(to: observable, mode: .immediatelyUpdateObservable, convert: {$0}, convertBack: nil))
+        XCTAssertThrowsError(try field.bind(to: observable, mode: .immediatelyUpdateObservable, convertForward: {$0}, convertBack: nil))
         XCTAssertThrowsError(try label.bind(to: observable, mode: .immediatelyUpdateObservable))
     }
 
@@ -113,5 +129,20 @@ class BindingTargetTests: XCTestCase {
 
         XCTAssertEqual(field.text, editedValue)
         XCTAssertEqual(observable.value, editedValue)
+    }
+
+    struct DoubleToFloat: ValueConverter {
+        typealias From = Double
+        typealias To = Float
+
+        func convertForward(_ value: Double?) -> Float? {
+            guard let dbl = value else { return nil }
+            return Float(dbl)
+        }
+
+        func convertBack(_ value: Float?) -> Double? {
+            guard let flt = value else { return nil }
+            return Double(flt)
+        }
     }
 }

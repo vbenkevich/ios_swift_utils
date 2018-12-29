@@ -21,6 +21,10 @@ public extension Binding {
             throw Exception.noValidationAtObservable
         }
 
+        guard let target = target else {
+            throw Exception("BindingTarget == nil")
+        }
+
         target.errorPresenter = errorPresenter
 
         validation.notify(target) {
