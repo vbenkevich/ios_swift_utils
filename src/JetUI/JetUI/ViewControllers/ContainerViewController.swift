@@ -29,6 +29,8 @@ open class ContainerViewController: UIViewController, ControllerPresenter {
             if let newValue = currentController {
                 addChild(newValue)
                 newValue.view.frame = view.bounds
+                newValue.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                newValue.view.translatesAutoresizingMaskIntoConstraints = true
                 view.addSubview(newValue.view)
             }
             title = currentController?.title

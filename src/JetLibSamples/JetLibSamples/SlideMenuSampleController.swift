@@ -8,6 +8,7 @@
 
 import UIKit
 import JetLib
+import JetUI
 
 class SlideMenuSampleController: ContainerViewController {
 
