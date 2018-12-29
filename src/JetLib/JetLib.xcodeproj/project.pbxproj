@@ -11,7 +11,6 @@
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
 		BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */; };
-		BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */; };
 		BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */; };
 		BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA541F55212D615400904EC4 /* ActionCommand.swift */; };
 		BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB304211351590008C539 /* SpinLock.swift */; };
@@ -70,7 +69,6 @@
 		BAD07BAA2170108E00F0B451 /* AsyncCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */; };
 		BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD74819213823D100259F95 /* ActionCommandTests.swift */; };
 		BAD7481C213823F000259F95 /* UIButtonCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */; };
-		BADE86F421A828D600282B1B /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE86F321A828D600282B1B /* SlideMenu.swift */; };
 		BAE6485821384CC9000BB449 /* XCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE6485721384CC9000BB449 /* XCTestCase.swift */; };
 		BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */; };
 		BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2512218CD7DF00F68E96 /* Binding.swift */; };
@@ -100,7 +98,6 @@
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
 		BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+TaskStorage.swift"; sourceTree = "<group>"; };
-		BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Requests.swift"; sourceTree = "<group>"; };
 		BA541F55212D615400904EC4 /* ActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCommand.swift; sourceTree = "<group>"; };
 		BA54B81C210B70DF00A5F22F /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,7 +161,6 @@
 		BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCommandTests.swift; sourceTree = "<group>"; };
 		BAD74819213823D100259F95 /* ActionCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCommandTests.swift; sourceTree = "<group>"; };
 		BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonCommandTests.swift; sourceTree = "<group>"; };
-		BADE86F321A828D600282B1B /* SlideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		BAE6485721384CC9000BB449 /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
 		BAED2510218CD46B00F68E96 /* BindingTarget+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BindingTarget+Validation.swift"; sourceTree = "<group>"; };
 		BAED2512218CD7DF00F68E96 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
@@ -198,15 +194,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BA436E72215FCDE8000A59D1 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				BA436E75215FCE3C000A59D1 /* ContainerViewController.swift */,
-				BADE86F321A828D600282B1B /* SlideMenu.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		BA54B812210B70DF00A5F22F = {
 			isa = PBXGroup;
 			children = (
@@ -233,7 +220,6 @@
 				BA9EB303211351440008C539 /* Common */,
 				BA54B866210B73D700A5F22F /* Task */,
 				BAC82012210F7A880011DCF3 /* Http */,
-				BA436E72215FCDE8000A59D1 /* ViewControllers */,
 				BA66667D2163702B0004D41B /* Mvvm */,
 				BAA652D02189DBBF00E4BDC3 /* DataBindings */,
 				BA54B84D210B739100A5F22F /* Command */,
@@ -575,7 +561,6 @@
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
-				BADE86F421A828D600282B1B /* SlideMenu.swift in Sources */,
 				BA68136921D4D77C008BE2FA /* Alerts.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
 				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
@@ -595,7 +580,6 @@
 				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,
 				BA68136D21D4E003008BE2FA /* ExtendedViewModel.swift in Sources */,
 				BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */,
-				BA436E76215FCE3C000A59D1 /* ContainerViewController.swift in Sources */,
 				BAC445282136A112005AB974 /* TaskGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
