@@ -129,7 +129,7 @@ class ObservableCorrectionTests: XCTestCase {
         wait(exp)
     }
 
-    class TestCorrector<T>: ValueCorretor {
+    class TestCorrector<T>: ValueCorrector {
         typealias Value = T
 
         init(correctAction: ((T?, T?) -> T?)? = nil) {
