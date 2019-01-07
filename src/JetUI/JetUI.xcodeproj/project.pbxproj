@@ -7,13 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA30529121E3A48300C6F56A /* PinpadConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529021E3A48300C6F56A /* PinpadConfiguration.swift */; };
+		BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529421E3A7D900C6F56A /* UIColor.swift */; };
+		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
 		BA57501721D79C3B006E5F17 /* JetUI.h in Headers */ = {isa = PBXBuildFile; fileRef = BA57500921D79C3B006E5F17 /* JetUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502121D79C8B006E5F17 /* ContainerViewController.swift */; };
 		BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502721D79CEF006E5F17 /* SlideMenu.swift */; };
 		BA57502A21D79D14006E5F17 /* JetUI.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA57502921D79D13006E5F17 /* JetUI.podspec */; };
+		BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA30529021E3A48300C6F56A /* PinpadConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadConfiguration.swift; sourceTree = "<group>"; };
+		BA30529421E3A7D900C6F56A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		BA57500621D79C3B006E5F17 /* JetUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JetUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA57500921D79C3B006E5F17 /* JetUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JetUI.h; sourceTree = "<group>"; };
 		BA57500A21D79C3B006E5F17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -22,6 +29,7 @@
 		BA57502121D79C8B006E5F17 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		BA57502721D79CEF006E5F17 /* SlideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		BA57502921D79D13006E5F17 /* JetUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = JetUI.podspec; path = ../../../JetUI.podspec; sourceTree = "<group>"; };
+		BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +43,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA30529321E3A7C700C6F56A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BA30529421E3A7D900C6F56A /* UIColor.swift */,
+				BA30529621E3B93000C6F56A /* UIView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		BA574FFC21D79C3B006E5F17 = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +72,8 @@
 		BA57500821D79C3B006E5F17 /* JetUI */ = {
 			isa = PBXGroup;
 			children = (
+				BA30529321E3A7C700C6F56A /* Utils */,
+				BA57502C21D7AAEE006E5F17 /* Modules */,
 				BA57502021D79C71006E5F17 /* ViewControllers */,
 				BA57502921D79D13006E5F17 /* JetUI.podspec */,
 				BA57500921D79C3B006E5F17 /* JetUI.h */,
@@ -79,6 +98,23 @@
 				BA57502121D79C8B006E5F17 /* ContainerViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BA57502C21D7AAEE006E5F17 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				BA57502D21D7AB0C006E5F17 /* PinpadLogin */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		BA57502D21D7AB0C006E5F17 /* PinpadLogin */ = {
+			isa = PBXGroup;
+			children = (
+				BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */,
+				BA30529021E3A48300C6F56A /* PinpadConfiguration.swift */,
+			);
+			path = PinpadLogin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,7 +197,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */,
+				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
+				BA30529121E3A48300C6F56A /* PinpadConfiguration.swift in Sources */,
+				BA30529721E3B93000C6F56A /* UIView.swift in Sources */,
+				BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +342,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JetUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,6 +368,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JetUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
