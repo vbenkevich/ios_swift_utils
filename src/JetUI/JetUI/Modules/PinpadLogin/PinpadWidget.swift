@@ -14,28 +14,31 @@ public protocol PinpadDelegate: class {
     var isTouchIdEnabled: Bool { get }
     var isFaceIdEnabled: Bool { get }
 
-    func check(pincode: String) -> Task<Bool>
-    func checkFaceId() -> Task<Bool>
-    func checkTouchId() -> Task<Bool>
+    func check(pincode: String) -> Task<Void>
+    func checkFaceId() -> Task<Void>
+    func checkTouchId() -> Task<Void>
 }
 
-open class PinpadWidget: UIView {
+public class PinpadWidget: UIView {
 
-    open weak var delegate: PinpadDelegate? {
-        didSet {
-            pinCodeView.setup(delegate: delegate, configuration: configuration)
-        }
+    static let defaultConfiguration = DefaultConfiguration()
+
+    lazy var viewModel: ViewModel = {
+        let vm = ViewModel()
+        vm.view = self
+        vm.pincode = ""
+        return vm
+    }()
+
+    public weak var delegate: PinpadDelegate? {
+        get { return viewModel.delegate }
+        set { viewModel.delegate = newValue }
     }
 
-    public var configuration: PinpadConfiguration = DefaultConfiguration() {
+    public var configuration: PinpadConfiguration = PinpadWidget.defaultConfiguration {
         didSet {
-            reloadView()
-        }
-    }
-
-    var pincode: String = "" {
-        didSet {
-            pinCodeView.pincode = pincode
+            pinCodeView.configuration = configuration
+            reloadView(configuration)
         }
     }
 
@@ -46,33 +49,23 @@ open class PinpadWidget: UIView {
 
             content.translatesAutoresizingMaskIntoConstraints = false
             addSubview(content)
-            content.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-            content.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-            content.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            content.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-
-            superview?.setNeedsLayout()
+            content.equalSizeConstraints(to: self)
         }
     }
 
-    var deleteCommand: Command?
-    var appendCommand: Command?
-    var biometricCommand: Command?
-
-    var pinCodeView: PincodeView = PincodeView()
+    var pinCodeView: PincodeView = PincodeView(configuration: PinpadWidget.defaultConfiguration)
     var biometricView: UIView!
     var biometricButton: UIButton!
     var deleteButton: UIButton!
     var numberButtons: [UIButton] = []
 
-
-    open override func willMove(toSuperview newSuperview: UIView?) {
+    public override func willMove(toSuperview newSuperview: UIView?) {
         if newSuperview != nil && rootView == nil {
-            reloadView()
+            reloadView(configuration)
         }
     }
 
-    func reloadView() {
+    func reloadView(_ configuration: PinpadConfiguration) {
         let buttons = createButtonsView()
         let rootStack = UIStackView(arrangedSubviews: [pinCodeView, buttons])
         rootStack.axis = .vertical
@@ -82,40 +75,18 @@ open class PinpadWidget: UIView {
 
         rootView = rootStack
 
-        deleteButton.command = deleteCommand
+        deleteButton.command = viewModel.deleteCommand
+        deleteButton.hideIfCantExecuteCommand = true
         //biometricButton.command = biometricCommand
 
         for i in 0...9 {
-            numberButtons[i].command = appendCommand
-            numberButtons[i].commanParameter = i
+            numberButtons[i].commanParameter = i.description
+            numberButtons[i].command = viewModel.appendCommand
         }
 
-        appendCommand?.delegate = nil
+        viewModel.appendCommand.delegate = nil
     }
 
-    func append(symbol: String) {
-        pincode += symbol
-    }
-
-    func canAppend(symbol: String) -> Bool {
-        guard let maxCount = delegate?.symbolsCount else {
-            return false
-        }
-
-        return pincode.count < maxCount
-    }
-
-    func delete() {
-        pincode = String(pincode.prefix(pincode.count - 1))
-    }
-
-    func canDelete() -> Bool {
-        guard let maxCount = delegate?.symbolsCount else {
-            return false
-        }
-
-        return !pincode.isEmpty && pincode.count < maxCount
-    }
 
     func createButtonsView() -> UIView {
         deleteButton = configuration.createDeleteButton()
@@ -141,59 +112,5 @@ open class PinpadWidget: UIView {
         buttons.spacing = configuration.verticalSpacing
 
         return buttons
-    }
-}
-
-extension PinpadWidget {
-
-    class PincodeView: UIStackView {
-
-        var count: Int = 0
-        var filledViews: [UIView] = [] {
-            didSet {
-                for view in oldValue {
-                    removeArrangedSubview(view)
-                }
-                for (index, view) in filledViews.enumerated() {
-                    addArrangedSubview(view)
-                    view.isHidden = index >= pincode.count
-                }
-            }
-        }
-
-        var emptyViews: [UIView] = [] {
-            didSet {
-                for view in oldValue {
-                    removeArrangedSubview(view)
-                }
-                for (index, view) in emptyViews.enumerated() {
-                    addArrangedSubview(view)
-                    view.isHidden = index < pincode.count
-                }
-            }
-        }
-
-        convenience init() {
-            self.init(arrangedSubviews: [])
-            self.axis = .horizontal
-            self.distribution = .fillEqually
-        }
-
-        var pincode: String = "" {
-            didSet {
-                for index in 0..<emptyViews.count {
-                    emptyViews[index].isHidden = index >= pincode.count
-                    filledViews[index].isHidden = index < pincode.count
-                }
-            }
-        }
-
-        func setup(delegate: PinpadDelegate?, configuration: PinpadConfiguration) {
-            guard let delegate = delegate else { return }
-
-            spacing = configuration.horizontalSpacing
-            filledViews = (0..<delegate.symbolsCount).map { _ in configuration.createFilledDot() }
-            emptyViews = (0..<delegate.symbolsCount).map { _ in configuration.createEmptyDot() }
-        }
     }
 }

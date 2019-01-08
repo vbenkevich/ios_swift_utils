@@ -29,15 +29,15 @@ extension PinpadController: PinpadDelegate {
 
     var isFaceIdEnabled: Bool { return false }
 
-    func check(pincode: String) -> Task<Bool> {
-        return Task(true)
+    func check(pincode: String) -> Task<Void> {
+        return Task(Exception()).delay(500)
     }
 
-    func checkFaceId() -> Task<Bool> {
-        return Task(true)
+    func checkFaceId() -> Task<Void> {
+        return Task()
     }
 
-    func checkTouchId() -> Task<Bool> {
-        return Task(true)
+    func checkTouchId() -> Task<Void> {
+        return Task()
     }
 }

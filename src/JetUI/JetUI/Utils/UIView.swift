@@ -23,4 +23,18 @@ extension UIView {
 
         return container
     }
+
+    @discardableResult
+    func equalSizeConstraints(to view: UIView, activate: Bool = true) -> [NSLayoutConstraint] {
+        let constraints = [
+            self.leftAnchor.constraint(equalTo: view.leftAnchor),
+            self.topAnchor.constraint(equalTo: view.topAnchor),
+            self.rightAnchor.constraint(equalTo: view.rightAnchor),
+            self.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+
+        constraints.forEach { $0.isActive = activate }
+
+        return constraints
+    }
 }
