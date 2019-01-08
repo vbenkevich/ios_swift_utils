@@ -1,8 +1,6 @@
 //
-//  UIColor.swift
-//  JetUI
-//
 //  Created by Vladimir Benkevich on 07/01/2019.
+//  Copyright © Vladimir Benkevich 2019
 //
 
 import Foundation

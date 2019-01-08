@@ -1,13 +1,11 @@
 //
-//  PinpadControllerStyle.swift
-//  JetUI
-//
-//  Created by Vladimir Benkevich on 07/01/2019.
+//  Created by Vladimir Benkevich on 08/01/2019.
+//  Copyright © Vladimir Benkevich 2019
 //
 
 import Foundation
 
-public protocol PinpadConfiguration {
+public protocol PinpadWidgetConfiguration {
 
     var dotButtonsSpacing: CGFloat { get }
     var verticalSpacing: CGFloat { get }
@@ -15,13 +13,16 @@ public protocol PinpadConfiguration {
 
     func createButton(number: Int) -> UIButton
     func createDeleteButton() -> UIButton
+    func createFaceIdButton() -> UIButton
+    func createTouchIdButton() -> UIButton
+    func createOtherIdButton() -> UIButton
     func createFilledDot() -> UIView
     func createEmptyDot() -> UIView
 }
 
 public extension PinpadWidget {
 
-    open class DefaultConfiguration: PinpadConfiguration {
+    open class DefaultConfiguration: PinpadWidgetConfiguration {
 
         public var color: UIColor = UIColor.white
 
@@ -72,6 +73,27 @@ public extension PinpadWidget {
         public func createDeleteButton() -> UIButton {
             let button = UIButton(type: .custom)
             button.setTitle("del", for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }
+
+        public func createFaceIdButton() -> UIButton {
+            let button = UIButton(type: .custom)
+            button.setTitle("faceId", for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }
+
+        public func createTouchIdButton() -> UIButton {
+            let button = UIButton(type: .custom)
+            button.setTitle("touchId", for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }
+
+        public func createOtherIdButton() -> UIButton {
+            let button = UIButton(type: .custom)
+            button.setTitle("unknown auth", for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             return button
         }

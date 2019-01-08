@@ -1,8 +1,6 @@
 //
-//  PinpadWidget.PincodeView.swift
-//  JetUI
-//
 //  Created by Vladimir Benkevich on 08/01/2019.
+//  Copyright © Vladimir Benkevich 2019
 //
 
 import Foundation
@@ -14,7 +12,7 @@ extension PinpadWidget {
 
         var count: Int = 0
 
-        var configuration: PinpadConfiguration!
+        var configuration: PinpadWidgetConfiguration!
 
         var filledViews: [UIView] = [] {
             didSet {
@@ -40,7 +38,7 @@ extension PinpadWidget {
             }
         }
 
-        convenience init(configuration: PinpadConfiguration) {
+        convenience init(configuration: PinpadWidgetConfiguration) {
             self.init(arrangedSubviews: [])
             self.configuration = configuration
             self.axis = .horizontal
@@ -56,12 +54,12 @@ extension PinpadWidget {
             }
         }
 
-        func setup(delegate: PinpadDelegate?) {
-            guard let delegate = delegate else { return }
+        func setup(symbolsCount: UInt8?) {
+            guard let count = symbolsCount else { return }
 
             spacing = configuration.horizontalSpacing
-            filledViews = (0..<delegate.symbolsCount).map { _ in configuration.createFilledDot() }
-            emptyViews = (0..<delegate.symbolsCount).map { _ in configuration.createEmptyDot() }
+            filledViews = (0..<count).map { _ in configuration.createFilledDot() }
+            emptyViews = (0..<count).map { _ in configuration.createEmptyDot() }
         }
     }
 }

@@ -1,25 +1,26 @@
 //
-//  PinpadController.swift
-//  JetUI
-//
-//  Created by Vladimir Benkevich on 29/12/2018.
+//  Created by Vladimir Benkevich on 07/01/2019.
+//  Copyright © Vladimir Benkevich 2019
 //
 
 import UIKit
 import JetLib
 
-public protocol PinpadDelegate: class {
+public protocol PinpadFlowDelegate: class {
 
-    var symbolsCount: UInt8 { get }
-    var isTouchIdEnabled: Bool { get }
-    var isFaceIdEnabled: Bool { get }
+    func loginSuccess()
 
-    func check(pincode: String) -> Task<Void>
-    func checkFaceId() -> Task<Void>
-    func checkTouchId() -> Task<Void>
+    func loginFailed(_ error: Error, attempt: Int)
 }
 
 public class PinpadWidget: UIView {
+
+    public static var localization = Localization()
+
+    public struct Localization {
+        public var incorrectPincode = "Invalid pincode"
+        public var touchIdReason = "Application unlock"
+    }
 
     static let defaultConfiguration = DefaultConfiguration()
 
@@ -30,14 +31,19 @@ public class PinpadWidget: UIView {
         return vm
     }()
 
-    public weak var delegate: PinpadDelegate? {
+    public var service: PinpadWidgetService? {
+        get { return viewModel.service }
+        set { viewModel.service = newValue }
+    }
+
+    public var delegate: PinpadFlowDelegate? {
         get { return viewModel.delegate }
         set { viewModel.delegate = newValue }
     }
 
-    public var configuration: PinpadConfiguration = PinpadWidget.defaultConfiguration {
+    public var configuration: PinpadWidgetConfiguration = PinpadWidget.defaultConfiguration {
         didSet {
-            pinCodeView.configuration = configuration
+            pincodeView.configuration = configuration
             reloadView(configuration)
         }
     }
@@ -53,10 +59,22 @@ public class PinpadWidget: UIView {
         }
     }
 
-    var pinCodeView: PincodeView = PincodeView(configuration: PinpadWidget.defaultConfiguration)
-    var biometricView: UIView!
-    var biometricButton: UIButton!
+    var pincodeView: PincodeView = PincodeView(configuration: PinpadWidget.defaultConfiguration)
+
+    var deviceOwnerAuthView: UIView!
+
+    var deviceOwnerAuthButton: UIButton? {
+        didSet {
+            oldValue?.removeFromSuperview()
+            if let button = deviceOwnerAuthButton {
+                deviceOwnerAuthView.addSubview(button)
+                button.equalSizeConstraints(to: deviceOwnerAuthView)
+            }
+        }
+    }
+
     var deleteButton: UIButton!
+
     var numberButtons: [UIButton] = []
 
     public override func willMove(toSuperview newSuperview: UIView?) {
@@ -65,9 +83,9 @@ public class PinpadWidget: UIView {
         }
     }
 
-    func reloadView(_ configuration: PinpadConfiguration) {
+    func reloadView(_ configuration: PinpadWidgetConfiguration) {
         let buttons = createButtonsView()
-        let rootStack = UIStackView(arrangedSubviews: [pinCodeView, buttons])
+        let rootStack = UIStackView(arrangedSubviews: [pincodeView, buttons])
         rootStack.axis = .vertical
         rootStack.alignment = .center
         rootStack.spacing = configuration.dotButtonsSpacing
@@ -77,7 +95,6 @@ public class PinpadWidget: UIView {
 
         deleteButton.command = viewModel.deleteCommand
         deleteButton.hideIfCantExecuteCommand = true
-        //biometricButton.command = biometricCommand
 
         for i in 0...9 {
             numberButtons[i].commanParameter = i.description
@@ -85,20 +102,36 @@ public class PinpadWidget: UIView {
         }
 
         viewModel.appendCommand.delegate = nil
+
+        setupDeviceOwnerAuthButton()
     }
 
+    func setupDeviceOwnerAuthButton() {
+        if service?.isFaceIdAvailable == true {
+            deviceOwnerAuthButton = configuration.createFaceIdButton()
+        } else if service?.isTouchIdAvailable == true {
+            deviceOwnerAuthButton = configuration.createTouchIdButton()
+        } else if service?.isDeviceOwnerAuthEnabled == true {
+            deviceOwnerAuthButton = configuration.createOtherIdButton()
+        } else {
+            deviceOwnerAuthButton = nil
+        }
+
+        deviceOwnerAuthButton?.command = viewModel.biometricCommand
+        deviceOwnerAuthButton?.hideIfCantExecuteCommand = true
+    }
 
     func createButtonsView() -> UIView {
         deleteButton = configuration.createDeleteButton()
         numberButtons = (0...9).map { configuration.createButton(number: $0)}
-        biometricView = UIView(frame: CGRect.zero)
-        biometricView.backgroundColor = UIColor.clear
+        deviceOwnerAuthView = UIView(frame: CGRect.zero)
+        deviceOwnerAuthView.backgroundColor = UIColor.clear
 
         var horStacks = (0..<3).map { row in
             UIStackView(arrangedSubviews: (0..<3).map { numberButtons[6 - (row * 3) + ($0 + 1)] })
         }
 
-        horStacks.append(UIStackView(arrangedSubviews: [biometricView, numberButtons[0], deleteButton.embedInView()]))
+        horStacks.append(UIStackView(arrangedSubviews: [deviceOwnerAuthView, numberButtons[0], deleteButton.embedInView()]))
 
         for stack in horStacks {
             stack.distribution = .fillEqually
