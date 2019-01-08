@@ -36,8 +36,23 @@ extension UIButton: CommandDelegate {
         }
     }
 
+    public var hideIfCantExecuteCommand: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKeys.hideIfCantExecute) as? Bool ?? false }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.hideIfCantExecute, newValue, .OBJC_ASSOCIATION_COPY)
+
+            if let command = self.command {
+                stateChanged(command)
+            }
+        }
+    }
+
     public func stateChanged(_ command: Command) {
         isEnabled = command.canExecute(parameter: commanParameter)
+
+        if hideIfCantExecuteCommand {
+            isHidden = !isEnabled
+        }
     }
 
     @objc
@@ -48,5 +63,6 @@ extension UIButton: CommandDelegate {
     private struct AssociatedKeys {
         static var command = UInt(0)
         static var commandParameter = UInt(0)
+        static var hideIfCantExecute = UInt(0)
     }
 }
