@@ -82,10 +82,9 @@ public extension PinpadWidget {
         public init() {
         }
 
-        private let shouldUseDeviceOwnerAuthKey = "JetUI.PinCodeWidget.DeviceOwnerAuthService.shouldUseDeviceOwnerAuth" //todo
         public var shouldUseDeviceOwnerAuth: Bool {
-            get { return UserDefaults.standard.bool(forKey: shouldUseDeviceOwnerAuthKey) } // todo
-            set { UserDefaults.standard.set(newValue, forKey: shouldUseDeviceOwnerAuthKey) } // todo
+            get { return UserDefaults.standard.bool(forKey: UserDefaults.Key.shouldUseDeviceOwnerAuthKey) }
+            set { UserDefaults.standard.set(newValue, forKey: UserDefaults.Key.shouldUseDeviceOwnerAuthKey) }
         }
 
         public var isDeviceOwnerAuthAvailable: Bool {
@@ -141,10 +140,9 @@ public extension PinpadWidget {
 
         public static var name = "JetUI.PinCodeWidget"
 
-        private let isPincodeInitedKey = "JetUI.PinCodeWidget.PincodeService.isPincodeInited" // todo
         public var isPincodeInited: Bool {
-            get { return UserDefaults.standard.bool(forKey: isPincodeInitedKey) } // todo
-            set { UserDefaults.standard.set(newValue, forKey: isPincodeInitedKey) } // todo
+            get { return UserDefaults.standard.bool(forKey: UserDefaults.Key.isPincodeInited) }
+            set { UserDefaults.standard.set(newValue, forKey: UserDefaults.Key.isPincodeInited) }
         }
 
         private static let syncQueue = DispatchQueue(label: "JetUI.PinCodeWidget.synqQueue", qos: .userInteractive)
@@ -244,4 +242,10 @@ public extension PinpadWidget {
             static let dataCorrupted = KeychainException("Keychain data corrupted")
         }
     }
+}
+
+extension UserDefaults.Key {
+
+    static let shouldUseDeviceOwnerAuthKey = UserDefaults.Key("JetUI.PinCodeWidget.DeviceOwnerAuthService.shouldUseDeviceOwnerAuth")
+    static let isPincodeInited = UserDefaults.Key("JetUI.PinCodeWidget.PincodeService.isPincodeInited")
 }
