@@ -9,6 +9,9 @@ open class SerialCommand: Command {
 
     private var lock = SpinLock()
 
+    public init() {
+    }
+
     public weak var delegate: CommandDelegate?
 
     open var callbackQueue: DispatchQueue = DispatchQueue.main
