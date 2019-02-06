@@ -12,12 +12,16 @@
 		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
 		BA30529D21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */; };
 		BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */; };
-		BA3052A321E4CD0000C6F56A /* PinpadWidget.Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052A221E4CD0000C6F56A /* PinpadWidget.Services.swift */; };
+		BA3052A321E4CD0000C6F56A /* PinpadFlow.Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */; };
 		BA57501721D79C3B006E5F17 /* JetUI.h in Headers */ = {isa = PBXBuildFile; fileRef = BA57500921D79C3B006E5F17 /* JetUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502121D79C8B006E5F17 /* ContainerViewController.swift */; };
 		BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502721D79CEF006E5F17 /* SlideMenu.swift */; };
 		BA57502A21D79D14006E5F17 /* JetUI.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA57502921D79D13006E5F17 /* JetUI.podspec */; };
 		BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */; };
+		BA5958FB220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */; };
+		BA5958FD220B600600DE9922 /* PinpadFlow.PincodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */; };
+		BA5958FF220B60B600DE9922 /* PinpadFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5958FE220B60B600DE9922 /* PinpadFlow.swift */; };
+		BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +30,7 @@
 		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.ViewModel.swift; sourceTree = "<group>"; };
 		BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.PincodeView.swift; sourceTree = "<group>"; };
-		BA3052A221E4CD0000C6F56A /* PinpadWidget.Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.Services.swift; sourceTree = "<group>"; };
+		BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.Services.swift; sourceTree = "<group>"; };
 		BA57500621D79C3B006E5F17 /* JetUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JetUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA57500921D79C3B006E5F17 /* JetUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JetUI.h; sourceTree = "<group>"; };
 		BA57500A21D79C3B006E5F17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +40,10 @@
 		BA57502721D79CEF006E5F17 /* SlideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		BA57502921D79D13006E5F17 /* JetUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = JetUI.podspec; path = ../../../JetUI.podspec; sourceTree = "<group>"; };
 		BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.swift; sourceTree = "<group>"; };
+		BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.DeviceOwnerAuth.swift; sourceTree = "<group>"; };
+		BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.PincodeStorage.swift; sourceTree = "<group>"; };
+		BA5958FE220B60B600DE9922 /* PinpadFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.swift; sourceTree = "<group>"; };
+		BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.PinpadViewFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +129,11 @@
 				BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */,
 				BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */,
 				BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */,
-				BA3052A221E4CD0000C6F56A /* PinpadWidget.Services.swift */,
+				BA5958FE220B60B600DE9922 /* PinpadFlow.swift */,
+				BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */,
+				BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */,
+				BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */,
+				BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */,
 			);
 			path = PinpadLogin;
 			sourceTree = "<group>";
@@ -205,15 +217,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA3052A321E4CD0000C6F56A /* PinpadWidget.Services.swift in Sources */,
+				BA5958FB220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift in Sources */,
+				BA3052A321E4CD0000C6F56A /* PinpadFlow.Services.swift in Sources */,
 				BA30529D21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift in Sources */,
 				BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */,
 				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
+				BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */,
 				BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */,
+				BA5958FD220B600600DE9922 /* PinpadFlow.PincodeStorage.swift in Sources */,
 				BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */,
 				BA30529721E3B93000C6F56A /* UIView.swift in Sources */,
 				BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */,
+				BA5958FF220B60B600DE9922 /* PinpadFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

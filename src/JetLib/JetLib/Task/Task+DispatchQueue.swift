@@ -35,6 +35,11 @@ public extension DispatchQueue {
     }
 
     @discardableResult
+    func execute<T>(after interval: DispatchTimeInterval, task action: @escaping () throws -> T) -> Task<T> {
+        return self.async(Task(execute: action), after: interval)
+    }
+
+    @discardableResult
     func async<T>(_ task: Task<T>, after interval: DispatchTimeInterval) -> Task<T> {
         self.asyncAfter(deadline: .now() + interval) { task.item.perform() }
         return task
