@@ -17,7 +17,7 @@ class PinpadController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        pinpad.service = PinpadWidget.Service(pincodeService: PinpadWidget.PincodeStorage(),
-                                                          authService: PinpadWidget.DeviceOwnerAuth())
+        pinpad.service = PinpadFlow.WidgetService(pincodeService: PinpadFlow.PincodeStorage(),
+                                                  authService: PinpadFlow.DeviceOwnerAuth())
     }
 }

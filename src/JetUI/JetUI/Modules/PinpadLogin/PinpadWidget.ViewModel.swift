@@ -22,7 +22,7 @@ extension PinpadWidget {
 
         weak var delegate: PinpadFlowDelegate?
 
-        var service: PinpadWidgetService? {
+        var service: PinpadFlowWidgetService? {
             didSet {
                 view?.pincodeView.setup(symbolsCount: service?.symbolsCount)
                 view?.setupDeviceOwnerAuthButton()

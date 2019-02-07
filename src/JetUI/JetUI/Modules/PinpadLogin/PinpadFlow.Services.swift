@@ -6,7 +6,7 @@
 import Foundation
 import JetLib
 
-public protocol PinpadWidgetService {
+public protocol PinpadFlowWidgetService {
 
     var symbolsCount: UInt8 { get set }
 
@@ -18,7 +18,7 @@ public protocol PinpadWidgetService {
     func checkDeviceOwnerAuth() -> Task<Void>
 }
 
-public protocol DeviceOwnerAuthService {
+public protocol PinpadFlowDeviceOwnerAuthService {
 
     var shouldUseDeviceOwnerAuth: Bool { get set }
     var isDeviceOwnerAuthAvailable: Bool { get }
@@ -28,7 +28,7 @@ public protocol DeviceOwnerAuthService {
     func checkDeviceOwnerAuth() -> Task<Void>
 }
 
-public protocol PicodeStorageService {
+public protocol PinpadFlowPicodeStorageService {
 
     func validate(pincode: String) -> Task<Void>
     func setNew(pincode: String) -> Task<Void>
@@ -37,17 +37,15 @@ public protocol PicodeStorageService {
 
 public extension PinpadFlow {
 
-    public class Service: JetUI.PinpadWidgetService {
+    public class WidgetService: JetUI.PinpadFlowWidgetService {
 
-        private let pincodeStorage: JetUI.PicodeStorageService
-        private let authService: JetUI.DeviceOwnerAuthService
+        private let pincodeStorage: JetUI.PinpadFlowPicodeStorageService
+        private let authService: JetUI.PinpadFlowDeviceOwnerAuthService
 
-        public init(pincodeService: JetUI.PicodeStorageService, authService: JetUI.DeviceOwnerAuthService) {
+        public init(pincodeService: JetUI.PinpadFlowPicodeStorageService, authService: JetUI.PinpadFlowDeviceOwnerAuthService) {
             self.pincodeStorage = pincodeService
             self.authService = authService
         }
-
-        public weak var delegate: PinpadFlowDelegate?
 
         public var symbolsCount: UInt8 = 4
 

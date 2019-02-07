@@ -8,9 +8,9 @@ import JetLib
 
 public extension PinpadFlow {
 
-    public class PincodeStorage: JetUI.PicodeStorageService {
+    public class PincodeStorage: JetUI.PinpadFlowPicodeStorageService {
 
-        public static var name = "JetUI.PinCodeWidget"
+        public static var name = "JetUI.PinpadFlow"
 
         private static let syncQueue = DispatchQueue(label: "JetUI.PinCodeWidget.syncQueue", qos: .userInteractive)
 

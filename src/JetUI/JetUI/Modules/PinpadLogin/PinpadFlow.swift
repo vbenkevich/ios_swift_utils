@@ -10,14 +10,14 @@ open class PinpadFlow {
 
     public class PinpadFlowException: Exception {
         public static let keyNotFoundException: PinpadFlowException = PinpadFlowException("Key not found")
-        public static let pincodeDoesntSetException: PinpadFlowException = PinpadFlowException("Pincode doesn't set")
+        public static let pincodeDoesntSetException: PinpadFlowException = PinpadFlowException("Pincode hasn't been set")
     }
 
     public static var shared: PinpadFlow = PinpadFlow()
 
     public var maxInactivityTime: TimeInterval = TimeInterval(1 * 60 * 60) // 1 hour
     public var incorrectPinAttempts: Int = 5
-    public var viewFactory: PinpadViewFactory = PinpadViewFactory()
+    public var viewFactory: PinpadFlowViewFactory = PinpadDefaultViewFactory()
 
     public static var isPincodeInited: Bool {
         get { return UserDefaults.standard.bool(forKey: UserDefaults.Key.isPincodeInited) }
@@ -99,9 +99,9 @@ extension PinpadFlow {
         private let maxAttemps: Int
         private weak var pinpadController: UIViewController?
         private let source = Task<Void>.Source()
-        private let viewFactory: PinpadViewFactory
+        private let viewFactory: PinpadFlowViewFactory
 
-        init(maxAttemps: Int, viewFactory: PinpadViewFactory) {
+        init(maxAttemps: Int, viewFactory: PinpadFlowViewFactory) {
             self.maxAttemps = maxAttemps
             self.viewFactory = viewFactory
         }

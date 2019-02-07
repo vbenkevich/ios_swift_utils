@@ -31,7 +31,7 @@ public class PinpadWidget: UIView {
         return vm
     }()
 
-    public var service: PinpadWidgetService? {
+    public var service: PinpadFlowWidgetService? {
         get { return viewModel.service }
         set { viewModel.service = newValue }
     }

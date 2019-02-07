@@ -9,7 +9,7 @@ import JetLib
 
 public extension PinpadFlow {
 
-    public class DeviceOwnerAuth: JetUI.DeviceOwnerAuthService {
+    public class DeviceOwnerAuth: JetUI.PinpadFlowDeviceOwnerAuthService {
 
         private let context = LAContext()
 
