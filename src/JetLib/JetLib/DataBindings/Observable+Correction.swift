@@ -82,6 +82,11 @@ public extension Observable {
 public struct RangeValueCorrector<T: Comparable>: ValueCorrector {
     public typealias Value = T
 
+    public init(min: T?, max: T?) {
+        self.minValue = min
+        self.maxValue = max
+    }
+
     /// minimue value
     public var minValue: T?
 
