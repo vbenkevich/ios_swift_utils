@@ -6,58 +6,75 @@
 import Foundation
 import JetLib
 
-public protocol PinpadFlowViewFactory {
+public protocol PinpadFlowViewControllerFactory {
 
-    func createViews() -> (UIViewController, PinpadWidget)
+    func create() -> UIViewController & PinpadViewController
+}
+
+public protocol PinpadViewController {
+
+    var widget: PinpadWidget! { get }
 }
 
 public extension PinpadFlow {
 
-    open class PinpadDefaultViewFactory: PinpadFlowViewFactory {
+    open class PinpadDefaultViewControllerFactory: PinpadFlowViewControllerFactory {
 
-        public var backgroundImage: UIImage?
-        public var headerImage: UIImage?
+        public var backgroundView: UIView?
+        public var headerView: UIView?
 
         open func createWidget() -> PinpadWidget {
             let widget = PinpadWidget()
             widget.service = PinpadFlow.WidgetService(pincodeService: PinpadFlow.PincodeStorage(),
-                                                authService: PinpadFlow.DeviceOwnerAuth())
-            return PinpadWidget()
+                                                      authService: PinpadFlow.DeviceOwnerAuth())
+            return widget
         }
 
-        open func createViews() -> (UIViewController, PinpadWidget) {
-            let controller = PinpadViewControler()
+        open func create() -> UIViewController & PinpadViewController {
+            let controller = DefaultControler()
             controller.widget = createWidget()
-            controller.backgroundImage = backgroundImage
-            controller.headerImage = headerImage
+            controller.backgroundView = backgroundView
+            controller.headerView = headerView
+            controller.modalPresentationStyle = .overFullScreen
 
-            return (controller, controller.widget)
+            return controller
         }
 
-        class PinpadViewControler: UIViewController {
+        class DefaultControler: UIViewController, PinpadViewController {
 
-            var backgroundImage: UIImage?
-            var headerImage: UIImage?
+            var backgroundView: UIView?
+            var headerView: UIView?
             var widget: PinpadWidget!
 
             override func loadView() {
-                let root = UIImageView()
-                root.contentMode = .scaleAspectFill
-                root.image = backgroundImage
-
-                let header = UIImageView()
-                header.contentMode = .scaleAspectFit
-                header.image = headerImage
+                let root = backgroundView ?? {
+                    let view = UIView()
+                    let effectView = UIVisualEffectView()
+                    effectView.effect = UIBlurEffect(style: .light)
+                    effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    effectView.frame = view.bounds
+                    effectView.translatesAutoresizingMaskIntoConstraints = true
+                    view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+                    view.addSubview(effectView)
+                    return view
+                }()
 
                 let stack = UIStackView()
                 stack.translatesAutoresizingMaskIntoConstraints = false
                 stack.axis = .vertical
                 stack.spacing = PinpadWidget.defaultConfiguration.verticalSpacing
-                stack.addArrangedSubview(header)
+
+                if let header = headerView {
+                    stack.addArrangedSubview(header)
+                }
+
                 stack.addArrangedSubview(widget)
+
+                root.addSubview(stack)
 
                 stack.centerXAnchor.constraint(equalTo: root.centerXAnchor).isActive = true
                 stack.centerYAnchor.constraint(equalTo: root.centerYAnchor).isActive = true
+                stack.widthAnchor.constraint(equalTo: root.widthAnchor, multiplier: 0.67).isActive = true
 
                 if #available(iOS 11.0, *) {
                     stack.topAnchor.constraint(greaterThanOrEqualTo: root.safeAreaLayoutGuide.topAnchor, constant: 24).isActive = true

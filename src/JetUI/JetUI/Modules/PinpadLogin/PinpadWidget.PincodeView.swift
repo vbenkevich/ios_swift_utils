@@ -10,7 +10,12 @@ extension PinpadWidget {
 
     class PincodeView: UIStackView {
 
-        var count: Int = 0
+        convenience init(configuration: PinpadWidgetConfiguration) {
+            self.init(arrangedSubviews: [])
+            self.configuration = configuration
+            self.axis = .horizontal
+            self.distribution = .fillEqually
+        }
 
         var configuration: PinpadWidgetConfiguration!
 
@@ -36,13 +41,6 @@ extension PinpadWidget {
                     view.isHidden = index < pincode.count
                 }
             }
-        }
-
-        convenience init(configuration: PinpadWidgetConfiguration) {
-            self.init(arrangedSubviews: [])
-            self.configuration = configuration
-            self.axis = .horizontal
-            self.distribution = .fillEqually
         }
 
         var pincode: String = "" {

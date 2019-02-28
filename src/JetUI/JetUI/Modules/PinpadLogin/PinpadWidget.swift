@@ -6,7 +6,7 @@
 import UIKit
 import JetLib
 
-public protocol PinpadFlowDelegate: class {
+public protocol PinpadWidgetDelegate: class {
 
     func loginSuccess()
 
@@ -33,10 +33,14 @@ public class PinpadWidget: UIView {
 
     public var service: PinpadFlowWidgetService? {
         get { return viewModel.service }
-        set { viewModel.service = newValue }
+        set {
+            viewModel.service = newValue
+            pincodeView.setup(symbolsCount: service?.symbolsCount)
+            setupDeviceOwnerAuthButton()
+        }
     }
 
-    public var delegate: PinpadFlowDelegate? {
+    public var delegate: PinpadWidgetDelegate? {
         get { return viewModel.delegate }
         set { viewModel.delegate = newValue }
     }
@@ -76,6 +80,26 @@ public class PinpadWidget: UIView {
     var deleteButton: UIButton!
 
     var numberButtons: [UIButton] = []
+
+    public func showPincodeInvalid(completion: @escaping () -> Void) {
+        let duration = TimeInterval(0.5)
+        let shift = CGFloat(10)
+        let view = pincodeView
+
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.error)
+
+        let propertyAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.3) {
+            view.transform = CGAffineTransform(translationX: shift, y: 0)
+        }
+
+        propertyAnimator.addAnimations({
+            view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }, delayFactor: 0.2)
+
+        propertyAnimator.startAnimation()
+        propertyAnimator.addCompletion { _ in completion() }
+    }
 
     public override func willMove(toSuperview newSuperview: UIView?) {
         if newSuperview != nil && rootView == nil {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */; };
 		BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */; };
 		BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529421E3A7D900C6F56A /* UIColor.swift */; };
 		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.StorageLocker.swift; sourceTree = "<group>"; };
 		BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.Configuration.swift; sourceTree = "<group>"; };
 		BA30529421E3A7D900C6F56A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */,
 				BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */,
 				BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */,
+				BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */,
 			);
 			path = PinpadLogin;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */,
 				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
+				BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */,
 				BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */,
 				BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */,
 				BA5958FD220B600600DE9922 /* PinpadFlow.PincodeStorage.swift in Sources */,
@@ -288,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -346,7 +350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

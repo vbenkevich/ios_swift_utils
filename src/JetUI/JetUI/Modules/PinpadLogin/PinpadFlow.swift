@@ -15,9 +15,9 @@ open class PinpadFlow {
 
     public static var shared: PinpadFlow = PinpadFlow()
 
-    public var maxInactivityTime: TimeInterval = TimeInterval(1 * 60 * 60) // 1 hour
+    public var maxInactivityTime: TimeInterval = TimeInterval(15 * 60) // 15 min
     public var incorrectPinAttempts: Int = 5
-    public var viewFactory: PinpadFlowViewFactory = PinpadDefaultViewFactory()
+    public var viewFactory: PinpadFlowViewControllerFactory = PinpadDefaultViewControllerFactory()
 
     public static var isPincodeInited: Bool {
         get { return UserDefaults.standard.bool(forKey: UserDefaults.Key.isPincodeInited) }
@@ -32,23 +32,23 @@ open class PinpadFlow {
     private var storage = DataStorage() //TODO use encrypted
     private var lastBackgroudTime = Date()
 
-    private var _authentificator: Authentificator?
-    private var authentificator: Authentificator {
+    private var _storageLocker: StorageLocker?
+    private var storageLocker: StorageLocker {
         get {
-            _authentificator = _authentificator ?? Authentificator(maxAttemps: incorrectPinAttempts, viewFactory: viewFactory)
-            return _authentificator!
+            _storageLocker = _storageLocker ?? StorageLocker(maxAttemps: incorrectPinAttempts, viewFactory: viewFactory)
+            return _storageLocker!
         }
         set {
-            _authentificator = newValue
+            _storageLocker = newValue
         }
     }
 
     open func applicationDidBecomeActive() {
-        guard lastBackgroudTime.addingTimeInterval(maxInactivityTime) < Date(), !authentificator.inProgress else {
+        guard lastBackgroudTime.addingTimeInterval(maxInactivityTime) < Date(), !storageLocker.inProgress else {
             return
         }
 
-        authentificator = Authentificator(maxAttemps: incorrectPinAttempts, viewFactory: viewFactory)
+        storageLocker = StorageLocker(maxAttemps: incorrectPinAttempts, viewFactory: viewFactory)
     }
 
     open func applicationDidEnterBackground() {
@@ -60,7 +60,7 @@ open class PinpadFlow {
             throw PinpadFlowException.pincodeDoesntSetException
         }
 
-        return authentificator.authentificate().map {
+        return storageLocker.unlock().map {
             try self.storage.set(data, forKey: key)
         }
     }
@@ -70,7 +70,7 @@ open class PinpadFlow {
             throw PinpadFlowException.pincodeDoesntSetException
         }
 
-        return authentificator.authentificate().map {
+        return storageLocker.unlock().map {
             try self.storage.data(forKey: key)
         }
     }
@@ -88,78 +88,6 @@ open class PinpadFlow {
             }
 
             return data
-        }
-    }
-}
-
-extension PinpadFlow {
-
-    class Authentificator: PinpadFlowDelegate {
-
-        private let maxAttemps: Int
-        private weak var pinpadController: UIViewController?
-        private let source = Task<Void>.Source()
-        private let viewFactory: PinpadFlowViewFactory
-
-        init(maxAttemps: Int, viewFactory: PinpadFlowViewFactory) {
-            self.maxAttemps = maxAttemps
-            self.viewFactory = viewFactory
-        }
-
-        var inProgress: Bool {
-            return !task.status.isCompleted
-        }
-
-        private var isBeingDisplayed: Bool = false
-
-        private var task: Task<Void> {
-            return source.task
-        }
-
-        func authentificate() -> Task<Void> {
-            if !isBeingDisplayed {
-                isBeingDisplayed = true
-                presentUI()
-            }
-
-            return task
-        }
-
-        func loginSuccess() {
-            pinpadController?.dismiss(animated: true) { [weak source] in
-                try? source?.complete()
-            }
-        }
-
-        func loginFailed(_ error: Error, attempt: Int) {
-            guard attempt >= maxAttemps else { return }
-
-            pinpadController?.dismiss(animated: true) { [weak source] in
-                try? source?.error(error)
-            }
-        }
-
-        func presentUI() {
-            let (controller, widget) = viewFactory.createViews()
-            widget.delegate = self
-            pinpadController = controller
-            tryPresent(controller: controller)
-        }
-
-        func tryPresent(controller: UIViewController) {
-            var presenter = UIApplication.shared.keyWindow?.rootViewController
-
-            while presenter?.presentedViewController != nil {
-                presenter = presenter?.presentedViewController
-            }
-
-            if presenter is UIAlertController || presenter == nil {
-                DispatchQueue.main.execute(after: .seconds(1)) {
-                    self.tryPresent(controller: controller)
-                }
-            } else {
-                presenter?.present(controller, animated: true)
-            }
         }
     }
 }

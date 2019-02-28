@@ -20,14 +20,9 @@ extension PinpadWidget {
 
         weak var view: PinpadWidget?
 
-        weak var delegate: PinpadFlowDelegate?
+        weak var delegate: PinpadWidgetDelegate?
 
-        var service: PinpadFlowWidgetService? {
-            didSet {
-                view?.pincodeView.setup(symbolsCount: service?.symbolsCount)
-                view?.setupDeviceOwnerAuthButton()
-            }
-        }
+        var service: PinpadFlowWidgetService?
 
         var pincode: String = "" {
             didSet {
@@ -47,8 +42,7 @@ extension PinpadWidget {
                     }.onFail { [weak self, attempt] in
                         self?.attempt += 1
                         self?.delegate?.loginFailed($0, attempt: attempt + 1)
-                    }.notify { [weak self] _ in
-                        self?.pincode = ""
+                        self?.view?.showPincodeInvalid { self?.pincode = "" }
                     }
             } else {
                 return Task()

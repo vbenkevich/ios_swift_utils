@@ -42,7 +42,8 @@ public extension PinpadFlow {
         private let pincodeStorage: JetUI.PinpadFlowPicodeStorageService
         private let authService: JetUI.PinpadFlowDeviceOwnerAuthService
 
-        public init(pincodeService: JetUI.PinpadFlowPicodeStorageService, authService: JetUI.PinpadFlowDeviceOwnerAuthService) {
+        public init(pincodeService: JetUI.PinpadFlowPicodeStorageService,
+                    authService: JetUI.PinpadFlowDeviceOwnerAuthService) {
             self.pincodeStorage = pincodeService
             self.authService = authService
         }
