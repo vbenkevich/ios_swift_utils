@@ -66,17 +66,6 @@ open class DefaultValidationResultMerger: ValidationResultMerger {
 }
 
 /**
- trigger action for observable validation
- default: onEditingEnded
- */
-public enum ValidationMode {
-    case onValueChanged
-    case onEditingEnded
-
-    static let `default` = ValidationMode.onEditingEnded
-}
-
-/**
  Part of the observable.
  And incapsulates value validation logic.
  It contains the collection of validation rules. And chcek this rules with a value of the observable
@@ -96,27 +85,7 @@ public class ObservableValidation<Value: Equatable>: Invalidatable {
             }
 
             oldValue?.unsubscribe(self)
-
-            if mode == .onValueChanged {
-                subscribe()
-            } else {
-                unsubscribe()
-            }
-        }
-    }
-
-    /// validation trigger condition
-    public var mode: ValidationMode = ValidationMode.default {
-        didSet {
-            guard oldValue != mode else {
-                return
-            }
-
-            if mode == .onValueChanged {
-                subscribe()
-            } else {
-                unsubscribe()
-            }
+            subscribe()
         }
     }
 
@@ -137,13 +106,6 @@ public class ObservableValidation<Value: Equatable>: Invalidatable {
     }
 
     lazy var editingDelegate = ControlEditingDelegate(self)
-
-    @discardableResult
-    @available(*, deprecated, message: "use append(_ validator: Validator) instead")
-    public func addRule<Validator: ValidationRule>(_ rule: Validator) -> ObservableValidation where Validator.Value == Value  {
-        validationRules.append({ [rule] in rule.check($0) })
-        return self
-    }
 
     /**
      append validation rule to validations collection
@@ -198,37 +160,12 @@ public class ObservableValidation<Value: Equatable>: Invalidatable {
 
 public extension Observable {
 
-    @discardableResult
-    @available(*, deprecated, message: "use validation(mode: ValidationMode) instead")
-    public func addValidation(mode: ValidationMode? = nil) -> Observable {
-        if let mode = mode {
-            return validation(mode: mode)
-        } else {
-            return self
-        }
-    }
-
-    @discardableResult
-    @available(*, deprecated, message: "use validation(_ validator: Validator) instead")
-    public func addValidationRule<Validator: ValidationRule>(_ rule: Validator) -> Observable where Validator.Value == Value  {
-        return validation(rule)
-    }
-
     /**
      append validation rule to observable
      */
     @discardableResult
     public func validation<Validator: ValidationRule>(_ validator: Validator) -> Observable where Validator.Value == Value  {
         getOrCreateValidaition().append(validator)
-        return self
-    }
-
-    /**
-     set validation mode to observable
-     */
-    @discardableResult
-    public func validation(mode: ValidationMode) -> Observable  {
-        getOrCreateValidaition().mode = mode
         return self
     }
 

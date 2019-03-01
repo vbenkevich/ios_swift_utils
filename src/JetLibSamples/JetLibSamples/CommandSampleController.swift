@@ -19,7 +19,7 @@ class CommandSampleController: UIViewController {
         super.viewDidLoad()
 
         viewModel = CommandSampleViewModel()
-        add(viewModel)
+        sendViewAppearance(to: viewModel)
 
         try! label.bind(to: viewModel.textProperty)
 

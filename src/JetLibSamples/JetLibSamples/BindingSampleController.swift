@@ -13,9 +13,8 @@ import JetLib
 class BindingControllerViewModel: ViewModel {
 
     var property = Observable<String>(nil)
-        .addThrottling(DispatchTimeInterval.milliseconds(200))
-        .addValidation(mode: .onValueChanged)
-        .addValidationRule(PropertyValidator())
+        .throttling(DispatchTimeInterval.milliseconds(200))
+        .validation(PropertyValidator())
 
     override func viewWillAppear(_ animated: Bool) {
         property.value = nil
@@ -45,7 +44,7 @@ class BindingSampleController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        add(viewModel)
+        sendViewAppearance(to: viewModel)
 
         try! textField.bind(to: viewModel.property).with(errorPresenter: errorLabel)
         try! titleLabel.bind(to: viewModel.property)

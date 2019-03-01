@@ -44,11 +44,6 @@ extension UIViewController: View {
             class_getInstanceMethod(self, #selector(swizzled_viewDidDisappear(_:)))!)
     }
 
-    @available(*, deprecated, message: "use sendViewAppearance(to:retain:) instead")
-    public func add(_ delegate: ViewLifecycleDelegate, strongReference: Bool = true) {
-        sendViewAppearance(to: delegate, retain: strongReference)
-    }
-
     public func sendViewAppearance(to delegate: ViewLifecycleDelegate, retain: Bool) {
         if !lifecycleDelegates.contains(where: { $0.delegate === delegate }) {
             lifecycleDelegates.append(retain ? Strong(delegate) : Weak(delegate))

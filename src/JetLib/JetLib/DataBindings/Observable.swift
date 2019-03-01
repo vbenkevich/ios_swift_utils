@@ -146,7 +146,7 @@ public class Observable<Value: Equatable> {
 
 public extension Observable {
 
-    func addThrottling(_ throttling: DispatchTimeInterval) -> Observable {
+    func throttling(_ throttling: DispatchTimeInterval) -> Observable {
         self.throttling = throttling
         return self
     }
