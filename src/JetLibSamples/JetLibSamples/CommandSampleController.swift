@@ -44,11 +44,11 @@ class CommandSampleViewModel: ViewModel {
     var textProperty = Observable("")
 
     func doSomething() {
-        let complexRequest = submit(task:  Service().fetchDataQueue(test: "1").notify(DispatchQueue.main) {
+        let complexRequest = submit(task:  Service().fetchDataQueue(test: "1").notify(queue: DispatchQueue.main) {
             self.textProperty.value = $0.result
         }.chain { _ in
             return Service().fetchDataTcs(test: "2")
-        }.notify(DispatchQueue.main) {
+        }.notify(queue: DispatchQueue.main) {
             self.textProperty.value = $0.result
         })
 

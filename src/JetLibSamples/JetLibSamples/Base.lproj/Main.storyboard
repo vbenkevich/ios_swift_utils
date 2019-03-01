@@ -93,6 +93,51 @@
             </objects>
             <point key="canvasLocation" x="1753" y="134"/>
         </scene>
+        <!--Pinpad Controller-->
+        <scene sceneID="2qO-Mp-Fti">
+            <objects>
+                <viewController storyboardIdentifier="pinpad" id="23t-37-gps" customClass="PinpadController" customModule="JetLibSamples" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q4T-Yf-9yP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="3dA-Gh-LEl">
+                                <rect key="frame" x="32" y="239.5" width="311" height="188.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pinpad Header" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sV8-bX-6bT">
+                                        <rect key="frame" x="0.0" y="0.0" width="311" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wpt-XJ-PpZ" customClass="PinpadWidget" customModule="JetUI">
+                                        <rect key="frame" x="0.0" y="60.5" width="311" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" placeholder="YES" id="jNv-vk-prB"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Vj8-lK-IKn" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3dA-Gh-LEl" secondAttribute="bottom" constant="24" id="DjL-76-G4V"/>
+                            <constraint firstItem="3dA-Gh-LEl" firstAttribute="leading" secondItem="Vj8-lK-IKn" secondAttribute="leading" constant="32" id="Paz-tN-MS2"/>
+                            <constraint firstItem="3dA-Gh-LEl" firstAttribute="centerY" secondItem="Q4T-Yf-9yP" secondAttribute="centerY" id="jHh-m8-Alk"/>
+                            <constraint firstItem="Vj8-lK-IKn" firstAttribute="trailing" secondItem="3dA-Gh-LEl" secondAttribute="trailing" constant="32" id="naH-R3-EAR"/>
+                            <constraint firstItem="3dA-Gh-LEl" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Vj8-lK-IKn" secondAttribute="top" constant="24" id="vRu-cJ-Xbu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Vj8-lK-IKn"/>
+                    </view>
+                    <connections>
+                        <outlet property="pinpad" destination="Wpt-XJ-PpZ" id="Qpr-Qd-SER"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nBv-al-hQZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1753" y="880"/>
+        </scene>
         <!--CommandSampleController-->
         <scene sceneID="g92-gz-fNL">
             <objects>

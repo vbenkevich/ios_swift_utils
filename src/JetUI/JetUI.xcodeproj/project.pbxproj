@@ -7,13 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */; };
+		BA16996F22292FAF00351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA16996E22292FAF00351F44 /* JetLib.framework */; };
+		BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */; };
+		BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529421E3A7D900C6F56A /* UIColor.swift */; };
+		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
+		BA30529D21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */; };
+		BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */; };
+		BA3052A321E4CD0000C6F56A /* PinpadFlow.Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */; };
 		BA57501721D79C3B006E5F17 /* JetUI.h in Headers */ = {isa = PBXBuildFile; fileRef = BA57500921D79C3B006E5F17 /* JetUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502121D79C8B006E5F17 /* ContainerViewController.swift */; };
 		BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502721D79CEF006E5F17 /* SlideMenu.swift */; };
 		BA57502A21D79D14006E5F17 /* JetUI.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA57502921D79D13006E5F17 /* JetUI.podspec */; };
+		BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */; };
+		BA5958FB220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */; };
+		BA5958FD220B600600DE9922 /* PinpadFlow.PincodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */; };
+		BA5958FF220B60B600DE9922 /* PinpadFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5958FE220B60B600DE9922 /* PinpadFlow.swift */; };
+		BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.StorageLocker.swift; sourceTree = "<group>"; };
+		BA16996E22292FAF00351F44 /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.Configuration.swift; sourceTree = "<group>"; };
+		BA30529421E3A7D900C6F56A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.ViewModel.swift; sourceTree = "<group>"; };
+		BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.PincodeView.swift; sourceTree = "<group>"; };
+		BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.Services.swift; sourceTree = "<group>"; };
 		BA57500621D79C3B006E5F17 /* JetUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JetUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA57500921D79C3B006E5F17 /* JetUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JetUI.h; sourceTree = "<group>"; };
 		BA57500A21D79C3B006E5F17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -22,6 +43,11 @@
 		BA57502121D79C8B006E5F17 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		BA57502721D79CEF006E5F17 /* SlideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		BA57502921D79D13006E5F17 /* JetUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = JetUI.podspec; path = ../../../JetUI.podspec; sourceTree = "<group>"; };
+		BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.swift; sourceTree = "<group>"; };
+		BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.DeviceOwnerAuth.swift; sourceTree = "<group>"; };
+		BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.PincodeStorage.swift; sourceTree = "<group>"; };
+		BA5958FE220B60B600DE9922 /* PinpadFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.swift; sourceTree = "<group>"; };
+		BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.PinpadViewFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,18 +55,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA16996F22292FAF00351F44 /* JetLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA16996D22292FAF00351F44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA16996E22292FAF00351F44 /* JetLib.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA30529321E3A7C700C6F56A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BA30529421E3A7D900C6F56A /* UIColor.swift */,
+				BA30529621E3B93000C6F56A /* UIView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		BA574FFC21D79C3B006E5F17 = {
 			isa = PBXGroup;
 			children = (
 				BA57500821D79C3B006E5F17 /* JetUI */,
 				BA57501321D79C3B006E5F17 /* JetUITests */,
 				BA57500721D79C3B006E5F17 /* Products */,
+				BA16996D22292FAF00351F44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,6 +100,8 @@
 		BA57500821D79C3B006E5F17 /* JetUI */ = {
 			isa = PBXGroup;
 			children = (
+				BA30529321E3A7C700C6F56A /* Utils */,
+				BA57502C21D7AAEE006E5F17 /* Modules */,
 				BA57502021D79C71006E5F17 /* ViewControllers */,
 				BA57502921D79D13006E5F17 /* JetUI.podspec */,
 				BA57500921D79C3B006E5F17 /* JetUI.h */,
@@ -79,6 +126,31 @@
 				BA57502121D79C8B006E5F17 /* ContainerViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BA57502C21D7AAEE006E5F17 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				BA57502D21D7AB0C006E5F17 /* PinpadLogin */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		BA57502D21D7AB0C006E5F17 /* PinpadLogin */ = {
+			isa = PBXGroup;
+			children = (
+				BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */,
+				BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */,
+				BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */,
+				BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */,
+				BA5958FE220B60B600DE9922 /* PinpadFlow.swift */,
+				BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */,
+				BA3052A221E4CD0000C6F56A /* PinpadFlow.Services.swift */,
+				BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */,
+				BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */,
+				BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */,
+			);
+			path = PinpadLogin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,8 +232,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA5958FB220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift in Sources */,
+				BA3052A321E4CD0000C6F56A /* PinpadFlow.Services.swift in Sources */,
+				BA30529D21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift in Sources */,
 				BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */,
+				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
+				BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */,
+				BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */,
+				BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */,
+				BA5958FD220B600600DE9922 /* PinpadFlow.PincodeStorage.swift in Sources */,
+				BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */,
+				BA30529721E3B93000C6F56A /* UIView.swift in Sources */,
+				BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */,
+				BA5958FF220B60B600DE9922 /* PinpadFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +304,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -278,7 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -302,6 +386,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JetUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,6 +412,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JetUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

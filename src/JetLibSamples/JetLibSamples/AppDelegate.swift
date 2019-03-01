@@ -7,6 +7,7 @@
 
 import UIKit
 import JetLib
+import JetUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIViewController.swizzleViewAppearances()
 
         return true
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        PinpadFlow.shared.applicationDidBecomeActive()
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        PinpadFlow.shared.applicationDidEnterBackground()
     }
 }
 

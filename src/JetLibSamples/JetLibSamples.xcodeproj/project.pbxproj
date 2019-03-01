@@ -7,23 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA169968222846F900351F44 /* JetUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA30529821E3BAF900C6F56A /* JetUI.framework */; };
+		BA169969222846F900351F44 /* JetUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA30529821E3BAF900C6F56A /* JetUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA16996B2228470000351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; };
+		BA16996C2228470000351F44 /* JetLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA30529B21E3CBE400C6F56A /* PinpadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529A21E3CBE400C6F56A /* PinpadController.swift */; };
 		BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */; };
 		BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B879210B754A00A5F22F /* AppDelegate.swift */; };
 		BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B87B210B754A00A5F22F /* CommandSampleController.swift */; };
 		BA54B87F210B754A00A5F22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B87D210B754A00A5F22F /* Main.storyboard */; };
 		BA54B881210B754C00A5F22F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA54B880210B754C00A5F22F /* Assets.xcassets */; };
 		BA54B884210B754C00A5F22F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */; };
-		BAA4E790216EB64E00A60DC0 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; };
 		BAED2515218CEB5700F68E96 /* BindingSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2514218CEB5700F68E96 /* BindingSampleController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BA436E7C215FD076000A59D1 /* Embed Frameworks */ = {
+		BA16996A222846FA00351F44 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BA16996C2228470000351F44 /* JetLib.framework in Embed Frameworks */,
+				BA169969222846F900351F44 /* JetUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,6 +37,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BA30529821E3BAF900C6F56A /* JetUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA30529A21E3CBE400C6F56A /* PinpadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadController.swift; sourceTree = "<group>"; };
 		BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuSampleController.swift; sourceTree = "<group>"; };
 		BA54B876210B754A00A5F22F /* JetLibSamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JetLibSamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B879210B754A00A5F22F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAA4E790216EB64E00A60DC0 /* JetLib.framework in Frameworks */,
+				BA16996B2228470000351F44 /* JetLib.framework in Frameworks */,
+				BA169968222846F900351F44 /* JetUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +88,7 @@
 				BAED2514218CEB5700F68E96 /* BindingSampleController.swift */,
 				BA54B87B210B754A00A5F22F /* CommandSampleController.swift */,
 				BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */,
+				BA30529A21E3CBE400C6F56A /* PinpadController.swift */,
 				BA54B87D210B754A00A5F22F /* Main.storyboard */,
 				BA54B880210B754C00A5F22F /* Assets.xcassets */,
 				BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */,
@@ -90,6 +100,7 @@
 		BAA4E78E216EB64E00A60DC0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA30529821E3BAF900C6F56A /* JetUI.framework */,
 				BAA4E78F216EB64E00A60DC0 /* JetLib.framework */,
 			);
 			name = Frameworks;
@@ -105,7 +116,7 @@
 				BA54B872210B754A00A5F22F /* Sources */,
 				BA54B873210B754A00A5F22F /* Frameworks */,
 				BA54B874210B754A00A5F22F /* Resources */,
-				BA436E7C215FD076000A59D1 /* Embed Frameworks */,
+				BA16996A222846FA00351F44 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */,
+				BA30529B21E3CBE400C6F56A /* PinpadController.swift in Sources */,
 				BAED2515218CEB5700F68E96 /* BindingSampleController.swift in Sources */,
 				BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */,
 				BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */,

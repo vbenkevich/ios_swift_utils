@@ -8,10 +8,10 @@ import Foundation
 public extension Task {
 
     @discardableResult
-    public func chain<K>(nextTask: @escaping (Task<T>) -> Task<K>) -> Task<K> {
+    public func chain<K>(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (Task<T>) -> Task<K>) -> Task<K> {
         let tcs = Task<K>.Source()
 
-        self.notify(queue: DispatchQueue.global(qos: .userInitiated)) { _ in
+        self.notify(queue: queue) { _ in
             let task = nextTask(self)
             task.notify {
                 try? tcs.setStatus($0.status)
@@ -22,8 +22,8 @@ public extension Task {
     }
 
     @discardableResult
-    public func chainOnSuccess<K>(nextTask: @escaping (T) throws -> Task<K>) -> Task<K>{
-        return chain {
+    public func chainOnSuccess<K>(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (T) throws -> Task<K>) -> Task<K>{
+        return chain(queue: queue) {
             if $0.isSuccess {
                 do {
                     return try nextTask($0.result!)

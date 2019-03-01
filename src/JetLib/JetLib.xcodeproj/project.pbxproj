@@ -11,6 +11,11 @@
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
 		BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */; };
+		BA3052A121E4C16100C6F56A /* Task+Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052A021E4C16100C6F56A /* Task+Delay.swift */; };
+		BA3052A721E601C400C6F56A /* KeyChainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052A621E601C400C6F56A /* KeyChainStorage.swift */; };
+		BA3052A921E6028400C6F56A /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052A821E6028400C6F56A /* UserDefaults.swift */; };
+		BA3052AB21E602D300C6F56A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052AA21E602D300C6F56A /* Logger.swift */; };
+		BA3052AE21E65DAC00C6F56A /* KeyChainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3052AD21E65DAC00C6F56A /* KeyChainStorageTests.swift */; };
 		BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */; };
 		BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA541F55212D615400904EC4 /* ActionCommand.swift */; };
 		BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB304211351590008C539 /* SpinLock.swift */; };
@@ -98,6 +103,11 @@
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
 		BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+TaskStorage.swift"; sourceTree = "<group>"; };
+		BA3052A021E4C16100C6F56A /* Task+Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Delay.swift"; sourceTree = "<group>"; };
+		BA3052A621E601C400C6F56A /* KeyChainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainStorage.swift; sourceTree = "<group>"; };
+		BA3052A821E6028400C6F56A /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		BA3052AA21E602D300C6F56A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		BA3052AD21E65DAC00C6F56A /* KeyChainStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainStorageTests.swift; sourceTree = "<group>"; };
 		BA4E95B7212F07A2009B2154 /* HttpClient+Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HttpClient+Requests.swift"; sourceTree = "<group>"; };
 		BA541F55212D615400904EC4 /* ActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCommand.swift; sourceTree = "<group>"; };
 		BA54B81C210B70DF00A5F22F /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,6 +204,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA3052A421E6019B00C6F56A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BA3052A521E601B000C6F56A /* KeyChain */,
+				BA3052A821E6028400C6F56A /* UserDefaults.swift */,
+				BA3052AA21E602D300C6F56A /* Logger.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		BA3052A521E601B000C6F56A /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				BA3052A621E601C400C6F56A /* KeyChainStorage.swift */,
+			);
+			path = KeyChain;
+			sourceTree = "<group>";
+		};
+		BA3052AC21E65D8800C6F56A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BA3052AD21E65DAC00C6F56A /* KeyChainStorageTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		BA54B812210B70DF00A5F22F = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +253,7 @@
 		BA54B81E210B70DF00A5F22F /* JetLib */ = {
 			isa = PBXGroup;
 			children = (
+				BA3052A421E6019B00C6F56A /* Utils */,
 				BA9EB303211351440008C539 /* Common */,
 				BA54B866210B73D700A5F22F /* Task */,
 				BAC82012210F7A880011DCF3 /* Http */,
@@ -233,7 +270,8 @@
 		BA54B829210B70E000A5F22F /* JetLibTests */ = {
 			isa = PBXGroup;
 			children = (
-				BAC4451721357BD5005AB974 /* Utils */,
+				BAC4451721357BD5005AB974 /* TestUtils */,
+				BA3052AC21E65D8800C6F56A /* Utils */,
 				BAC820202111F0630011DCF3 /* Task */,
 				BAC8201F2111F05D0011DCF3 /* Http */,
 				BA666684216384E50004D41B /* Mvvm */,
@@ -264,6 +302,7 @@
 				BA7CEDF7211C954000C81653 /* Task+Source.swift */,
 				BA9EB30721135DDA0008C539 /* Task+Chain.swift */,
 				BA54B867210B73F600A5F22F /* Task+DispatchQueue.swift */,
+				BA3052A021E4C16100C6F56A /* Task+Delay.swift */,
 				BAC445272136A112005AB974 /* TaskGroup.swift */,
 			);
 			path = Task;
@@ -335,7 +374,7 @@
 			path = DataBindings;
 			sourceTree = "<group>";
 		};
-		BAC4451721357BD5005AB974 /* Utils */ = {
+		BAC4451721357BD5005AB974 /* TestUtils */ = {
 			isa = PBXGroup;
 			children = (
 				BAC4451821357BEC005AB974 /* TestError.swift */,
@@ -343,7 +382,7 @@
 				BAE6485721384CC9000BB449 /* XCTestCase.swift */,
 				BA68137221D50CC8008BE2FA /* Stub.swift */,
 			);
-			path = Utils;
+			path = TestUtils;
 			sourceTree = "<group>";
 		};
 		BAC82012210F7A880011DCF3 /* Http */ = {
@@ -558,11 +597,13 @@
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
 				BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */,
+				BA3052A121E4C16100C6F56A /* Task+Delay.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
 				BA73AEEE21522E44002AD0E9 /* HttpClient+Mocks.swift in Sources */,
 				BA68136921D4D77C008BE2FA /* Alerts.swift in Sources */,
 				BA541F8F212D662200904EC4 /* SpinLock.swift in Sources */,
+				BA3052AB21E602D300C6F56A /* Logger.swift in Sources */,
 				BA66667F216371120004D41B /* ViewModel.swift in Sources */,
 				BA6666812163711D0004D41B /* View.swift in Sources */,
 				BAED2513218CD7DF00F68E96 /* Binding.swift in Sources */,
@@ -572,12 +613,14 @@
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
 				BA68136B21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift in Sources */,
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
+				BA3052A721E601C400C6F56A /* KeyChainStorage.swift in Sources */,
 				BAA652D4218A124200E4BDC3 /* BindingTarget.swift in Sources */,
 				BA18413B21B2D34600253718 /* Exception.swift in Sources */,
 				BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */,
 				BACD957D21763AED008396D5 /* Observable.swift in Sources */,
 				BAD07B2F219E10D4003111E9 /* Observable+Merge.swift in Sources */,
 				BA6666882163B4EA0004D41B /* UIViewController+View.swift in Sources */,
+				BA3052A921E6028400C6F56A /* UserDefaults.swift in Sources */,
 				BA68136D21D4E003008BE2FA /* ExtendedViewModel.swift in Sources */,
 				BA7CEDF8211C954000C81653 /* Task+Source.swift in Sources */,
 				BAC445282136A112005AB974 /* TaskGroup.swift in Sources */,
@@ -604,6 +647,7 @@
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BA68137121D50B22008BE2FA /* ExtendedViewModelTests.swift in Sources */,
+				BA3052AE21E65DAC00C6F56A /* KeyChainStorageTests.swift in Sources */,
 				BA7D58CF21CFD9DA008A3177 /* Observable+Correction.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
 				BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */,
