@@ -41,6 +41,21 @@ public extension Task {
     }
 
     @discardableResult
+    public func chainOnFail(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (Error) -> Task<T>) -> Task<T>{
+        return chain(queue: queue) {
+            if $0.isSuccess {
+                return Task($0.result!)
+            } else if $0.isCancelled {
+                return Task(status: .cancelled)
+            } else if $0.isFailed {
+                return nextTask($0.error!)
+            } else {
+                preconditionFailure("inconsistent state")
+            }
+        }
+    }
+
+    @discardableResult
     public func onSuccess(queue: DispatchQueue = DispatchQueue.main, callback: @escaping (T) -> Void) -> Task<T>{
         return notify(queue: queue) {
             if $0.isSuccess {

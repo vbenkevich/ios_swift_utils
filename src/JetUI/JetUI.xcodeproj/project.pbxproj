@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */; };
 		BA16996F22292FAF00351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA16996E22292FAF00351F44 /* JetLib.framework */; };
+		BA16997522298E6A00351F44 /* ObservableValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997422298E6A00351F44 /* ObservableValidationUtils.swift */; };
+		BA169977222992A200351F44 /* Task+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169976222992A200351F44 /* Task+ErrorAlert.swift */; };
 		BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */; };
 		BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529421E3A7D900C6F56A /* UIColor.swift */; };
 		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
@@ -29,6 +31,8 @@
 /* Begin PBXFileReference section */
 		BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.StorageLocker.swift; sourceTree = "<group>"; };
 		BA16996E22292FAF00351F44 /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA16997422298E6A00351F44 /* ObservableValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValidationUtils.swift; sourceTree = "<group>"; };
+		BA169976222992A200351F44 /* Task+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+ErrorAlert.swift"; sourceTree = "<group>"; };
 		BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.Configuration.swift; sourceTree = "<group>"; };
 		BA30529421E3A7D900C6F56A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 			children = (
 				BA30529421E3A7D900C6F56A /* UIColor.swift */,
 				BA30529621E3B93000C6F56A /* UIView.swift */,
+				BA16997422298E6A00351F44 /* ObservableValidationUtils.swift */,
+				BA169976222992A200351F44 /* Task+ErrorAlert.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -232,10 +238,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA169977222992A200351F44 /* Task+ErrorAlert.swift in Sources */,
 				BA5958FB220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift in Sources */,
 				BA3052A321E4CD0000C6F56A /* PinpadFlow.Services.swift in Sources */,
 				BA30529D21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift in Sources */,
 				BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */,
+				BA16997522298E6A00351F44 /* ObservableValidationUtils.swift in Sources */,
 				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
 				BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */,

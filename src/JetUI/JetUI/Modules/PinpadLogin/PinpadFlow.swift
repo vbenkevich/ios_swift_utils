@@ -29,7 +29,7 @@ open class PinpadFlow {
         set { UserDefaults.standard.set(newValue, forKey: UserDefaults.Key.dontUsePincode) }
     }
 
-    private var storage = DataStorage() //TODO use encrypted
+    private var storage = KeyChainStorage.standard //TODO use encrypted
     private var lastBackgroudTime = Date()
 
     private var _storageLocker: StorageLocker?
@@ -61,7 +61,9 @@ open class PinpadFlow {
         }
 
         return storageLocker.unlock().map {
-            try self.storage.set(data, forKey: key)
+            guard self.storage.set(value: data, forKey: key) else {
+                throw PinpadFlowException.keyNotFoundException
+            }
         }
     }
 
@@ -71,23 +73,24 @@ open class PinpadFlow {
         }
 
         return storageLocker.unlock().map {
-            try self.storage.data(forKey: key)
-        }
-    }
-
-    //TODO use encrypted storage
-    private class DataStorage {
-
-        func set<T: Codable>(_ data: T, forKey key: UserDefaults.Key) throws {
-            UserDefaults.standard.set(data, forKey: key)
-        }
-
-        func data<T: Codable>(forKey key: UserDefaults.Key) throws -> T {
-            guard let data: T = UserDefaults.standard.value(forKey: key) else {
+            guard let data: T = self.storage.value(forKey: key) else {
                 throw PinpadFlowException.keyNotFoundException
             }
 
             return data
+        }
+    }
+
+    @discardableResult
+    open func delete(key: UserDefaults.Key) throws -> Task<Void> {
+        guard PinpadFlow.isPincodeInited, !PinpadFlow.dontUsePincode else {
+            throw PinpadFlowException.pincodeDoesntSetException
+        }
+
+        return storageLocker.unlock().map {
+            guard self.storage.delete(key: key) else {
+                throw PinpadFlowException.keyNotFoundException
+            }
         }
     }
 }

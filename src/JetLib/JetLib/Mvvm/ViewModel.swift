@@ -59,14 +59,7 @@ open class ViewModel: ViewLifecycleDelegate {
     public func startLoadData() -> NotifyCompletion {
         let loader = newLoader()
         willLoadData(loader: loader)
-        return loadData(loader: loader)
-    }
-
-    @discardableResult
-    @available(*, deprecated, message: "use willLoadData instead")
-    open func loadData(loader: DataLoader? = nil) -> NotifyCompletion {
-        let currentLoader = loader ?? self.loader ?? newLoader()
-        return performDataLoading(loader: currentLoader)
+        return performDataLoading(loader: loader)
     }
 
     open func loadDataCompleted() {
@@ -76,17 +69,7 @@ open class ViewModel: ViewLifecycleDelegate {
     open func submit<TData>(task: Task<TData>, tag: DataTaskTag? = nil) -> Task<TData> {
         return submitedTasks.append(task: task, tag: tag)
     }
-
-    @discardableResult
-    @available(*, deprecated, message: "use willLoadData instead")
-    public func load<TData>(task: Task<TData>) -> Task<TData> {
-        if loader == nil {
-            loader = newLoader()
-        }
-
-        return try! loader!.append(task)
-    }
-
+    
     public func cancelAll() {
         loader = nil
     }
