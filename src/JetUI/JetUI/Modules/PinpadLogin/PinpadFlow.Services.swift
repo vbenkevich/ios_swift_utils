@@ -55,11 +55,11 @@ public extension PinpadFlow {
         }
 
         public var isTouchIdAvailable: Bool {
-            return authService.isFaceIdAvailable
+            return authService.isTouchIdAvailable
         }
 
         public var isFaceIdAvailable: Bool {
-            return authService.isTouchIdAvailable
+            return authService.isFaceIdAvailable
         }
 
         public func check(pincode: String) -> Task<Void> {

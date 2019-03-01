@@ -12,27 +12,38 @@ extension PinpadWidget {
 
         private var attempt: Int = 0
 
-        lazy var deleteCommand = ActionCommand(self, execute: { $0.delete() }, canExecute: { $0.canDelete() })
+        lazy var deleteSymbolCommand = ActionCommand(self,
+                                                     execute: { $0.executeDeleteSymbol() },
+                                                     canExecute: { $0.canExecuteDeleteSymbol() })
 
-        lazy var appendCommand = AsyncCommand(self, task: { $0.append($1) })
+        lazy var appendSymbolCommand = AsyncCommand(self,
+                                                    task: { $0.executeAppendSymbol($1) })
 
-        lazy var biometricCommand = AsyncCommand(self, task: { $0.biometric() }, canExecute: { $0.canBiometric() })
+        lazy var deviceOwnerAuthCommand = AsyncCommand(self,
+                                                       task: { $0.executeDeviceOwnerAuth() },
+                                                       canExecute: { $0.canExecuteDeviceOwnerAuth() })
 
         weak var view: PinpadWidget?
 
         weak var delegate: PinpadWidgetDelegate?
 
-        var service: PinpadFlowWidgetService?
+        var service: PinpadFlowWidgetService? {
+            didSet {
+                deleteSymbolCommand.invalidate()
+                appendSymbolCommand.invalidate()
+                deviceOwnerAuthCommand.invalidate()
+            }
+        }
 
         var pincode: String = "" {
             didSet {
-                deleteCommand.invalidate()
-                biometricCommand.invalidate()
+                deleteSymbolCommand.invalidate()
+                deviceOwnerAuthCommand.invalidate()
                 view?.pincodeView.pincode = pincode
             }
         }
 
-        fileprivate func append(_ symbol: String) -> Task<Void> {
+        fileprivate func executeAppendSymbol(_ symbol: String) -> Task<Void> {
             pincode += symbol
 
             if let service = service, service.symbolsCount == pincode.count {
@@ -49,11 +60,11 @@ extension PinpadWidget {
             }
         }
 
-        fileprivate func delete() {
+        fileprivate func executeDeleteSymbol() {
             pincode = String(pincode.prefix(pincode.count - 1))
         }
 
-        fileprivate func canDelete() -> Bool {
+        fileprivate func canExecuteDeleteSymbol() -> Bool {
             guard let maxCount = service?.symbolsCount else {
                 return false
             }
@@ -61,7 +72,7 @@ extension PinpadWidget {
             return !pincode.isEmpty && pincode.count < maxCount
         }
 
-        fileprivate func biometric() -> Task<Void> {
+        fileprivate func executeDeviceOwnerAuth() -> Task<Void> {
             guard let service = service else {
                 return Task()
             }
@@ -77,7 +88,7 @@ extension PinpadWidget {
                 }
         }
 
-        fileprivate func canBiometric() -> Bool {
+        fileprivate func canExecuteDeviceOwnerAuth() -> Bool {
             return service?.isDeviceOwnerAuthEnabled == true
         }
     }

@@ -14,10 +14,7 @@ extension UIView {
         container.backgroundColor = UIColor.clear
         container.insertSubview(self, at: 0)
 
-        container.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.left).isActive = true
-        container.topAnchor.constraint(equalTo: topAnchor, constant: insets.top).isActive = true
-        rightAnchor.constraint(equalTo: container.rightAnchor, constant: insets.right).isActive = true
-        bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: insets.bottom).isActive = true
+        equalSizeConstraints(to: container)
 
         return container
     }

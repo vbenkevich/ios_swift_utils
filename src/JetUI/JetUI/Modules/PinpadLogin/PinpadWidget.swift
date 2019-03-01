@@ -117,15 +117,15 @@ public class PinpadWidget: UIView {
 
         rootView = rootStack
 
-        deleteButton.command = viewModel.deleteCommand
+        deleteButton.command = viewModel.deleteSymbolCommand
         deleteButton.hideIfCantExecuteCommand = true
 
         for i in 0...9 {
             numberButtons[i].commanParameter = i.description
-            numberButtons[i].command = viewModel.appendCommand
+            numberButtons[i].command = viewModel.appendSymbolCommand
         }
 
-        viewModel.appendCommand.delegate = nil
+        viewModel.appendSymbolCommand.delegate = nil
 
         setupDeviceOwnerAuthButton()
     }
@@ -141,15 +141,16 @@ public class PinpadWidget: UIView {
             deviceOwnerAuthButton = nil
         }
 
-        deviceOwnerAuthButton?.command = viewModel.biometricCommand
+        deviceOwnerAuthButton?.command = viewModel.deviceOwnerAuthCommand
         deviceOwnerAuthButton?.hideIfCantExecuteCommand = true
     }
 
     func createButtonsView() -> UIView {
         deleteButton = configuration.createDeleteButton()
         numberButtons = (0...9).map { configuration.createButton(number: $0)}
-        deviceOwnerAuthView = UIView(frame: CGRect.zero)
+        deviceOwnerAuthView = UIView()
         deviceOwnerAuthView.backgroundColor = UIColor.clear
+        deviceOwnerAuthView.translatesAutoresizingMaskIntoConstraints = false
 
         var horStacks = (0..<3).map { row in
             UIStackView(arrangedSubviews: (0..<3).map { numberButtons[6 - (row * 3) + ($0 + 1)] })

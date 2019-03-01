@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */; };
+		BA16996F22292FAF00351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA16996E22292FAF00351F44 /* JetLib.framework */; };
 		BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */; };
 		BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529421E3A7D900C6F56A /* UIColor.swift */; };
 		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.StorageLocker.swift; sourceTree = "<group>"; };
+		BA16996E22292FAF00351F44 /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.Configuration.swift; sourceTree = "<group>"; };
 		BA30529421E3A7D900C6F56A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -53,12 +55,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA16996F22292FAF00351F44 /* JetLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA16996D22292FAF00351F44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA16996E22292FAF00351F44 /* JetLib.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BA30529321E3A7C700C6F56A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +85,7 @@
 				BA57500821D79C3B006E5F17 /* JetUI */,
 				BA57501321D79C3B006E5F17 /* JetUITests */,
 				BA57500721D79C3B006E5F17 /* Products */,
+				BA16996D22292FAF00351F44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
