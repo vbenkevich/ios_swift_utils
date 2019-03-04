@@ -31,9 +31,10 @@ class AuthService {
         var login: String?
         var password: String?
 
-        return TaskGroup([
-                try! storage.data(forKey: AuthService.loginKey).map { login = $0 },
-                try! storage.data(forKey: AuthService.passwordKey).map { password = $0 }])
+        let getLogin = try! storage.data(forKey: AuthService.loginKey).map { login = $0 }
+        let getPassword = try! storage.data(forKey: AuthService.passwordKey).map { password = $0 }
+
+        return TaskGroup([getLogin, getPassword])
             .whenAll()
             .chainOnSuccess { self.login(login: login!, password: password!) }
     }

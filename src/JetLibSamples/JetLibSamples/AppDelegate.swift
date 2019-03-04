@@ -20,13 +20,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        PinpadFlow.shared.applicationDidBecomeActive()
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        PinpadFlow.shared.applicationDidEnterBackground()
-    }
 }
 

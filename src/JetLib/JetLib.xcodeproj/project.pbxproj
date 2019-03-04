@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BA0845342168F1A6009DDB72 /* JetLib.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA0845332168F1A5009DDB72 /* JetLib.podspec */; };
+		BA16997B222D26B100351F44 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997A222D26B100351F44 /* DataStorage.swift */; };
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
 		BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */; };
@@ -100,6 +101,7 @@
 
 /* Begin PBXFileReference section */
 		BA0845332168F1A5009DDB72 /* JetLib.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = JetLib.podspec; path = ../../../JetLib.podspec; sourceTree = "<group>"; };
+		BA16997A222D26B100351F44 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
 		BA18413E21B4170300253718 /* ViewModel+TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+TaskStorage.swift"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				BA3052A521E601B000C6F56A /* KeyChain */,
 				BA3052A821E6028400C6F56A /* UserDefaults.swift */,
 				BA3052AA21E602D300C6F56A /* Logger.swift */,
+				BA16997A222D26B100351F44 /* DataStorage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				BA3052A721E601C400C6F56A /* KeyChainStorage.swift in Sources */,
 				BAA652D4218A124200E4BDC3 /* BindingTarget.swift in Sources */,
 				BA18413B21B2D34600253718 /* Exception.swift in Sources */,
+				BA16997B222D26B100351F44 /* DataStorage.swift in Sources */,
 				BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */,
 				BACD957D21763AED008396D5 /* Observable.swift in Sources */,
 				BAD07B2F219E10D4003111E9 /* Observable+Merge.swift in Sources */,

@@ -11,6 +11,8 @@
 		BA16996F22292FAF00351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA16996E22292FAF00351F44 /* JetLib.framework */; };
 		BA16997522298E6A00351F44 /* ObservableValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997422298E6A00351F44 /* ObservableValidationUtils.swift */; };
 		BA169977222992A200351F44 /* Task+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169976222992A200351F44 /* Task+ErrorAlert.swift */; };
+		BA169979222D269F00351F44 /* PincodeProtectedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169978222D269F00351F44 /* PincodeProtectedStorage.swift */; };
+		BA16997D222D5C9B00351F44 /* PincodeProtectedStorageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997C222D5C9B00351F44 /* PincodeProtectedStorageUI.swift */; };
 		BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */; };
 		BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529421E3A7D900C6F56A /* UIColor.swift */; };
 		BA30529721E3B93000C6F56A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529621E3B93000C6F56A /* UIView.swift */; };
@@ -33,6 +35,8 @@
 		BA16996E22292FAF00351F44 /* JetLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA16997422298E6A00351F44 /* ObservableValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValidationUtils.swift; sourceTree = "<group>"; };
 		BA169976222992A200351F44 /* Task+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+ErrorAlert.swift"; sourceTree = "<group>"; };
+		BA169978222D269F00351F44 /* PincodeProtectedStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeProtectedStorage.swift; sourceTree = "<group>"; };
+		BA16997C222D5C9B00351F44 /* PincodeProtectedStorageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeProtectedStorageUI.swift; sourceTree = "<group>"; };
 		BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.Configuration.swift; sourceTree = "<group>"; };
 		BA30529421E3A7D900C6F56A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BA30529621E3B93000C6F56A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 				BA5958FA220B5F0B00DE9922 /* PinpadFlow.DeviceOwnerAuth.swift */,
 				BA5958FC220B600600DE9922 /* PinpadFlow.PincodeStorage.swift */,
 				BA1699642228236A00351F44 /* PinpadFlow.StorageLocker.swift */,
+				BA169978222D269F00351F44 /* PincodeProtectedStorage.swift */,
+				BA16997C222D5C9B00351F44 /* PincodeProtectedStorageUI.swift */,
 			);
 			path = PinpadLogin;
 			sourceTree = "<group>";
@@ -247,11 +253,13 @@
 				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
 				BA1699652228236A00351F44 /* PinpadFlow.StorageLocker.swift in Sources */,
+				BA16997D222D5C9B00351F44 /* PincodeProtectedStorageUI.swift in Sources */,
 				BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */,
 				BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */,
 				BA5958FD220B600600DE9922 /* PinpadFlow.PincodeStorage.swift in Sources */,
 				BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */,
 				BA30529721E3B93000C6F56A /* UIView.swift in Sources */,
+				BA169979222D269F00351F44 /* PincodeProtectedStorage.swift in Sources */,
 				BA30529521E3A7D900C6F56A /* UIColor.swift in Sources */,
 				BA5958FF220B60B600DE9922 /* PinpadFlow.swift in Sources */,
 			);

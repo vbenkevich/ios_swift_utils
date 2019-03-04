@@ -5,11 +5,11 @@
 
 import Foundation
 
-open class KeyChainStorage {
+open class KeyChainStorage: SyncDataStorage {
 
     public static let standard = KeyChainStorage(serviceName: "JetLib.KeyChainStorage")
 
-    init(serviceName: String, accessGroup: String? = nil) {
+    public init(serviceName: String, accessGroup: String? = nil) {
         self.serviceName = serviceName
         self.accessGroup = accessGroup
     }
@@ -17,54 +17,45 @@ open class KeyChainStorage {
     public let serviceName: String
     public let accessGroup: String?
 
-    public func value<T: Codable>(forKey key: UserDefaults.Key) -> T? {
-        guard let data = readData(forKey: key.stringKey) else {
-            return nil
+    public func value<T: Codable>(forKey key: UserDefaults.Key) throws -> T {
+        guard let data = try readData(forKey: key.stringKey) else {
+            throw KeyNotFoundException(key)
         }
 
-        return try? JSONDecoder().decode(T.self, from: data)
+        return try JSONDecoder().decode(T.self, from: data)
     }
 
-    @discardableResult
-    public func set<T: Codable>(value: T, forKey key: UserDefaults.Key) -> Bool {
-        guard let data = try? JSONEncoder().encode(value) else {
-            return false
-        }
-
-        return write(data: data, forKey: key.stringKey)
+    public func set<T: Codable>(_ value: T, forKey key: UserDefaults.Key) throws {
+        let data = try JSONEncoder().encode(value)
+        try write(data: data, forKey: key.stringKey)
     }
 
-    @discardableResult
-    public func delete(key: UserDefaults.Key) -> Bool {
+    public func delete(key: UserDefaults.Key) throws {
         let query = QueryBuilder(key: key.stringKey, serviceName: serviceName, accessGroup: accessGroup)
         let status = SecItemDelete(query.build())
 
-        if status == errSecSuccess {
-            return true
-        } else {
-            return false
+        guard status == errSecSuccess else {
+            throw DataAssessError(status)
         }
     }
 
-    public func contains(key: UserDefaults.Key) -> Bool {
-        return readData(forKey: key.stringKey) != nil
+    @discardableResult
+    public func contains(key: UserDefaults.Key) throws -> Bool {
+        return try readData(forKey: key.stringKey) != nil
     }
 
-    @discardableResult
-    public func clearAll() ->  Bool {
+    public func clearAll() throws {
         var query = QueryBuilder(key: nil, serviceName: serviceName, accessGroup: accessGroup)
         query.matchLimitOne = false
 
         let status: OSStatus = SecItemDelete(query.build())
 
-        if status == errSecSuccess {
-            return true
-        } else {
-            return false
+        guard status == errSecSuccess else {
+            throw DataAssessError(status)
         }
     }
 
-    fileprivate func readData(forKey key: String) -> Data? {
+    fileprivate func readData(forKey key: String) throws -> Data? {
         var query = QueryBuilder(key: key, serviceName: serviceName, accessGroup: accessGroup)
         query.returnData = true
         query.matchLimitOne = true
@@ -75,34 +66,42 @@ open class KeyChainStorage {
         if status == noErr {
             return result as? Data
         } else {
-            return nil
+            throw DataAssessError(status)
         }
     }
 
-    fileprivate func write(data: Data, forKey key: String) -> Bool {
+    fileprivate func write(data: Data, forKey key: String) throws {
         var query = QueryBuilder(key: key, serviceName: serviceName, accessGroup: accessGroup)
         query.writeData = data
 
         let status = SecItemAdd(query.build() as CFDictionary, nil)
 
         if status == errSecDuplicateItem {
-            return update(data: data, forKey: key)
-        } else if status == errSecSuccess {
-            return true
-        } else {
-            return false
+            try update(data: data, forKey: key)
+        }
+
+        guard status == errSecSuccess else {
+            throw DataAssessError(status)
         }
     }
 
-    fileprivate func update(data: Data, forKey key: String) -> Bool {
+    fileprivate func update(data: Data, forKey key: String) throws {
         let query = QueryBuilder(key: key, serviceName: serviceName, accessGroup: accessGroup)
 
         let status = SecItemUpdate(query.build(), [kSecValueData: data] as CFDictionary)
 
-        if status == errSecSuccess {
-            return true
-        } else {
-            return false
+        guard status == errSecSuccess else {
+            throw DataAssessError(status)
+        }
+    }
+
+    public class DataAssessError: Exception {
+
+        public let status: OSStatus
+
+        public init(_ status: OSStatus) {
+            self.status = status
+            super.init("Operation failed. Status = (\(status))")
         }
     }
 
