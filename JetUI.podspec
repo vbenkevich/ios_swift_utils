@@ -13,7 +13,9 @@ Pod::Spec.new do |s|
   s.swift_version = "4.2"
 
   s.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
-  s.source_files  = "src/JetUI/JetUI/**/*.swift"
+  s.source_files = "src/JetUI/JetUI/**/*.swift"
+
+  s.dependency "JetLib", "0.2.0"
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

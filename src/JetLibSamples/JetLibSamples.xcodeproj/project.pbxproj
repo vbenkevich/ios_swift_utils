@@ -74,8 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				BA169983222E7BDD00351F44 /* LoginViewModel.swift */,
-				BA169985222E7C6300351F44 /* AuthService.swift */,
 				BA169987222E7C8C00351F44 /* LoginController.swift */,
+				BA169985222E7C6300351F44 /* AuthService.swift */,
 				BA169989222E7CA500351F44 /* LoginFlowCoordinator.swift */,
 			);
 			path = Login;
