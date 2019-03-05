@@ -14,8 +14,6 @@ class SlideMenuSampleController: ContainerViewController {
 
     var slideMenu = SlideMenu()
 
-    static let tokenKey = UserDefaults.Key("token")
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,15 +28,6 @@ class SlideMenuSampleController: ContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        PinpadFlow.PincodeStorage()
-            .setNew(pincode: "1234")
-            .chainOnSuccess {
-                try PinpadFlow.shared.data(forKey: SlideMenuSampleController.tokenKey)
-            }.onFail {
-                self.showAlert(error: $0)
-            }.onSuccess {
-                self.showAlert(title: $0)
-            }
     }
 
     @objc func handleShowMenu(_ sender: Any) {

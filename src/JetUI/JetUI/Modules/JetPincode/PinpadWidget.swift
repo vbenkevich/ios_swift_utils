@@ -6,43 +6,14 @@
 import UIKit
 import JetLib
 
-public protocol PinpadWidgetDelegate: class {
-
-    func loginSuccess()
-
-    func loginFailed(_ error: Error, attempt: Int)
-}
-
 public class PinpadWidget: UIView {
-
-    public static var localization = Localization()
-
-    public struct Localization {
-        public var incorrectPincode = "Invalid pincode"
-        public var touchIdReason = "Application unlock"
-    }
 
     static let defaultConfiguration = DefaultConfiguration()
 
-    lazy var viewModel: ViewModel = {
-        let vm = ViewModel()
-        vm.view = self
-        vm.pincode = ""
-        return vm
-    }()
-
-    public var service: PinpadFlowWidgetService? {
-        get { return viewModel.service }
-        set {
-            viewModel.service = newValue
-            pincodeView.setup(symbolsCount: service?.symbolsCount)
-            setupDeviceOwnerAuthButton()
+    var viewModel: PinpadViewModel! {
+        didSet {
+            viewModel.view = self
         }
-    }
-
-    public var delegate: PinpadWidgetDelegate? {
-        get { return viewModel.delegate }
-        set { viewModel.delegate = newValue }
     }
 
     public var configuration: PinpadWidgetConfiguration = PinpadWidget.defaultConfiguration {
@@ -128,15 +99,18 @@ public class PinpadWidget: UIView {
         viewModel.appendSymbolCommand.delegate = nil
 
         setupDeviceOwnerAuthButton()
+        pincodeView.setup(symbolsCount: viewModel!.symbolsCount)
     }
 
     func setupDeviceOwnerAuthButton() {
-        if service?.isFaceIdAvailable == true {
-            deviceOwnerAuthButton = configuration.createFaceIdButton()
-        } else if service?.isTouchIdAvailable == true {
-            deviceOwnerAuthButton = configuration.createTouchIdButton()
-        } else if service?.isDeviceOwnerAuthEnabled == true {
+        let authType = viewModel.deviceOwnerLock?.type
+
+        if authType == .unknown {
             deviceOwnerAuthButton = configuration.createOtherIdButton()
+        } else if authType == .faceID {
+            deviceOwnerAuthButton = configuration.createFaceIdButton()
+        } else if authType == .touchID {
+            deviceOwnerAuthButton = configuration.createTouchIdButton()
         } else {
             deviceOwnerAuthButton = nil
         }

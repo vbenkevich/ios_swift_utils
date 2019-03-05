@@ -6,9 +6,9 @@
 import Foundation
 import JetLib
 
-public protocol PinpadFlowViewControllerFactory {
+public protocol PinpadViewControllerFactory {
 
-    func create() -> UIViewController & PinpadViewController
+    func create(viewModel: PinpadWidget.PinpadViewModel) -> UIViewController & PinpadViewController
 }
 
 public protocol PinpadViewController {
@@ -16,23 +16,22 @@ public protocol PinpadViewController {
     var widget: PinpadWidget! { get }
 }
 
-public extension PinpadFlow {
+public extension PinpadWidget {
 
-    open class PinpadDefaultViewControllerFactory: PinpadFlowViewControllerFactory {
+    open class DefaultFactory: PinpadViewControllerFactory {
 
         public var backgroundView: UIView?
         public var headerView: UIView?
 
-        open func createWidget() -> PinpadWidget {
-            let widget = PinpadWidget()
-            widget.service = PinpadFlow.WidgetService(pincodeService: PinpadFlow.PincodeStorage(),
-                                                      authService: PinpadFlow.DeviceOwnerAuth())
+        open func createWidget(viewModel: PinpadWidget.PinpadViewModel) -> PinpadWidget {
+            var widget = PinpadWidget()
+            widget.viewModel = viewModel
             return widget
         }
 
-        open func create() -> UIViewController & PinpadViewController {
+        open func create(viewModel: PinpadWidget.PinpadViewModel) -> UIViewController & PinpadViewController {
             let controller = DefaultControler()
-            controller.widget = createWidget()
+            controller.widget = createWidget(viewModel: viewModel)
             controller.backgroundView = backgroundView
             controller.headerView = headerView
             controller.modalPresentationStyle = .overFullScreen

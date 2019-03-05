@@ -8,9 +8,15 @@ import JetLib
 
 extension PinpadWidget {
 
-    class ViewModel {
+    public class PinpadViewModel {
 
-        private var attempt: Int = 0
+        public init(symbolsCount: Int, deviceOwnerLock: DeviceOwnerLock?) {
+            self.symbolsCount = symbolsCount
+            self.deviceOwnerLock = deviceOwnerLock
+        }
+
+        let symbolsCount: Int
+        let deviceOwnerLock: DeviceOwnerLock?
 
         lazy var deleteSymbolCommand = ActionCommand(self,
                                                      execute: { $0.executeDeleteSymbol() },
@@ -25,15 +31,7 @@ extension PinpadWidget {
 
         weak var view: PinpadWidget?
 
-        weak var delegate: PinpadWidgetDelegate?
-
-        var service: PinpadFlowWidgetService? {
-            didSet {
-                deleteSymbolCommand.invalidate()
-                appendSymbolCommand.invalidate()
-                deviceOwnerAuthCommand.invalidate()
-            }
-        }
+        public weak var delegate: PincodeUIPresenterDelegate?
 
         var pincode: String = "" {
             didSet {
@@ -46,18 +44,11 @@ extension PinpadWidget {
         fileprivate func executeAppendSymbol(_ symbol: String) -> Task<Void> {
             pincode += symbol
 
-            if let service = service, service.symbolsCount == pincode.count {
-                return service.check(pincode: pincode)
-                    .onSuccess { [weak self] _ in
-                        self?.delegate?.loginSuccess()
-                    }.onFail { [weak self, attempt] in
-                        self?.attempt += 1
-                        self?.delegate?.loginFailed($0, attempt: attempt + 1)
-                        self?.view?.showPincodeInvalid { self?.pincode = "" }
-                    }
-            } else {
-                return Task()
+            if symbolsCount == pincode.count && delegate?.validate(code: pincode) == false {
+                view?.showPincodeInvalid { [weak self] in self?.pincode = "" }
             }
+
+            return Task()
         }
 
         fileprivate func executeDeleteSymbol() {
@@ -65,31 +56,21 @@ extension PinpadWidget {
         }
 
         fileprivate func canExecuteDeleteSymbol() -> Bool {
-            guard let maxCount = service?.symbolsCount else {
-                return false
-            }
-
-            return !pincode.isEmpty && pincode.count < maxCount
+            return !pincode.isEmpty && pincode.count < symbolsCount
         }
 
         fileprivate func executeDeviceOwnerAuth() -> Task<Void> {
-            guard let service = service else {
+            guard let lock = deviceOwnerLock else {
                 return Task()
             }
 
-            return service.checkDeviceOwnerAuth()
-                .onSuccess { [weak self] _ in
-                    self?.delegate?.loginSuccess()
-                }.onFail { [weak self, attempt] in
-                    self?.attempt += 1
-                    self?.delegate?.loginFailed($0, attempt: attempt + 1)
-                }.notify { [weak self] _ in
-                    self?.pincode = ""
-                }
+            return lock.getCode().onSuccess { [delegate] in
+                _ = delegate?.validate(code: $0)
+            }.map { _ in return Void() }
         }
 
         fileprivate func canExecuteDeviceOwnerAuth() -> Bool {
-            return service?.isDeviceOwnerAuthEnabled == true
+            return deviceOwnerLock != nil
         }
     }
 }
