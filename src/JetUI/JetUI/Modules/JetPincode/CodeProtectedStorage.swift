@@ -19,13 +19,13 @@ public protocol CodeProvider {
 
 public class CodeProtectedStorage: AsyncDataStorage {
 
+    let codeLocker: CodeLocker
     private let dataStorage: AsyncDataStorage
-    private let codeLocker: CodeLocker
     private let codeProvider: CodeProvider
 
-    public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, lifetime: TimeInterval) {
+    public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, configuration: JetPincodeConfiguration) {
         self.codeProvider = codeProvider
-        self.codeLocker = CodeLocker(validator: validator, lifetime: lifetime)
+        self.codeLocker = CodeLocker(validator: validator, configuration: configuration)
         self.dataStorage = origin
     }
 
@@ -56,18 +56,23 @@ public class CodeProtectedStorage: AsyncDataStorage {
     class CodeLocker {
 
         let validator: CodeValidator
-        let lifetime: TimeInterval
+        let configuration: JetPincodeConfiguration
 
         var lastUnlockTime: Date = Date()
         var unlockTask: Task<Void>?
 
-        init(validator: CodeValidator, lifetime: TimeInterval) {
+        init(validator: CodeValidator, configuration: JetPincodeConfiguration) {
             self.validator = validator
-            self.lifetime = lifetime
+            self.configuration = configuration
+        }
+
+        public func unlock() {
+            lastUnlockTime = Date()
+            unlockTask = Task()
         }
 
         public func tryUnlock(codeProvider: CodeProvider) -> Task<Void> {
-            if (lastUnlockTime + lifetime) < Date() {
+            if (lastUnlockTime + configuration.pincodeLifetime) < Date() {
                 unlockTask = nil
             }
 
@@ -81,6 +86,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
                 }
             }
 
+            lastUnlockTime = Date()
             unlockTask = task
 
             return task

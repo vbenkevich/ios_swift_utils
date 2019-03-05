@@ -103,7 +103,7 @@ public class PinpadWidget: UIView {
     }
 
     func setupDeviceOwnerAuthButton() {
-        let authType = viewModel.deviceOwnerLock?.type
+        let authType = DeviceOwnerLock.type
 
         if authType == .unknown {
             deviceOwnerAuthButton = configuration.createOtherIdButton()

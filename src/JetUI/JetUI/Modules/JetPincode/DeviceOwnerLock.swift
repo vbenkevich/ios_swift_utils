@@ -17,13 +17,13 @@ public class DeviceOwnerLock {
     }
 
     private let storage: KeyChainStorage
-    private let context = LAContext()
 
     public init(storage: KeyChainStorage) {
         self.storage = storage
     }
 
-    public var type: AuthType {
+    public static var type: AuthType {
+        let context = LAContext()
         if #available(iOS 11.0, *) {
             switch context.biometryType {
             case .LABiometryNone:   return .none
@@ -45,7 +45,7 @@ public class DeviceOwnerLock {
 
     public func checkDeviceOwnerAuth() -> Task<Void> {
         let taskSource = Task<Void>.Source()
-
+        let context = LAContext()
         context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics,
                                localizedReason: JetPincodeConfiguration.Strings.touchIdReason)
         {

@@ -28,7 +28,7 @@ open class JetPincode {
         self.dataStorage = CodeProtectedStorage(origin: keyChainStorage.async(),
                                                 validator: pincodeStorage,
                                                 codeProvider: uiCodeProvider,
-                                                lifetime: configuration.pincodeLifetime)
+                                                configuration: configuration)
     }
 
     private let pincodeStorage: PincodeStorage
@@ -38,10 +38,12 @@ open class JetPincode {
     public let configuration: JetPincodeConfiguration
 
     public func setPincode(code: String) throws {
+        dataStorage.codeLocker.unlock()
         try pincodeStorage.setPincode(code: code)
     }
 
     public func deletePincode() throws {
+        dataStorage.codeLocker.invalidate()
         try pincodeStorage.deletePincode()
     }
 }
@@ -74,7 +76,7 @@ open class JetPincodeConfiguration {
 
     public var pincodeAttempts: Int = 5
 
-    public let pincodeLifetime: TimeInterval = TimeInterval(60 * 60)
+    public var pincodeLifetime: TimeInterval = TimeInterval(10 * 60)
 
     public var pincodeStatus: PincodeStatus? {
         get { return UserDefaults.standard.value(forKey: UserDefaults.Key.pincodeStatusKey) }
