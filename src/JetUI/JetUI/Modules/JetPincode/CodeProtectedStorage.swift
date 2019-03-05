@@ -19,8 +19,8 @@ public protocol CodeProvider {
 
 public class CodeProtectedStorage: AsyncDataStorage {
 
+    let codeLocker: CodeLocker
     private let dataStorage: AsyncDataStorage
-    private let codeLocker: CodeLocker
     private let codeProvider: CodeProvider
 
     public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, lifetime: TimeInterval) {
@@ -66,6 +66,11 @@ public class CodeProtectedStorage: AsyncDataStorage {
             self.lifetime = lifetime
         }
 
+        public func unlock() {
+            lastUnlockTime = Date()
+            unlockTask = Task()
+        }
+
         public func tryUnlock(codeProvider: CodeProvider) -> Task<Void> {
             if (lastUnlockTime + lifetime) < Date() {
                 unlockTask = nil
@@ -81,6 +86,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
                 }
             }
 
+            lastUnlockTime = Date()
             unlockTask = task
 
             return task

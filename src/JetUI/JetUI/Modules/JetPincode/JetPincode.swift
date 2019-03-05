@@ -38,10 +38,12 @@ open class JetPincode {
     public let configuration: JetPincodeConfiguration
 
     public func setPincode(code: String) throws {
+        dataStorage.codeLocker.unlock()
         try pincodeStorage.setPincode(code: code)
     }
 
     public func deletePincode() throws {
+        dataStorage.codeLocker.invalidate()
         try pincodeStorage.deletePincode()
     }
 }
