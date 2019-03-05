@@ -23,7 +23,11 @@ public class DeviceOwnerLock {
     }
 
     public static var type: AuthType {
+        var error: NSError?
+
         let context = LAContext()
+        let evaluteRes = context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
+
         if #available(iOS 11.0, *) {
             switch context.biometryType {
             case .LABiometryNone:   return .none
@@ -31,10 +35,9 @@ public class DeviceOwnerLock {
             case .touchID:          return .touchID
             default:                return .unknown
             }
-        } else {
-            var error: NSError?
-            return context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) ? .touchID : .none
         }
+
+        return evaluteRes ? .touchID : .none
     }
 
     public func getCode() -> Task<String> {
