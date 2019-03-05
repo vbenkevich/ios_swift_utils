@@ -10,13 +10,13 @@ extension PinpadWidget {
 
     public class PinpadViewModel {
 
-        public init(symbolsCount: Int, deviceOwnerLock: DevideOwnerLock?) {
+        public init(symbolsCount: Int, deviceOwnerLock: DeviceOwnerLock?) {
             self.symbolsCount = symbolsCount
             self.deviceOwnerLock = deviceOwnerLock
         }
 
         let symbolsCount: Int
-        let deviceOwnerLock: DevideOwnerLock?
+        let deviceOwnerLock: DeviceOwnerLock?
 
         lazy var deleteSymbolCommand = ActionCommand(self,
                                                      execute: { $0.executeDeleteSymbol() },
@@ -31,7 +31,7 @@ extension PinpadWidget {
 
         weak var view: PinpadWidget?
 
-        public weak var delegate: UIPincodeProviderDelegate?
+        public weak var delegate: PincodeUIPresenterDelegate?
 
         var pincode: String = "" {
             didSet {
@@ -66,7 +66,7 @@ extension PinpadWidget {
 
             return lock.getCode().onSuccess { [delegate] in
                 _ = delegate?.validate(code: $0)
-                }.map { _ in return Void() }
+            }.map { _ in return Void() }
         }
 
         fileprivate func canExecuteDeviceOwnerAuth() -> Bool {

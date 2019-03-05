@@ -11,8 +11,10 @@
 		BA169969222846F900351F44 /* JetUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA30529821E3BAF900C6F56A /* JetUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA16996B2228470000351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; };
 		BA16996C2228470000351F44 /* JetLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BA16997322298C3D00351F44 /* LoginSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997222298C3D00351F44 /* LoginSampleController.swift */; };
-		BA30529B21E3CBE400C6F56A /* PinpadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA30529A21E3CBE400C6F56A /* PinpadController.swift */; };
+		BA169984222E7BDD00351F44 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169983222E7BDD00351F44 /* LoginViewModel.swift */; };
+		BA169986222E7C6300351F44 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169985222E7C6300351F44 /* AuthService.swift */; };
+		BA169988222E7C8C00351F44 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169987222E7C8C00351F44 /* LoginController.swift */; };
+		BA16998A222E7CA500351F44 /* LoginFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169989222E7CA500351F44 /* LoginFlowCoordinator.swift */; };
 		BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */; };
 		BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B879210B754A00A5F22F /* AppDelegate.swift */; };
 		BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54B87B210B754A00A5F22F /* CommandSampleController.swift */; };
@@ -38,9 +40,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BA16997222298C3D00351F44 /* LoginSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSampleController.swift; sourceTree = "<group>"; };
+		BA169983222E7BDD00351F44 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		BA169985222E7C6300351F44 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		BA169987222E7C8C00351F44 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		BA169989222E7CA500351F44 /* LoginFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinator.swift; sourceTree = "<group>"; };
 		BA30529821E3BAF900C6F56A /* JetUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JetUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA30529A21E3CBE400C6F56A /* PinpadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadController.swift; sourceTree = "<group>"; };
 		BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuSampleController.swift; sourceTree = "<group>"; };
 		BA54B876210B754A00A5F22F /* JetLibSamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JetLibSamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA54B879210B754A00A5F22F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +70,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA169982222E7BCB00351F44 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				BA169983222E7BDD00351F44 /* LoginViewModel.swift */,
+				BA169985222E7C6300351F44 /* AuthService.swift */,
+				BA169987222E7C8C00351F44 /* LoginController.swift */,
+				BA169989222E7CA500351F44 /* LoginFlowCoordinator.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		BA54B86D210B754A00A5F22F = {
 			isa = PBXGroup;
 			children = (
@@ -86,12 +101,11 @@
 		BA54B878210B754A00A5F22F /* JetLibSamples */ = {
 			isa = PBXGroup;
 			children = (
+				BA169982222E7BCB00351F44 /* Login */,
 				BA54B879210B754A00A5F22F /* AppDelegate.swift */,
-				BA16997222298C3D00351F44 /* LoginSampleController.swift */,
 				BAED2514218CEB5700F68E96 /* BindingSampleController.swift */,
 				BA54B87B210B754A00A5F22F /* CommandSampleController.swift */,
 				BA436E77215FCF4B000A59D1 /* SlideMenuSampleController.swift */,
-				BA30529A21E3CBE400C6F56A /* PinpadController.swift */,
 				BA54B87D210B754A00A5F22F /* Main.storyboard */,
 				BA54B880210B754C00A5F22F /* Assets.xcassets */,
 				BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */,
@@ -182,11 +196,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA436E78215FCF4B000A59D1 /* SlideMenuSampleController.swift in Sources */,
-				BA30529B21E3CBE400C6F56A /* PinpadController.swift in Sources */,
 				BAED2515218CEB5700F68E96 /* BindingSampleController.swift in Sources */,
+				BA169984222E7BDD00351F44 /* LoginViewModel.swift in Sources */,
 				BA54B87C210B754A00A5F22F /* CommandSampleController.swift in Sources */,
 				BA54B87A210B754A00A5F22F /* AppDelegate.swift in Sources */,
-				BA16997322298C3D00351F44 /* LoginSampleController.swift in Sources */,
+				BA169988222E7C8C00351F44 /* LoginController.swift in Sources */,
+				BA16998A222E7CA500351F44 /* LoginFlowCoordinator.swift in Sources */,
+				BA169986222E7C6300351F44 /* AuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

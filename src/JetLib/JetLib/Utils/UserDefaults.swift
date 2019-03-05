@@ -36,7 +36,7 @@ public extension UserDefaults {
         }
 
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            return try JSONDecoder().decode([T].self, from: data).first // workaround for plain strings
         } catch {
             Logger.error(error)
             return nil
@@ -45,8 +45,8 @@ public extension UserDefaults {
 
     func set<T: Codable>(_ value: T, forKey defaultName: Key) {
         do {
-            let data = try JSONEncoder().encode(value)
-            self.set(data, forKey: defaultName.stringKey)
+            let data = try JSONEncoder().encode([value])
+            self.set(data, forKey: defaultName.stringKey) // workaround for plain strings
         } catch {
             Logger.error(error)
         }

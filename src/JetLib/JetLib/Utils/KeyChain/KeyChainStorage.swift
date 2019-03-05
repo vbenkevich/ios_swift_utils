@@ -22,21 +22,20 @@ open class KeyChainStorage: SyncDataStorage {
             throw KeyNotFoundException(key)
         }
 
-        return try JSONDecoder().decode(T.self, from: data)
+        guard let value = try JSONDecoder().decode([T].self, from: data).first else { // workaround for plain strings
+            throw KeyNotFoundException(key)
+        }
+
+        return value
     }
 
     public func set<T: Codable>(_ value: T, forKey key: UserDefaults.Key) throws {
-        let data = try JSONEncoder().encode(value)
+        let data = try JSONEncoder().encode([value]) // workaround for plain strings
         try write(data: data, forKey: key.stringKey)
     }
 
     public func delete(key: UserDefaults.Key) throws {
-        let query = QueryBuilder(key: key.stringKey, serviceName: serviceName, accessGroup: accessGroup)
-        let status = SecItemDelete(query.build())
-
-        guard status == errSecSuccess else {
-            throw DataAssessError(status)
-        }
+        try delete(key: key.stringKey)
     }
 
     @discardableResult
@@ -45,10 +44,9 @@ open class KeyChainStorage: SyncDataStorage {
     }
 
     public func clearAll() throws {
-        var query = QueryBuilder(key: nil, serviceName: serviceName, accessGroup: accessGroup)
-        query.matchLimitOne = false
+        let query = QueryBuilder(serviceName: serviceName).accessGroup(accessGroup).all().build()
 
-        let status: OSStatus = SecItemDelete(query.build())
+        let status: OSStatus = SecItemDelete(query)
 
         guard status == errSecSuccess else {
             throw DataAssessError(status)
@@ -56,12 +54,11 @@ open class KeyChainStorage: SyncDataStorage {
     }
 
     fileprivate func readData(forKey key: String) throws -> Data? {
-        var query = QueryBuilder(key: key, serviceName: serviceName, accessGroup: accessGroup)
-        query.returnData = true
-        query.matchLimitOne = true
+        let query = QueryBuilder(serviceName: serviceName).accessGroup(accessGroup).one().get().key(key).build()
 
         var result: AnyObject?
-        let status = SecItemCopyMatching(query.build(), &result)
+
+        let status = SecItemCopyMatching(query, &result)
 
         if status == noErr {
             return result as? Data
@@ -71,13 +68,13 @@ open class KeyChainStorage: SyncDataStorage {
     }
 
     fileprivate func write(data: Data, forKey key: String) throws {
-        var query = QueryBuilder(key: key, serviceName: serviceName, accessGroup: accessGroup)
-        query.writeData = data
+        let query = QueryBuilder(serviceName: serviceName).accessGroup(accessGroup).set(data).key(key).build()
 
-        let status = SecItemAdd(query.build() as CFDictionary, nil)
+        var status = SecItemAdd(query as CFDictionary, nil)
 
         if status == errSecDuplicateItem {
-            try update(data: data, forKey: key)
+            try delete(key: key)
+            status = SecItemAdd(query as CFDictionary, nil)
         }
 
         guard status == errSecSuccess else {
@@ -85,10 +82,10 @@ open class KeyChainStorage: SyncDataStorage {
         }
     }
 
-    fileprivate func update(data: Data, forKey key: String) throws {
-        let query = QueryBuilder(key: key, serviceName: serviceName, accessGroup: accessGroup)
+    fileprivate func delete(key: String) throws {
+        let query = QueryBuilder(serviceName: serviceName).accessGroup(accessGroup).key(key).build()
 
-        let status = SecItemUpdate(query.build(), [kSecValueData: data] as CFDictionary)
+        let status = SecItemDelete(query)
 
         guard status == errSecSuccess else {
             throw DataAssessError(status)
@@ -105,46 +102,48 @@ open class KeyChainStorage: SyncDataStorage {
         }
     }
 
-    struct QueryBuilder {
+    class QueryBuilder {
 
-        init(key: String?, serviceName: String, accessGroup: String?) {
-            self.key = key
-            self.serviceName = serviceName
-            self.accessGroup = accessGroup
+        fileprivate var query: [String : Any]
+
+        init(serviceName: String) {
+            query = [kSecClass as String : kSecClassGenericPassword as String,
+                     kSecAttrService as String : serviceName]
         }
 
-        let serviceName: String
-        let accessGroup: String?
-        let key: String?
+        func accessGroup(_ accessGroup: String?) -> QueryBuilder {
+            if let group = accessGroup {
+                query[kSecAttrAccessGroup as String] = group
+            }
+            return self
+        }
 
-        var returnData: Bool = false
-        var matchLimitOne: Bool = true
-        var writeData: Data?
-        var protection = kSecAttrAccessibleAlwaysThisDeviceOnly
+        func key(_ key: String) -> QueryBuilder {
+            query[kSecAttrAccount as String] = key
+            return self
+        }
+
+        func set(_ data: Data) -> QueryBuilder {
+            query[kSecValueData as String] = data
+            return self
+        }
+
+        func get() -> QueryBuilder {
+            query[kSecReturnData as String] = kCFBooleanTrue
+            return self
+        }
+
+        func one() -> QueryBuilder {
+            query[kSecMatchLimit as String] = kSecMatchLimitOne
+            return self
+        }
+
+        func all() -> QueryBuilder {
+            query[kSecMatchLimit as String] = kSecMatchLimitAll
+            return self
+        }
 
         func build() -> CFDictionary {
-            var query = [CFString: Any]()
-            query[kSecAttrService] = serviceName
-            query[kSecClass] = kSecClassGenericPassword
-
-            if let group = accessGroup {
-                query[kSecAttrAccessGroup] = group
-            }
-
-            if let data = writeData {
-                query[kSecValueData] = data
-            }
-
-            if let key = key {
-                let encodedKey = key.data(using: String.Encoding.utf8)
-                query[kSecAttrAccount] = encodedKey
-                query[kSecAttrGeneric] = encodedKey
-            }
-
-            query[kSecAttrAccessible] = protection
-            query[kSecMatchLimit] = matchLimitOne ? kSecMatchLimitOne : kSecMatchLimitAll
-            query[kSecReturnData] = returnData ? kCFBooleanTrue : kCFBooleanFalse
-
             return query as CFDictionary
         }
     }
