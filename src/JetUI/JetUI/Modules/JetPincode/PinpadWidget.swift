@@ -99,6 +99,7 @@ public class PinpadWidget: UIView {
         viewModel.appendSymbolCommand.delegate = nil
 
         setupDeviceOwnerAuthButton()
+        pincodeView.setup(symbolsCount: viewModel!.symbolsCount)
     }
 
     func setupDeviceOwnerAuthButton() {

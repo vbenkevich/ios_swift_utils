@@ -52,12 +52,10 @@ extension PinpadWidget {
             }
         }
 
-        func setup(symbolsCount: UInt8?) {
-            guard let count = symbolsCount else { return }
-
+        func setup(symbolsCount: Int) {
             spacing = configuration.horizontalSpacing
-            filledViews = (0..<count).map { _ in configuration.createFilledDot() }
-            emptyViews = (0..<count).map { _ in configuration.createEmptyDot() }
+            filledViews = (0..<symbolsCount).map { _ in configuration.createFilledDot() }
+            emptyViews = (0..<symbolsCount).map { _ in configuration.createEmptyDot() }
         }
     }
 }

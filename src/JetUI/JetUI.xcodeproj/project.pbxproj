@@ -24,7 +24,7 @@
 		BA57502821D79CEF006E5F17 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502721D79CEF006E5F17 /* SlideMenu.swift */; };
 		BA57502A21D79D14006E5F17 /* JetUI.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA57502921D79D13006E5F17 /* JetUI.podspec */; };
 		BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */; };
-		BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */; };
+		BA595901220B839D00DE9922 /* PinpadWidget.PinpadViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA595900220B839D00DE9922 /* PinpadWidget.PinpadViewFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +49,7 @@
 		BA57502721D79CEF006E5F17 /* SlideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		BA57502921D79D13006E5F17 /* JetUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = JetUI.podspec; path = ../../../JetUI.podspec; sourceTree = "<group>"; };
 		BA57502E21D7AB6B006E5F17 /* PinpadWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.swift; sourceTree = "<group>"; };
-		BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadFlow.PinpadViewFactory.swift; sourceTree = "<group>"; };
+		BA595900220B839D00DE9922 /* PinpadWidget.PinpadViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinpadWidget.PinpadViewFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +147,7 @@
 				BA30529E21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift */,
 				BA30529C21E4BD9E00C6F56A /* PinpadWidget.ViewModel.swift */,
 				BA30529021E3A48300C6F56A /* PinpadWidget.Configuration.swift */,
-				BA595900220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift */,
+				BA595900220B839D00DE9922 /* PinpadWidget.PinpadViewFactory.swift */,
 				BA169978222D269F00351F44 /* CodeProtectedStorage.swift */,
 				BA16998B222E842900351F44 /* JetPincode.swift */,
 				BA16998D222E84AB00351F44 /* JetPincodeUIPresenter.swift */,
@@ -243,7 +243,7 @@
 				BA57503021D7AB6B006E5F17 /* PinpadWidget.swift in Sources */,
 				BA57502221D79C8B006E5F17 /* ContainerViewController.swift in Sources */,
 				BA16998C222E842900351F44 /* JetPincode.swift in Sources */,
-				BA595901220B839D00DE9922 /* PinpadFlow.PinpadViewFactory.swift in Sources */,
+				BA595901220B839D00DE9922 /* PinpadWidget.PinpadViewFactory.swift in Sources */,
 				BA30529F21E4BE6300C6F56A /* PinpadWidget.PincodeView.swift in Sources */,
 				BA30529121E3A48300C6F56A /* PinpadWidget.Configuration.swift in Sources */,
 				BA16998E222E84AB00351F44 /* JetPincodeUIPresenter.swift in Sources */,
