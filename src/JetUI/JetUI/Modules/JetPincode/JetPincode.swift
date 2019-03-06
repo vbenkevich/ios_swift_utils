@@ -101,5 +101,6 @@ open class JetPincodeConfiguration {
     public class Strings {
         public static var touchIdReason: String = "<TODO> JetUI.PincodeConfiguration.Strings.touchIdReason"
         public static var notRecognized: String = "<TODO> JetUI.PincodeConfiguration.Strings.notRecognized"
+        public static var osPasscodeNotSet: String = "<TODO> JetUI.PincodeConfiguration.Strings.osPasscodeNotSet"
     }
 }

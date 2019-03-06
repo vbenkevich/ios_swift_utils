@@ -64,9 +64,10 @@ extension PinpadWidget {
                 return Task()
             }
 
-            return lock.getCode().onSuccess { [delegate] in
-                _ = delegate?.validate(code: $0)
-            }.map { _ in return Void() }
+            return lock.getCode()
+                .onSuccess { [delegate] in _ = delegate?.validate(code: $0) }
+                .displayError(view?.controller)
+                .map { _ in return Void() }
         }
 
         fileprivate func canExecuteDeviceOwnerAuth() -> Bool {

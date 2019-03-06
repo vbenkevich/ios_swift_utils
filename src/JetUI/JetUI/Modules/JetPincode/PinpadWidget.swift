@@ -8,6 +8,14 @@ import JetLib
 
 public class PinpadWidget: UIView {
 
+    public var configuration: PinpadWidgetConfiguration = PinpadWidget.defaultConfiguration {
+        didSet {
+            pincodeView.configuration = configuration
+            reloadView(configuration)
+        }
+    }
+
+
     static let defaultConfiguration = DefaultConfiguration()
 
     var viewModel: PinpadViewModel! {
@@ -16,12 +24,7 @@ public class PinpadWidget: UIView {
         }
     }
 
-    public var configuration: PinpadWidgetConfiguration = PinpadWidget.defaultConfiguration {
-        didSet {
-            pincodeView.configuration = configuration
-            reloadView(configuration)
-        }
-    }
+    weak var controller: UIViewController?
 
     var rootView: UIView? {
         didSet {

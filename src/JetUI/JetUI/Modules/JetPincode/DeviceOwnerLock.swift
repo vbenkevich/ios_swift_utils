@@ -17,6 +17,7 @@ public class DeviceOwnerLock {
     }
 
     private let storage: KeyChainStorage
+    private let context = LAContext()
 
     public init(storage: KeyChainStorage) {
         self.storage = storage
@@ -48,12 +49,12 @@ public class DeviceOwnerLock {
 
     public func checkDeviceOwnerAuth() -> Task<Void> {
         let taskSource = Task<Void>.Source()
-        let context = LAContext()
+
         context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics,
                                localizedReason: JetPincodeConfiguration.Strings.touchIdReason)
         {
             if let error = $1 {
-                try? taskSource.error(Exception(nil, error))
+                try? taskSource.error(DeviceOwnerLock.tryParseError(error))
             } else if $0 {
                 try? taskSource.complete()
             } else {
@@ -62,5 +63,13 @@ public class DeviceOwnerLock {
         }
 
         return taskSource.task
+    }
+
+    private static func tryParseError(_ error: Error) -> Exception {
+        if let laError = error as? LAError, laError.code == LAError.passcodeNotSet {
+            return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
+        } else {
+            return Exception(nil, error)
+        }
     }
 }

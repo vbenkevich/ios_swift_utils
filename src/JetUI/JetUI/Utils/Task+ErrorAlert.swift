@@ -8,14 +8,16 @@ import JetLib
 
 public extension Task {
 
-    func displayError(_ presenter: ErrorPresenter) -> Task {
-        self.onFail { presenter.showError(message: ($0 as CustomStringConvertible).description) }
+    func displayError(_ presenter: ErrorPresenter?) -> Task {
+        self.onFail { [weak presenter] in
+            presenter?.showError(message: ($0 as CustomStringConvertible).description)
+        }
         return self
     }
 
-    func displayError(_ presenter: AlertPresenter) -> Task {
-        return self.chainOnFail { error in
-            presenter.showAlert(error: error).map { _ in throw error }
+    func displayError(_ presenter: AlertPresenter?) -> Task {
+        return self.chainOnFail { [weak presenter] error in
+            presenter?.showAlert(error: error).map { _ in throw error } ?? Task(error)
         }
     }
 }

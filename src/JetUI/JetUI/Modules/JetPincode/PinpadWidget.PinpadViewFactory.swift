@@ -43,7 +43,11 @@ public extension PinpadWidget {
 
             var backgroundView: UIView?
             var headerView: UIView?
-            var widget: PinpadWidget!
+            var widget: PinpadWidget! {
+                didSet {
+                    widget.controller = self
+                }
+            }
 
             override func loadView() {
                 let root = backgroundView ?? {
