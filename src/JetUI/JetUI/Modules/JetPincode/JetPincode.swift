@@ -15,14 +15,14 @@ extension UserDefaults.Key {
 
 open class JetPincode {
 
-    public static var shared: JetPincode = JetPincode(configuration: JetPincodeConfiguration(),
-                                                      viewFactory: PinpadWidget.DefaultFactory())
+    public static var shared: JetPincode = JetPincode(configuration: JetPincodeConfiguration())
 
-    public init(configuration: JetPincodeConfiguration, viewFactory: PinpadViewControllerFactory) {
+    public init(configuration: JetPincodeConfiguration) {
         let keyChainStorage = KeyChainStorage(serviceName: "JetUI.JetPincode")
         pincodeStorage = PincodeStorage(storage: keyChainStorage)
 
-        let uiCodeProvider = PincodeUIPresenter(pincodeStorage: pincodeStorage, viewFactory: viewFactory)
+        let uiCodeProvider = PincodeUIPresenter(pincodeStorage: pincodeStorage,
+                                                uiFactory: configuration.uiFactory)
 
         self.configuration = configuration
         self.dataStorage = CodeProtectedStorage(origin: keyChainStorage.async(),
@@ -72,11 +72,15 @@ public extension JetPincode {
 
 open class JetPincodeConfiguration {
 
+    public init() {}
+
     public var symbolsCount: Int = 4
 
     public var pincodeAttempts: Int = 5
 
     public var pincodeLifetime: TimeInterval = TimeInterval(10 * 60)
+
+    public var uiFactory: PinpadViewFactory = PinpadWidgetDefaultViewControllerFactory()
 
     public var pincodeStatus: PincodeStatus? {
         get { return UserDefaults.standard.value(forKey: UserDefaults.Key.pincodeStatusKey) }

@@ -16,7 +16,7 @@ public class PinpadWidget: UIView {
     }
 
 
-    static let defaultConfiguration = DefaultConfiguration()
+    static let defaultConfiguration = PinpadWidgetDefaultConfiguration()
 
     var viewModel: PinpadViewModel! {
         didSet {

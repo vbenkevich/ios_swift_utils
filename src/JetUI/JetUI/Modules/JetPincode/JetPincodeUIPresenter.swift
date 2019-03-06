@@ -14,11 +14,11 @@ public protocol PincodeUIPresenterDelegate: class {
 class PincodeUIPresenter: CodeProvider {
 
     private let pincodeStorage: PincodeStorage
-    private let viewFactory: PinpadViewControllerFactory
+    private let viewFactory: PinpadViewFactory
 
-    init(pincodeStorage: PincodeStorage, viewFactory: PinpadViewControllerFactory) {
+    init(pincodeStorage: PincodeStorage, uiFactory: PinpadViewFactory) {
         self.pincodeStorage = pincodeStorage
-        self.viewFactory = viewFactory
+        self.viewFactory = uiFactory
     }
 
     var currentPresentation: Presentation?
