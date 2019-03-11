@@ -81,6 +81,14 @@ public class PinpadWidget: UIView {
         }
     }
 
+    override public func didMoveToWindow() {
+        super.didMoveToWindow()
+
+        if configuration.showDeviceOwnerAuthImmidately {
+            viewModel.deviceOwnerAuthCommand.execute()
+        }
+    }
+
     func reloadView(_ configuration: PinpadWidgetConfiguration) {
         let buttons = createButtonsView()
         let rootStack = UIStackView(arrangedSubviews: [pincodeView, buttons])
@@ -130,7 +138,7 @@ public class PinpadWidget: UIView {
         deviceOwnerAuthView.translatesAutoresizingMaskIntoConstraints = false
 
         var horStacks = (0..<3).map { row in
-            UIStackView(arrangedSubviews: (0..<3).map { numberButtons[6 - (row * 3) + ($0 + 1)] })
+            UIStackView(arrangedSubviews: (0..<3).map { numberButtons[(row * 3) + ($0 + 1)] })
         }
 
         horStacks.append(UIStackView(arrangedSubviews: [deviceOwnerAuthView, numberButtons[0], deleteButton.embedInView()]))

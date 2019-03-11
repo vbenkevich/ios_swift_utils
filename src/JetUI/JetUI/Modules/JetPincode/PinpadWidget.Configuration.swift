@@ -7,6 +7,7 @@ import Foundation
 
 public protocol PinpadWidgetConfiguration {
 
+    var showDeviceOwnerAuthImmidately: Bool { get set }
     var dotButtonsSpacing: CGFloat { get set}
     var verticalSpacing: CGFloat { get set }
     var horizontalSpacing: CGFloat { get set}
@@ -23,6 +24,8 @@ public protocol PinpadWidgetConfiguration {
 open class PinpadWidgetDefaultConfiguration: PinpadWidgetConfiguration {
 
     public init() {}
+
+    open var showDeviceOwnerAuthImmidately: Bool = true
 
     open var color: UIColor = UIColor.white
 
