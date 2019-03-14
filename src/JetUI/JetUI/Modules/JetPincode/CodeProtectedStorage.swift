@@ -82,7 +82,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
 
             let task = codeProvider.getCode().map { [validator] in
                 guard validator.validate(code: $0) else {
-                    throw InvalidCodeException()
+                    throw InvalidCodeException(JetPincodeConfiguration.Strings.invalidPincode)
                 }
             }
 
