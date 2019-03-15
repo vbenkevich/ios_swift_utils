@@ -103,9 +103,23 @@ open class JetPincodeConfiguration {
     }
 
     public class Strings {
-        public static var touchIdReason: String = "<TODO> JetUI.PincodeConfiguration.Strings.touchIdReason"
         public static var notRecognized: String = "<TODO> JetUI.PincodeConfiguration.Strings.notRecognized"
+        public static var notRecognizedTouchId: String? = nil
+        public static var notRecognizedFaceId: String? = nil
+
+        public static var touchIdReason: String = "<TODO> JetUI.PincodeConfiguration.Strings.touchIdReason"
         public static var osPasscodeNotSet: String = "<TODO> JetUI.PincodeConfiguration.Strings.osPasscodeNotSet"
         public static var invalidPincode: String = "<TODO> JetUI.PincodeConfiguration.Strings.invalidPincode"
+
+        public static var notRecognizedMessage: String {
+            switch DeviceOwnerLock.type {
+            case .faceID:
+                return JetPincodeConfiguration.Strings.notRecognizedFaceId ?? JetPincodeConfiguration.Strings.notRecognized
+            case .touchID:
+                return JetPincodeConfiguration.Strings.notRecognizedTouchId ?? JetPincodeConfiguration.Strings.notRecognized
+            default:
+                return JetPincodeConfiguration.Strings.notRecognized
+            }
+        }
     }
 }

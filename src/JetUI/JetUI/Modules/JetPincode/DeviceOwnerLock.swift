@@ -54,7 +54,11 @@ public class DeviceOwnerLock {
                                localizedReason: JetPincodeConfiguration.Strings.touchIdReason)
         {
             if let error = $1 {
-                try? taskSource.error(DeviceOwnerLock.tryParseError(error))
+                if error.isCancel {
+                    try? taskSource.cancel()
+                } else {
+                    try? taskSource.error(DeviceOwnerLock.tryParseError(error))
+                }
             } else if $0 {
                 try? taskSource.complete()
             } else {
@@ -66,10 +70,35 @@ public class DeviceOwnerLock {
     }
 
     private static func tryParseError(_ error: Error) -> Exception {
-        if let laError = error as? LAError, laError.code == LAError.passcodeNotSet {
-            return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
-        } else {
+        guard let laError = error as? LAError else {
             return Exception(nil, error)
+        }
+
+        switch laError.code {
+        case .authenticationFailed:
+            return Exception(JetPincodeConfiguration.Strings.notRecognizetMessage)
+        case .passcodeNotSet:
+            return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
+        case .userCancel, .systemCancel, .appCancel, .userFallback:
+            return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
+        default:
+            return Exception(nil, error)
+        }
+    }
+}
+
+fileprivate extension Error {
+
+    var isCancel: Bool {
+        guard let laError = self as? LAError else {
+            return false
+        }
+
+        switch laError.code {
+        case .userCancel, .systemCancel, .appCancel:
+            return true
+        default:
+            return false
         }
     }
 }
