@@ -96,7 +96,9 @@ class PincodeUIPresenter: CodeProvider {
             }
 
             if attempt == maxAttempts {
-                controller.dismiss(animated: true) { [source] in try! source.error(CodeProtectedStorage.InvalidCodeException()) }
+                controller.dismiss(animated: true) { [source] in
+                    try! source.error(CodeProtectedStorage.InvalidCodeException(JetPincodeConfiguration.Strings.invalidPincode))
+                }
             }
 
             return false

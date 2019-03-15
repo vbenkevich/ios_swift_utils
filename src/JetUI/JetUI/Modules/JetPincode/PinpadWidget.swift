@@ -81,14 +81,6 @@ public class PinpadWidget: UIView {
         }
     }
 
-    override public func didMoveToWindow() {
-        super.didMoveToWindow()
-
-        if configuration.showDeviceOwnerAuthImmidately {
-            viewModel.deviceOwnerAuthCommand.execute()
-        }
-    }
-
     func reloadView(_ configuration: PinpadWidgetConfiguration) {
         let buttons = createButtonsView()
         let rootStack = UIStackView(arrangedSubviews: [pincodeView, buttons])

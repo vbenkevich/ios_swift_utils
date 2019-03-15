@@ -38,6 +38,7 @@ open class PinpadWidgetDefaultViewControllerFactory: PinpadViewFactory {
         controller.backgroundView = backgroundView
         controller.headerView = headerView
         controller.modalPresentationStyle = .overFullScreen
+        controller.widget.controller = controller
 
         return controller
     }
@@ -88,6 +89,13 @@ open class PinpadWidgetDefaultViewControllerFactory: PinpadViewFactory {
 
             view = root
         }
-    }
 
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+
+            if widget.configuration.showDeviceOwnerAuthImmidately {
+                widget.viewModel.deviceOwnerAuthCommand.execute()
+            }
+        }
+    }
 }
