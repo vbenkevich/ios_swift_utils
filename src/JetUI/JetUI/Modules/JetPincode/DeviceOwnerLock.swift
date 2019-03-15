@@ -79,10 +79,8 @@ public class DeviceOwnerLock {
             return Exception(JetPincodeConfiguration.Strings.notRecognizedMessage)
         case .passcodeNotSet:
             return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
-        case .userCancel, .systemCancel, .appCancel, .userFallback:
-            return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
         default:
-            return Exception(nil, error)
+            return Exception(laError.localizedDescription, error)
         }
     }
 }
@@ -95,7 +93,7 @@ fileprivate extension Error {
         }
 
         switch laError.code {
-        case .userCancel, .systemCancel, .appCancel:
+        case .userCancel, .systemCancel, .appCancel, .userFallback:
             return true
         default:
             return false
