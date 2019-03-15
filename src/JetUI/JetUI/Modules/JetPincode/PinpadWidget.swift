@@ -84,7 +84,7 @@ public class PinpadWidget: UIView {
     override public func didMoveToWindow() {
         super.didMoveToWindow()
 
-        if configuration.showDeviceOwnerAuthImmidately {
+        if window != nil && configuration.showDeviceOwnerAuthImmidately {
             viewModel.deviceOwnerAuthCommand.execute()
         }
     }
