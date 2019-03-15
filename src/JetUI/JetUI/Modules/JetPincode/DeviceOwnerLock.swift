@@ -76,7 +76,7 @@ public class DeviceOwnerLock {
 
         switch laError.code {
         case .authenticationFailed:
-            return Exception(JetPincodeConfiguration.Strings.notRecognizetMessage)
+            return Exception(JetPincodeConfiguration.Strings.notRecognizedMessage)
         case .passcodeNotSet:
             return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
         case .userCancel, .systemCancel, .appCancel, .userFallback:
