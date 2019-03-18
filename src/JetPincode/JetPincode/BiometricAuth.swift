@@ -7,7 +7,7 @@ import Foundation
 import LocalAuthentication
 import JetLib
 
-public class DeviceOwnerLock {
+public class BiometricAuth {
 
     public enum AuthType {
         case faceID
@@ -42,27 +42,27 @@ public class DeviceOwnerLock {
     }
 
     public func getCode() -> Task<String> {
-        return checkDeviceOwnerAuth().map { [storage] in
+        return checkAuth().map { [storage] in
             return try storage.value(forKey: UserDefaults.Key.pincodeKey)
         }
     }
 
-    public func checkDeviceOwnerAuth() -> Task<Void> {
+    public func checkAuth() -> Task<Void> {
         let taskSource = Task<Void>.Source()
 
         context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics,
-                               localizedReason: JetPincodeConfiguration.Strings.touchIdReason)
+                               localizedReason: Strings.touchIdReason)
         {
             if let error = $1 {
                 if error.isCancel {
                     try? taskSource.cancel()
                 } else {
-                    try? taskSource.error(DeviceOwnerLock.tryParseError(error))
+                    try? taskSource.error(BiometricAuth.tryParseError(error))
                 }
             } else if $0 {
                 try? taskSource.complete()
             } else {
-                try? taskSource.error(Exception(JetPincodeConfiguration.Strings.notRecognized))
+                try? taskSource.error(Exception(Strings.notRecognized))
             }
         }
 
@@ -76,9 +76,9 @@ public class DeviceOwnerLock {
 
         switch laError.code {
         case .authenticationFailed:
-            return Exception(JetPincodeConfiguration.Strings.notRecognizedMessage)
+            return Exception(Strings.notRecognizedMessage)
         case .passcodeNotSet:
-            return Exception(JetPincodeConfiguration.Strings.osPasscodeNotSet)
+            return Exception(Strings.osPasscodeNotSet)
         default:
             return Exception(laError.localizedDescription, error)
         }

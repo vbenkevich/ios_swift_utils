@@ -23,7 +23,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
     private let dataStorage: AsyncDataStorage
     private let codeProvider: CodeProvider
 
-    public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, configuration: JetPincodeConfiguration) {
+    public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, configuration: Configuration) {
         self.codeProvider = codeProvider
         self.codeLocker = CodeLocker(validator: validator, configuration: configuration)
         self.dataStorage = origin
@@ -56,12 +56,12 @@ public class CodeProtectedStorage: AsyncDataStorage {
     class CodeLocker {
 
         let validator: CodeValidator
-        let configuration: JetPincodeConfiguration
+        let configuration: Configuration
 
         var lastUnlockTime: Date = Date()
         var unlockTask: Task<Void>?
 
-        init(validator: CodeValidator, configuration: JetPincodeConfiguration) {
+        init(validator: CodeValidator, configuration: Configuration) {
             self.validator = validator
             self.configuration = configuration
         }
@@ -82,7 +82,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
 
             let task = codeProvider.getCode().map { [validator] in
                 guard validator.validate(code: $0) else {
-                    throw InvalidCodeException(JetPincodeConfiguration.Strings.invalidPincode)
+                    throw InvalidCodeException(Strings.invalidPincode)
                 }
             }
 

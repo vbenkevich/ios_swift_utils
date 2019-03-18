@@ -15,10 +15,12 @@ class PincodeUIPresenter: CodeProvider {
 
     private let pincodeStorage: PincodeStorage
     private let viewFactory: PinpadViewFactory
+    private let configuration: Configuration
 
-    init(pincodeStorage: PincodeStorage, uiFactory: PinpadViewFactory) {
+    init(pincodeStorage: PincodeStorage, viewFactory: PinpadViewFactory, configuration: Configuration) {
         self.pincodeStorage = pincodeStorage
-        self.viewFactory = uiFactory
+        self.viewFactory = viewFactory
+        self.configuration = configuration
     }
 
     var currentPresentation: Presentation?
@@ -33,13 +35,13 @@ class PincodeUIPresenter: CodeProvider {
 
         self.currentPresentation = presentation
 
-        let deviceOwnerLock = getDeviceOwnerLock(status: config.deviceOwnerStatus)
-        let viewModel = PinpadWidget.PinpadViewModel(symbolsCount: config.symbolsCount,
-                                                     deviceOwnerLock: deviceOwnerLock)
+        let biomentric = getBiometric(status: config.deviceOwnerStatus)
+        let viewModel = PincodeViewModel(config: configuration, biomentricAuth: biomentric)
+
         viewModel.delegate = presentation
 
         DispatchQueue.main.async { [viewFactory] in
-            presentation.controller = viewFactory.create(viewModel: viewModel)
+            presentation.controller = viewFactory.createController(viewModel)
             presentation.present()
         }
 
@@ -50,9 +52,9 @@ class PincodeUIPresenter: CodeProvider {
         }
     }
 
-    func getDeviceOwnerLock(status: JetPincodeConfiguration.DeviceOwnerAuthStatus?) -> DeviceOwnerLock? {
-        if status == JetPincodeConfiguration.DeviceOwnerAuthStatus.use {
-            return DeviceOwnerLock(storage: pincodeStorage.storage)
+    func getBiometric(status: Configuration.DeviceOwnerAuthStatus?) -> BiometricAuth? {
+        if status == Configuration.DeviceOwnerAuthStatus.use {
+            return BiometricAuth(storage: pincodeStorage.storage)
         } else {
             return nil
         }
@@ -97,7 +99,7 @@ class PincodeUIPresenter: CodeProvider {
 
             if attempt == maxAttempts {
                 controller.dismiss(animated: true) { [source] in
-                    try! source.error(CodeProtectedStorage.InvalidCodeException(JetPincodeConfiguration.Strings.invalidPincode))
+                    try! source.error(CodeProtectedStorage.InvalidCodeException(Strings.invalidPincode))
                 }
             }
 

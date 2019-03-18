@@ -1,29 +1,33 @@
 //
-//  Created by Vladimir Benkevich on 08/01/2019.
+//  Created on 18/03/2019
 //  Copyright © Vladimir Benkevich 2019
 //
 
 import Foundation
+import JetUI
+import JetLib
 
-public protocol PinpadWidgetConfiguration {
+public protocol PinpadViewFactory {
 
-    var showDeviceOwnerAuthImmidately: Bool { get set }
-    var dotButtonsSpacing: CGFloat { get set}
-    var verticalSpacing: CGFloat { get set }
-    var horizontalSpacing: CGFloat { get set}
-
-    func createButton(number: Int) -> UIButton
-    func createDeleteButton() -> UIButton
-    func createFaceIdButton() -> UIButton
-    func createTouchIdButton() -> UIButton
-    func createOtherIdButton() -> UIButton
-    func createFilledDot() -> UIView
-    func createEmptyDot() -> UIView
+    func createController(_ viewModel: PincodeViewModel) -> UIViewController
 }
 
-open class PinpadWidgetDefaultConfiguration: PinpadWidgetConfiguration {
+open class PinpadViewFactoryDefault: PinpadViewFactory {
 
     public init() {}
+
+    open func createController(_ viewModel: PincodeViewModel) -> UIViewController {
+        let contoller = PincodeController()
+        contoller.viewModel = viewModel
+        contoller.pinpad = createPinpad(viewModel)
+        return contoller
+    }
+
+    open func createPinpad(_ viewModel: PincodeViewModel) -> UIView & Pinpad {
+        let view = PincodeView()
+        view.load(self, config: viewModel.config)
+        return view
+    }
 
     open var showDeviceOwnerAuthImmidately: Bool = true
 
@@ -99,21 +103,5 @@ open class PinpadWidgetDefaultConfiguration: PinpadWidgetConfiguration {
         button.setTitle("unknown auth", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }
-}
-
-open class RoundedButton: UIButton {
-
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = min(frame.width, frame.height) / 2
-    }
-}
-
-open class RoundedView: UIView {
-
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = min(frame.width, frame.height) / 2
     }
 }

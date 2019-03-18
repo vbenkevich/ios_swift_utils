@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-extension UIView {
+public extension UIView {
 
     func embedInView(insets: UIEdgeInsets = UIEdgeInsets.zero) -> UIView {
         let container = UIView()
@@ -31,5 +31,21 @@ extension UIView {
         constraints.forEach { $0.isActive = activate }
 
         return constraints
+    }
+}
+
+open class RoundedButton: UIButton {
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = min(frame.width, frame.height) / 2
+    }
+}
+
+open class RoundedView: UIView {
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = min(frame.width, frame.height) / 2
     }
 }
