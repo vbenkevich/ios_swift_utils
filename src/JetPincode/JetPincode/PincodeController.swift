@@ -10,11 +10,11 @@ import JetUI
 
 open class PincodeController: UIViewController {
 
+    open var backgroundView: UIView?
+
+    open var headerView: UIView?
+
     var viewModel: PincodeViewModel!
-
-    var backgroundView: UIView?
-
-    var headerView: UIView?
 
     var pinpad: (UIView & Pinpad)! {
         didSet {

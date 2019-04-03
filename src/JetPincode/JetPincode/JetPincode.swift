@@ -54,16 +54,16 @@ public extension JetPincode {
     }
 
     @discardableResult
-    public func set<T: Codable>(_ value: T, forKey defaultName: UserDefaults.Key) -> Task<Void> {
+    func set<T: Codable>(_ value: T, forKey defaultName: UserDefaults.Key) -> Task<Void> {
         return dataStorage.set(value, forKey: defaultName)
     }
 
     @discardableResult
-    public func delete(key defaultName: UserDefaults.Key) -> Task<Void> {
+    func delete(key defaultName: UserDefaults.Key) -> Task<Void> {
         return dataStorage.delete(key: defaultName)
     }
 
-    public func invalidate() {
+    func invalidate() {
         dataStorage.invalidate()
     }
 }
