@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, "10.0"
   spec.swift_version = "4.2"
 
-  spec.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
+  spec.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", tag: "0.4.0" }
   
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
