@@ -39,7 +39,7 @@ class TaskExecutionTests: XCTestCase {
         let result = "completed"
         let task = Task(result)
 
-        task.notify(notifyQueue) {
+        task.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, result)
             XCTAssertEqual($0.status, .success(result))
             XCTAssert($0 === task)
@@ -55,7 +55,7 @@ class TaskExecutionTests: XCTestCase {
         let task = Task<Int> {
             return 1
         }
-        task.notify(notifyQueue) {
+        task.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, 1)
             XCTAssertEqual($0.status, .success(1))
             XCTAssert($0 === task)
@@ -74,7 +74,7 @@ class TaskExecutionTests: XCTestCase {
         let task = Task<Int> {
             throw error
         }
-        task.notify(notifyQueue) {
+        task.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, nil)
             XCTAssertEqual($0.status, .failed(error))
             XCTAssert($0 === task)
@@ -92,9 +92,9 @@ class TaskExecutionTests: XCTestCase {
 
         let task = Task<Int> {
             return 1
-        }.notify(notifyQueue) { _ in
+        }.notify(queue: notifyQueue) { _ in
             notify1.fulfill()
-        }.notify(notifyQueue) { _ in
+        }.notify(queue: notifyQueue) { _ in
             notify2.fulfill()
         }
 
@@ -113,7 +113,7 @@ class TaskExecutionTests: XCTestCase {
             return 1
         }
 
-        task.notify(executeQueue) { _ in
+        task.notify(queue: executeQueue) { _ in
             completed.fulfill()
         }
 
@@ -131,7 +131,7 @@ class TaskExecutionTests: XCTestCase {
             return 1
         }
 
-        task.notify(executeQueue) { _ in
+        task.notify(queue: executeQueue) { _ in
             completed.fulfill()
         }
 
@@ -145,7 +145,7 @@ class TaskExecutionTests: XCTestCase {
 
         let task = Task<Int> {
             return 1
-        }.notify(notifyQueue) {
+        }.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, nil)
             XCTAssertEqual($0.status, .cancelled)
             notify.fulfill()
@@ -171,7 +171,7 @@ class TaskExecutionTests: XCTestCase {
             return 1
         }
 
-        task.notify(notifyQueue) { _ in
+        task.notify(queue: notifyQueue) { _ in
             cancelled.fulfill()
         }
 

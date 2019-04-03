@@ -10,6 +10,13 @@ public protocol URLRequestAdapter {
     func adapt(origin: URLRequest) -> URLRequest
 }
 
+public struct Response {
+    let request: URLRequest
+    let content: Data?
+    let response: URLResponse?
+    let error: Error?
+}
+
 public class HttpClient {
 
     public static let `default`: HttpClient = HttpClient()
@@ -18,17 +25,12 @@ public class HttpClient {
 
     public var urlSession: URLSession = URLSession.shared
 
-    public func request<TResponse: HttpResponse>(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<TResponse> {
+    public func send(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<Response> {
         let prepared = (adapter ?? requetAdapter)?.adapt(origin: request) ?? request
-        let tcs = Task<TResponse>.Source()
+        let tcs = Task<Response>.Source()
 
         let dataTask = urlSession.dataTask(with: prepared) { (data, response, error) in
-            // order is important
-            let result = TResponse(prepared)
-            result.origin = response
-            result.error = error
-            result.content = data
-            try? tcs.complete(result)
+            try? tcs.complete(Response(request: prepared, content: data, response: response, error: error))
         }
 
         tcs.task.linked = dataTask

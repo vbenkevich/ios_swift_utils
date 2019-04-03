@@ -42,13 +42,13 @@ class TaskChainTests: XCTestCase {
 
         let task = Task<Int> { return result1 }
 
-        task.notify(notifyQueue) {
+        task.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, result1)
             XCTAssertEqual($0.status, .success(result1))
             notifyTask1.fulfill()
         }
         .chain(nextTask: createSecondTask)
-        .notify(notifyQueue) {
+        .notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, result2)
             XCTAssertEqual($0.status, .success(result2))
             notifyTask2.fulfill()
@@ -78,14 +78,14 @@ class TaskChainTests: XCTestCase {
             return Task<String>(result2)
         }
 
-        task1.notify(notifyQueue) {
+        task1.notify(queue: notifyQueue) {
             XCTAssertTrue($0.isSuccess)
             XCTAssertTrue($0.isCompleted)
             XCTAssertFalse($0.isCancelled)
             XCTAssertFalse($0.isFailed)
             notifyTask1.fulfill()
         }
-        task2.notify(notifyQueue) {
+        task2.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, result2)
             XCTAssertTrue($0.isSuccess)
             XCTAssertTrue($0.isCompleted)
@@ -104,11 +104,11 @@ class TaskChainTests: XCTestCase {
         let task = Task<Int> { return 1 }
         try! task.cancel()
 
-        task.notify(notifyQueue) { _ in singleExpectation.fulfill() }
+        task.notify(queue: notifyQueue) { _ in singleExpectation.fulfill() }
         let _: Task<String> = task.chainOnSuccess { _ in
             singleExpectation.fulfill()
             return Task("1")
-        }.notify(notifyQueue) {
+        }.notify(queue: notifyQueue) {
             XCTAssertFalse($0.isSuccess)
             XCTAssertTrue($0.isCompleted)
             XCTAssertTrue($0.isCancelled)
@@ -123,11 +123,11 @@ class TaskChainTests: XCTestCase {
     func testChainOnSuccessError() {
         let singleExpectation = expectation(description: "single")
         let error = TestError()
-        let task = Task<Int> { throw error }.notify(notifyQueue) { _ in singleExpectation.fulfill() }
+        let task = Task<Int> { throw error }.notify(queue: notifyQueue) { _ in singleExpectation.fulfill() }
         let _: Task<String> = task.chainOnSuccess { _ in
             singleExpectation.fulfill()
             return Task("1")
-        }.notify(notifyQueue) {
+        }.notify(queue: notifyQueue) {
             XCTAssertFalse($0.isSuccess)
             XCTAssertTrue($0.isCompleted)
             XCTAssertFalse($0.isCancelled)
