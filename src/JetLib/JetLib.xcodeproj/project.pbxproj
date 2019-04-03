@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA0845342168F1A6009DDB72 /* JetLib.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA0845332168F1A5009DDB72 /* JetLib.podspec */; };
 		BA16997B222D26B100351F44 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997A222D26B100351F44 /* DataStorage.swift */; };
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
@@ -100,7 +99,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BA0845332168F1A5009DDB72 /* JetLib.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = JetLib.podspec; path = ../../../JetLib.podspec; sourceTree = "<group>"; };
 		BA16997A222D26B100351F44 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				BA66667D2163702B0004D41B /* Mvvm */,
 				BAA652D02189DBBF00E4BDC3 /* DataBindings */,
 				BA54B84D210B739100A5F22F /* Command */,
-				BA0845332168F1A5009DDB72 /* JetLib.podspec */,
 				BA54B81F210B70DF00A5F22F /* JetLib.h */,
 				BA54B820210B70E000A5F22F /* Info.plist */,
 			);
@@ -558,7 +555,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA0845342168F1A6009DDB72 /* JetLib.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

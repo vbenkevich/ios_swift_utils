@@ -2,6 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../JetLib.podspec"
+      assignedFileDataType = "public.ruby-script">
+   </FileRef>
+   <FileRef
       location = "group:JetUI/JetUI.xcodeproj">
    </FileRef>
    <FileRef
