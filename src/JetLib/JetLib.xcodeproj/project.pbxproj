@@ -75,6 +75,9 @@
 		BABB23F92254FA74006AA462 /* JetPincodeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB23EF2254FA74006AA462 /* JetPincodeConfiguration.swift */; };
 		BABB23FA2254FD8A006AA462 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB23E22254F9B5006AA462 /* SlideMenu.swift */; };
 		BABB23FB2254FD8C006AA462 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB23E32254F9B5006AA462 /* ContainerViewController.swift */; };
+		BABB23FD225508E2006AA462 /* BottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB23FC225508E2006AA462 /* BottomViewController.swift */; };
+		BABB23FF22550910006AA462 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB23FE22550910006AA462 /* UIScrollView.swift */; };
+		BABB2401225509E1006AA462 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB2400225509E1006AA462 /* UIEdgeInsets.swift */; };
 		BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC44513213566F1005AB974 /* HttpClientBasicTests.swift */; };
 		BAC4451921357BEC005AB974 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4451821357BEC005AB974 /* TestError.swift */; };
 		BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC4451A21357E19005AB974 /* HTTPURLResponse.swift */; };
@@ -188,6 +191,9 @@
 		BABB23ED2254FA74006AA462 /* PincodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PincodeController.swift; sourceTree = "<group>"; };
 		BABB23EE2254FA74006AA462 /* BiometricAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuth.swift; sourceTree = "<group>"; };
 		BABB23EF2254FA74006AA462 /* JetPincodeConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JetPincodeConfiguration.swift; sourceTree = "<group>"; };
+		BABB23FC225508E2006AA462 /* BottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewController.swift; sourceTree = "<group>"; };
+		BABB23FE22550910006AA462 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
+		BABB2400225509E1006AA462 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		BAC44513213566F1005AB974 /* HttpClientBasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientBasicTests.swift; sourceTree = "<group>"; };
 		BAC4451821357BEC005AB974 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		BAC4451A21357E19005AB974 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
@@ -289,7 +295,7 @@
 				BA9EB303211351440008C539 /* Core */,
 				BAC82012210F7A880011DCF3 /* Http */,
 				BABB23DD2254F942006AA462 /* UIKitExtensions */,
-				BABB23E42254F9B5006AA462 /* ViewControllers */,
+				BABB23E42254F9B5006AA462 /* Controllers */,
 				BABB23E52254FA46006AA462 /* Pincode */,
 				BA54B81F210B70DF00A5F22F /* JetLib.h */,
 				BA54B820210B70E000A5F22F /* Info.plist */,
@@ -416,17 +422,20 @@
 			children = (
 				BABB23E02254F9A5006AA462 /* UIColor.swift */,
 				BABB23DE2254F99C006AA462 /* UIView.swift */,
+				BABB23FE22550910006AA462 /* UIScrollView.swift */,
+				BABB2400225509E1006AA462 /* UIEdgeInsets.swift */,
 			);
 			path = UIKitExtensions;
 			sourceTree = "<group>";
 		};
-		BABB23E42254F9B5006AA462 /* ViewControllers */ = {
+		BABB23E42254F9B5006AA462 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				BABB23E22254F9B5006AA462 /* SlideMenu.swift */,
 				BABB23E32254F9B5006AA462 /* ContainerViewController.swift */,
+				BABB23FC225508E2006AA462 /* BottomViewController.swift */,
 			);
-			path = ViewControllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		BABB23E52254FA46006AA462 /* Pincode */ = {
@@ -661,6 +670,7 @@
 				BABB23F62254FA74006AA462 /* PinpadViewFactory.swift in Sources */,
 				BABB23FA2254FD8A006AA462 /* SlideMenu.swift in Sources */,
 				BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */,
+				BABB2401225509E1006AA462 /* UIEdgeInsets.swift in Sources */,
 				BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
 				BA68135B21D29271008BE2FA /* HttpClient+Exception.swift in Sources */,
@@ -691,6 +701,7 @@
 				BABB23F22254FA74006AA462 /* JetPincodeStrings.swift in Sources */,
 				BABB23DF2254F99C006AA462 /* UIView.swift in Sources */,
 				BA54B860210B73BF00A5F22F /* Command.swift in Sources */,
+				BABB23FD225508E2006AA462 /* BottomViewController.swift in Sources */,
 				BA68135921D27C4A008BE2FA /* HttpClient+Decoding.swift in Sources */,
 				BABB23F52254FA74006AA462 /* JetPincode.swift in Sources */,
 				BABB23F32254FA74006AA462 /* CodeProtectedStorage.swift in Sources */,
@@ -698,6 +709,7 @@
 				BA4E95B8212F07A2009B2154 /* HttpClient+Requests.swift in Sources */,
 				BA68136B21D4DD6B008BE2FA /* UIViewContlroller+Alerts.swift in Sources */,
 				BA54B86B210B73F600A5F22F /* Task.swift in Sources */,
+				BABB23FF22550910006AA462 /* UIScrollView.swift in Sources */,
 				BA3052A721E601C400C6F56A /* KeyChainStorage.swift in Sources */,
 				BABB23E12254F9A5006AA462 /* UIColor.swift in Sources */,
 				BAA652D4218A124200E4BDC3 /* BindingTarget.swift in Sources */,
