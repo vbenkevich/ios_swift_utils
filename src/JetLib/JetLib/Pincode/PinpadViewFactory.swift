@@ -4,8 +4,6 @@
 //
 
 import Foundation
-import JetUI
-import JetLib
 
 public protocol PinpadViewFactory {
 

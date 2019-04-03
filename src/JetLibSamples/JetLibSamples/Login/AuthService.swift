@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import JetPincode
 import JetLib
 
 class AuthService {

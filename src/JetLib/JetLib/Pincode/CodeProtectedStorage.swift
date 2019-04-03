@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import JetLib
 import LocalAuthentication
 
 public protocol CodeValidator {
@@ -23,7 +22,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
     private let dataStorage: AsyncDataStorage
     private let codeProvider: CodeProvider
 
-    public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, configuration: Configuration) {
+    public init(origin: AsyncDataStorage, validator: CodeValidator, codeProvider: CodeProvider, configuration: JetPincodeConfiguration) {
         self.codeProvider = codeProvider
         self.codeLocker = CodeLocker(validator: validator, configuration: configuration)
         self.dataStorage = origin
@@ -56,12 +55,12 @@ public class CodeProtectedStorage: AsyncDataStorage {
     class CodeLocker {
 
         let validator: CodeValidator
-        let configuration: Configuration
+        let configuration: JetPincodeConfiguration
 
         var lastUnlockTime: Date = Date()
         var unlockTask: Task<Void>?
 
-        init(validator: CodeValidator, configuration: Configuration) {
+        init(validator: CodeValidator, configuration: JetPincodeConfiguration) {
             self.validator = validator
             self.configuration = configuration
         }
@@ -82,7 +81,7 @@ public class CodeProtectedStorage: AsyncDataStorage {
 
             let task = codeProvider.getCode().map { [validator] in
                 guard validator.validate(code: $0) else {
-                    throw InvalidCodeException(Strings.invalidPincode)
+                    throw InvalidCodeException(JetPincodeStrings.invalidPincode)
                 }
             }
 

@@ -4,16 +4,15 @@
 //
 
 import Foundation
-import JetLib
 
 open class JetPincode {
 
-    public static var shared: JetPincode = JetPincode(configuration: Configuration(), viewFactory: PinpadViewFactoryDefault())
+    public static var shared: JetPincode = JetPincode(configuration: JetPincodeConfiguration(), viewFactory: PinpadViewFactoryDefault())
 
-    public init(configuration: Configuration, viewFactory: PinpadViewFactory) {
+    public init(configuration: JetPincodeConfiguration, viewFactory: PinpadViewFactory) {
         self.viewFactory = viewFactory
 
-        let keyChainStorage = KeyChainStorage(serviceName: "JetUI.JetPincode")
+        let keyChainStorage = KeyChainStorage(serviceName: "JetLib.JetPincode")
         pincodeStorage = PincodeStorage(storage: keyChainStorage)
 
         let uiCodeProvider = PincodeUIPresenter(pincodeStorage: pincodeStorage,
@@ -31,7 +30,7 @@ open class JetPincode {
 
     public let dataStorage: CodeProtectedStorage
 
-    public let configuration: Configuration
+    public let configuration: JetPincodeConfiguration
 
     public let viewFactory: PinpadViewFactory
 

@@ -5,7 +5,6 @@
 
 import Foundation
 import LocalAuthentication
-import JetLib
 
 public class BiometricAuth {
 
@@ -51,7 +50,7 @@ public class BiometricAuth {
         let taskSource = Task<Void>.Source()
 
         context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics,
-                               localizedReason: Strings.touchIdReason)
+                               localizedReason: JetPincodeStrings.touchIdReason)
         {
             if let error = $1 {
                 if error.isCancel {
@@ -62,7 +61,7 @@ public class BiometricAuth {
             } else if $0 {
                 try? taskSource.complete()
             } else {
-                try? taskSource.error(Exception(Strings.notRecognized))
+                try? taskSource.error(Exception(JetPincodeStrings.notRecognized))
             }
         }
 
@@ -76,9 +75,9 @@ public class BiometricAuth {
 
         switch laError.code {
         case .authenticationFailed:
-            return Exception(Strings.notRecognizedMessage)
+            return Exception(JetPincodeStrings.notRecognizedMessage)
         case .passcodeNotSet:
-            return Exception(Strings.osPasscodeNotSet)
+            return Exception(JetPincodeStrings.osPasscodeNotSet)
         default:
             return Exception(laError.localizedDescription, error)
         }

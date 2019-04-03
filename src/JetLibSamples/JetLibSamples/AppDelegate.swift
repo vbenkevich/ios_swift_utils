@@ -7,7 +7,6 @@
 
 import UIKit
 import JetLib
-import JetUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

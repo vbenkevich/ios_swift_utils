@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import JetLib
 
 public protocol PincodeUIPresenterDelegate: class {
 
@@ -15,9 +14,9 @@ class PincodeUIPresenter: CodeProvider {
 
     private let pincodeStorage: PincodeStorage
     private let viewFactory: PinpadViewFactory
-    private let configuration: Configuration
+    private let configuration: JetPincodeConfiguration
 
-    init(pincodeStorage: PincodeStorage, viewFactory: PinpadViewFactory, configuration: Configuration) {
+    init(pincodeStorage: PincodeStorage, viewFactory: PinpadViewFactory, configuration: JetPincodeConfiguration) {
         self.pincodeStorage = pincodeStorage
         self.viewFactory = viewFactory
         self.configuration = configuration
@@ -52,8 +51,8 @@ class PincodeUIPresenter: CodeProvider {
         }
     }
 
-    func getBiometric(status: Configuration.DeviceOwnerAuthStatus?) -> BiometricAuth? {
-        if status == Configuration.DeviceOwnerAuthStatus.use {
+    func getBiometric(status: JetPincodeConfiguration.DeviceOwnerAuthStatus?) -> BiometricAuth? {
+        if status == JetPincodeConfiguration.DeviceOwnerAuthStatus.use {
             return BiometricAuth(storage: pincodeStorage.storage)
         } else {
             return nil
@@ -99,7 +98,7 @@ class PincodeUIPresenter: CodeProvider {
 
             if attempt == maxAttempts {
                 controller.dismiss(animated: true) { [source] in
-                    try! source.error(CodeProtectedStorage.InvalidCodeException(Strings.invalidPincode))
+                    try! source.error(CodeProtectedStorage.InvalidCodeException(JetPincodeStrings.invalidPincode))
                 }
             }
 

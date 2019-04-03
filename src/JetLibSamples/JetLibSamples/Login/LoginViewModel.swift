@@ -5,7 +5,6 @@
 
 import Foundation
 import JetLib
-import JetUI
 
 class LoginViewModel: ViewModel {
 
