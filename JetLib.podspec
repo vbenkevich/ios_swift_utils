@@ -1,19 +1,19 @@
 
-Pod::Spec.new do |s|
+Pod::Spec.new do |spec|
 
-  s.name         = "JetLib"
-  s.version      = "0.3.0"
-  s.summary      = "Toolkit for fast development iOS apps"
-  s.homepage     = "https://github.com/vbenkevich/ios_swift_utils"
+  spec.name         = "JetLib"
+  spec.version      = "0.4.0"
+  spec.summary      = "Toolkit for fast development iOS apps"
+  spec.homepage     = "https://github.com/vbenkevich/ios_swift_utils"
 
-  s.license      = "MIT"
-  s.author       = { "Vladimir Benkevich" => "vladimir.benkevich@gmail.com" }
+  spec.license      = "MIT"
+  spec.author       = { "Vladimir Benkevich" => "vladimir.benkevich@gmail.com" }
 
-  s.platform     = :ios, "10.0"
-  s.swift_version = "4.2"
+  spec.platform     = :ios, "10.0"
+  spec.swift_version = "4.2"
 
-  s.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
-  s.source_files  = "src/JetLib/JetLib/**/*.swift"
+  spec.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
+  spec.source_files  = "src/JetLib/JetLib/Core/**/*.swift"
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -22,4 +22,21 @@ Pod::Spec.new do |s|
   #
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
+  spec.subspec 'Controllers' do |controllers|
+    controllers.source_files  = "src/JetLib/JetLib/ViewControllers/**/*.swift"
+    controllers.dependency 'JetLib/UIKitExtensions'
+  end
+
+  spec.subspec 'Pincode' do |pincode|
+    pincode.source_files  = "src/JetLib/JetLib/Pincode/**/*.swift"
+    pincode.dependency 'JetLib/UIKitExtensions'
+  end
+
+  spec.subspec 'Http' do |http|
+      http.source_files  = "src/JetLib/JetLib/Http/**/*.swift"
+  end
+
+  spec.subspec 'UIKitExtensions' do |extensions|
+      extensions.source_files  = "src/JetLib/JetLib/UIKitExtensions/**/*.swift"
+  end
 end

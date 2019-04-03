@@ -8,9 +8,8 @@
 
 import UIKit
 import JetLib
-import JetUI
 
-class SlideMenuSampleController: ContainerViewController {
+class SlideMenuSampleController: JetLib.ContainerViewController {
 
     var slideMenu = SlideMenu()
 

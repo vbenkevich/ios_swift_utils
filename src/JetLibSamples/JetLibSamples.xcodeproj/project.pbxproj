@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA169968222846F900351F44 /* JetUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA30529821E3BAF900C6F56A /* JetUI.framework */; };
-		BA169969222846F900351F44 /* JetUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA30529821E3BAF900C6F56A /* JetUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA16996B2228470000351F44 /* JetLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; };
 		BA16996C2228470000351F44 /* JetLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4E78F216EB64E00A60DC0 /* JetLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA169984222E7BDD00351F44 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA169983222E7BDD00351F44 /* LoginViewModel.swift */; };
@@ -21,8 +19,6 @@
 		BA54B87F210B754A00A5F22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B87D210B754A00A5F22F /* Main.storyboard */; };
 		BA54B881210B754C00A5F22F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA54B880210B754C00A5F22F /* Assets.xcassets */; };
 		BA54B884210B754C00A5F22F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA54B882210B754C00A5F22F /* LaunchScreen.storyboard */; };
-		BAAAB27D2254B7330067EC0A /* JetPincode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAAB27C2254B7330067EC0A /* JetPincode.framework */; };
-		BAAAB27E2254B7420067EC0A /* JetPincode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAAAB27C2254B7330067EC0A /* JetPincode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAED2515218CEB5700F68E96 /* BindingSampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED2514218CEB5700F68E96 /* BindingSampleController.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,9 +29,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BAAAB27E2254B7420067EC0A /* JetPincode.framework in Embed Frameworks */,
 				BA16996C2228470000351F44 /* JetLib.framework in Embed Frameworks */,
-				BA169969222846F900351F44 /* JetUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,9 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAAAB27D2254B7330067EC0A /* JetPincode.framework in Frameworks */,
 				BA16996B2228470000351F44 /* JetLib.framework in Frameworks */,
-				BA169968222846F900351F44 /* JetUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

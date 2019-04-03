@@ -5,8 +5,6 @@
 
 import Foundation
 import UIKit
-import JetLib
-import JetUI
 
 open class PincodeController: UIViewController {
 

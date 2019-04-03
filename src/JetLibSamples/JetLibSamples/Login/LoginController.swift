@@ -5,7 +5,6 @@
 
 import Foundation
 import JetLib
-import JetPincode
 
 class LoginController: UIViewController {
 

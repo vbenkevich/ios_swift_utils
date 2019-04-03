@@ -5,8 +5,6 @@
 
 import Foundation
 import UIKit
-import JetUI
-import JetLib
 
 public protocol Pinpad {
 
@@ -143,7 +141,7 @@ class PincodeView: UIView {
 
 extension PincodeView: Pinpad {
 
-    func load(_ factory: PinpadViewFactoryDefault, config: Configuration) {
+    func load(_ factory: PinpadViewFactoryDefault, config: JetPincodeConfiguration) {
         let buttons = createButtonsView(factory)
         let rootStack = UIStackView(arrangedSubviews: [codeView, buttons])
         rootStack.axis = .vertical

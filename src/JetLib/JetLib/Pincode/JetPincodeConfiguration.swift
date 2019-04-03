@@ -5,7 +5,7 @@
 
 import Foundation
 
-open class Configuration {
+open class JetPincodeConfiguration {
 
     public init() {}
 

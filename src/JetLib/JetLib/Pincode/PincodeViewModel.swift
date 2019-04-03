@@ -4,12 +4,10 @@
 //
 
 import Foundation
-import JetLib
-import JetUI
 
 public class PincodeViewModel: ExtendedViewModel {
 
-    public init(config: Configuration, biomentricAuth: BiometricAuth?) {
+    public init(config: JetPincodeConfiguration, biomentricAuth: BiometricAuth?) {
         self.config = config
         self.biomentricAuth = biomentricAuth
         self.validaor = PincodeValidator(config)
@@ -17,7 +15,7 @@ public class PincodeViewModel: ExtendedViewModel {
 
     fileprivate let validaor: PincodeValidator
 
-    let config: Configuration
+    let config: JetPincodeConfiguration
 
     let biomentricAuth: BiometricAuth?
 
@@ -74,11 +72,11 @@ public class PincodeViewModel: ExtendedViewModel {
     fileprivate class PincodeValidator: ValidationRule {
         typealias Value = String
 
-        init(_ config: Configuration) {
+        init(_ config: JetPincodeConfiguration) {
             self.config = config
         }
 
-        let config: Configuration
+        let config: JetPincodeConfiguration
 
         weak var delegate: PincodeUIPresenterDelegate?
 
