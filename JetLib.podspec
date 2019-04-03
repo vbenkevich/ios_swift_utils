@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "JetLib"
-  spec.version      = "0.4.0"
+  spec.version      = "0.5.0"
   spec.summary      = "Toolkit for fast development iOS apps"
   spec.homepage     = "https://github.com/vbenkevich/ios_swift_utils"
 
@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, "10.0"
   spec.swift_version = "4.2"
 
-  spec.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", tag: "0.4.0" }
+  spec.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
   
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
