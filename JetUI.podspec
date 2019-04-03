@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "JetUI"
-  s.version      = "0.2.0"
+  s.version      = "0.3.0"
   s.summary      = "A set of views and controllers for fast development iOS apps"
   s.homepage     = "https://github.com/vbenkevich/ios_swift_utils"
 
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
   s.source_files = "src/JetUI/JetUI/**/*.swift"
 
-  s.dependency "JetLib", "0.2.0"
+  s.dependency "JetLib", "0.3.0"
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

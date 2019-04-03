@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA15DA042254E13E0031FC58 /* JetPincode.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BA15DA032254E13E0031FC58 /* JetPincode.podspec */; };
 		BA7388BE223F9AEE00750455 /* JetPincode.h in Headers */ = {isa = PBXBuildFile; fileRef = BA7388BC223F9AEE00750455 /* JetPincode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA7388D3223F9B3A00750455 /* JetPincode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7388CA223F9B3600750455 /* JetPincode.swift */; };
 		BA7388D5223F9B3A00750455 /* JetPincodeUIPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7388CC223F9B3600750455 /* JetPincodeUIPresenter.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA15DA032254E13E0031FC58 /* JetPincode.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = JetPincode.podspec; sourceTree = "<group>"; };
 		BA7388B9223F9AEE00750455 /* JetPincode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JetPincode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA7388BC223F9AEE00750455 /* JetPincode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JetPincode.h; sourceTree = "<group>"; };
 		BA7388BD223F9AEE00750455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				BA7388E3223FA96400750455 /* PincodeViewModel.swift */,
 				BA7388E1223FA79100750455 /* PincodeView.swift */,
 				BA8867E1223FC36B00358CC2 /* PinpadViewFactory.swift */,
+				BA15DA032254E13E0031FC58 /* JetPincode.podspec */,
 			);
 			path = JetPincode;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA15DA042254E13E0031FC58 /* JetPincode.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
