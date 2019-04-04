@@ -15,7 +15,7 @@ public class HttpMethod {
 
 public extension HttpClient {
 
-    public func request(url: URL, urlParams: [String: CustomStringConvertible]?, body: Data?, method: String, adapter: URLRequestAdapter?) throws -> Task<Response> {
+    func request(url: URL, urlParams: [String: CustomStringConvertible]?, body: Data?, method: String, adapter: URLRequestAdapter?) throws -> Task<Response> {
         guard let originUrlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             throw HttpException.badUrlFormat
         }
@@ -39,7 +39,7 @@ public extension HttpClient {
         return self.send(request, adapter: adapter)
     }
 
-    public func get(_ url: URL, id: CustomStringConvertible? = nil, urlParams: [String: CustomStringConvertible]? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+    func get(_ url: URL, id: CustomStringConvertible? = nil, urlParams: [String: CustomStringConvertible]? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
         var resultUrl = url
 
         if let id = id {
@@ -49,15 +49,15 @@ public extension HttpClient {
         return try request(url: resultUrl, urlParams: urlParams, body: nil, method: HttpMethod.get, adapter: adapter)
     }
 
-    public func post(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+    func post(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
         return try request(url: url, urlParams: nil, body: body, method: HttpMethod.post, adapter: adapter)
     }
 
-    public func put(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+    func put(_ url: URL, body: Data, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
         return try request(url: url, urlParams: nil, body: body, method: HttpMethod.put, adapter: adapter)
     }
 
-    public func delete(_ url: URL, id: CustomStringConvertible, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+    func delete(_ url: URL, id: CustomStringConvertible, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
         return try request(url: url.appendingPathComponent(id.description), urlParams: nil, body: nil, method: HttpMethod.delete, adapter: adapter)
     }
 }

@@ -43,7 +43,7 @@ open class AsyncCommand: SerialCommand {
 
 public extension AsyncCommand {
 
-    public convenience init<Source: AnyObject, TOut>(
+    convenience init<Source: AnyObject, TOut>(
         _ source:   Source,
         task:       @escaping (Source) -> Task<TOut>,
         canExecute: ((Source) -> Bool)? = nil)
@@ -67,7 +67,7 @@ public extension AsyncCommand {
         self.init(task: factory, canExecute: canExecute)
     }
 
-    public convenience init<Source: AnyObject, TParam, TOut>(
+    convenience init<Source: AnyObject, TParam, TOut>(
         _ source:   Source,
         task:       @escaping (Source, TParam) -> Task<TOut>,
         canExecute: ((Source, TParam) -> Bool)? = nil)

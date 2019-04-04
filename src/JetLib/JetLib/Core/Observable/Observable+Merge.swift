@@ -48,7 +48,7 @@ public extension Observable {
     }
 
     /// default struct for merged observables result
-    public struct Merged<T: Equatable>: Equatable {
+    struct Merged<T: Equatable>: Equatable {
         let first: Value?
         let second: T?
     }
