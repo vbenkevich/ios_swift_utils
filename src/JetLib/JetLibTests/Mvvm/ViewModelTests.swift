@@ -39,7 +39,7 @@ class ViewModelTests: XCTestCase {
 
         XCTAssertNotNil(weakTask)
 
-        viewModel.loadData()
+        viewModel.reload()
 
         wait(completed)
         
@@ -52,7 +52,8 @@ class ViewModelTests: XCTestCase {
         let task = Task(execute: { return 1})
         weak var weakViewModel = viewModel
 
-        viewModel.load(task: task)
+        viewModel.addTask(task)
+        viewModel.dataUpdateRequested(initiator: BaseTestViewModel()) // viewModel hold initiator untill updation finished
 
         XCTAssertNotNil(weakViewModel)
 

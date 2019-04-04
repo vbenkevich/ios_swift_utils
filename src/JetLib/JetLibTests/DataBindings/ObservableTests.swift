@@ -97,7 +97,7 @@ class ObservableTests: XCTestCase {
 
     func testThrottling() {
         let values = [1, 2, 3, 4, 5, 6]
-        let observable = Observable(0).addThrottling(.milliseconds(100))
+        let observable = Observable(0).throttling(.milliseconds(100))
 
         let notify = expectation(description: "notify")
         notify.expectedFulfillmentCount = 1

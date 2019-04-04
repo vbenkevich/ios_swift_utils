@@ -28,7 +28,7 @@ class BindingValidationTests: XCTestCase {
         let correct = expectation(description: "hide error")
 
         let observable = Observable(rule.expected)
-            .addValidationRule(rule)
+            .validation(rule)
 
         try! field.bind(to: observable)
             .with(errorPresenter: errorLabel)
@@ -48,8 +48,7 @@ class BindingValidationTests: XCTestCase {
         let rule = TestRule()
 
         let observable = Observable(rule.expected)
-            .addValidation(mode: .onValueChanged)
-            .addValidationRule(rule)
+            .validation(rule)
 
         try! field.bind(to: observable)
             .with(errorPresenter: errorLabel)
@@ -82,10 +81,9 @@ class BindingValidationTests: XCTestCase {
         let rule = TestRule()
 
         let observable = Observable(rule.expected)
-            .addValidation(mode: .onEditingEnded)
-            .addValidationRule(rule)
+            .validation(rule)
 
-        try! field.bind(to: observable)
+        try! field.bind(to: observable, mode: .twoWayLostFocus)
             .with(errorPresenter: errorLabel)
 
         let error = expectation(description: "show error")
@@ -109,11 +107,10 @@ class BindingValidationTests: XCTestCase {
         let error = expectation(description: "show error")
 
         let observable = Observable(rule.expected)
-            .addThrottling(.milliseconds(50))
-            .addValidation(mode: .onValueChanged)
-            .addValidationRule(rule)
+            .throttling(.milliseconds(50))
+            .validation(rule)
 
-        try! field.bind(to: observable)
+        try! field.bind(to: observable, mode: .twoWay)
             .with(errorPresenter: errorLabel)
 
         errorLabel.onShowError = { _ in error.fulfill() }
