@@ -56,21 +56,21 @@ open class Logger {
 
 public extension Logger.LogLevel {
 
-    public static let debug = Logger.LogLevel(prefix: "DEBUG")
+    static let debug = Logger.LogLevel(prefix: "DEBUG")
 
-    public static let info = Logger.LogLevel(prefix: "INFO")
+    static let info = Logger.LogLevel(prefix: "INFO")
 
-    public static let error = Logger.LogLevel(prefix: "ERROR")
+    static let error = Logger.LogLevel(prefix: "ERROR")
 }
 
 public extension Logger {
 
     static func debug(_ data: @autoclosure () throws -> CustomStringConvertible?) {
-        log(data, at: .debug)
+        log(try data(), at: .debug)
     }
 
     static func info(_ data: @autoclosure () throws -> CustomStringConvertible?) {
-        log(data, at: .info)
+        log(try data(), at: .info)
     }
 
     static func error(_ error: Error) {

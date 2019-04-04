@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "Vladimir Benkevich" => "vladimir.benkevich@gmail.com" }
 
   spec.platform     = :ios, "10.0"
-  spec.swift_version = "4.2"
+  spec.swift_version = "5.0"
 
   spec.source       =  { :git => "https://github.com/vbenkevich/ios_swift_utils.git", branch: "develop" }
   
