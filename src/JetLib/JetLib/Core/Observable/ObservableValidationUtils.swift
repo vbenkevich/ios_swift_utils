@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import JetLib
 
 public protocol Validatable {
 
@@ -37,7 +36,7 @@ extension Observable: Validatable {
 public extension Observable {
 
     @discardableResult
-    public func affect<TCommand: Command>(_ command: TCommand) -> Observable {
+    func affect<TCommand: Command>(_ command: TCommand) -> Observable {
         return notify(command) { cmd, res in cmd.invalidate() }
     }
 }
@@ -45,7 +44,7 @@ public extension Observable {
 public extension Command {
 
     @discardableResult
-    public func dependOn<Value: Equatable>(_ observable: Observable<Value>) -> Self {
+    func dependOn<Value: Equatable>(_ observable: Observable<Value>) -> Self {
         observable.affect(self)
         return self
     }

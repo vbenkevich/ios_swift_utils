@@ -20,13 +20,13 @@ public extension Array where Element: NotifyCompletion & Cancellable {
         return TaskGroup(self).whenAny()
     }
 
-    public func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+    func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
         self.whenAll().notify(queue: queue) { _ in
             callback()
         }
     }
 
-    public func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+    func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
         self.whenAny().notify(queue: queue) { _ in
             callback()
         }
@@ -35,11 +35,11 @@ public extension Array where Element: NotifyCompletion & Cancellable {
 
 public extension TaskGroup {
 
-    public func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+    func whenAll(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
         self.whenAll().notify(queue: queue) { _ in callback() }
     }
 
-    public func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
+    func whenAny(_ queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) {
         self.whenAny().notify(queue: queue) { _ in callback() }
     }
 }

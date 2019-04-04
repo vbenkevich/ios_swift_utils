@@ -99,7 +99,7 @@ open class ExtendedViewModel: ViewModel {
 
 public extension ExtendedViewModel {
 
-    public typealias ExtendedView = View & AlertPresenter & LoadingPresenter
+    typealias ExtendedView = View & AlertPresenter & LoadingPresenter
 
     @discardableResult
     func loadings(presenter: LoadingPresenter?) -> ExtendedViewModel {

@@ -15,16 +15,16 @@ class KeyChainStorageTests: XCTestCase {
     }
 
     override func tearDown() {
-        storage.clearAll()
+        try? storage.clearAll()
         storage = nil
     }
 
     func testReadWrite() {
-        let toWrite = true
+        let toWrite: Bool = true
 
-        XCTAssertTrue(storage.set(value: toWrite, forKey: UserDefaults.Key.testKey1))
+        XCTAssertNoThrow(try storage.set(toWrite, forKey: UserDefaults.Key.testKey1))
 
-        let read: Bool? = storage.value(forKey: UserDefaults.Key.testKey1)
+        let read: Bool? = try! storage.value(forKey: UserDefaults.Key.testKey1)
 
         XCTAssertEqual(toWrite, read)
     }
