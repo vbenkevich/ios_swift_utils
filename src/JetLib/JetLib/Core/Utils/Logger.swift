@@ -24,7 +24,11 @@ open class Logger {
     public static var levels: Set<LogLevel> = Set([LogLevel.info, LogLevel.error])
     #endif
 
-    public static var timeFormatter = DateFormatter()
+    public static var timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSZ"
+        return formatter
+    }()
 
     public static func log(_ data: @autoclosure () throws -> Any?, at level: LogLevel) {
         guard levels.contains(level), !outputs.isEmpty else {
