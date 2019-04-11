@@ -24,15 +24,24 @@ open class Logger {
     public static var levels: Set<LogLevel> = Set([LogLevel.info, LogLevel.error])
     #endif
 
-    public static var timeFormatter = DateFormatter()
+    public static var timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSZ"
+        return formatter
+    }()
 
-    public static func log(_ data: @autoclosure () throws -> CustomStringConvertible?, at level: LogLevel) {
+    public static func log(_ data: @autoclosure () throws -> Any?, at level: LogLevel) {
         guard levels.contains(level), !outputs.isEmpty else {
             return
         }
 
         do {
-            write(message: try data()?.description ?? "nil", level: level)
+            let evaluated = try data()
+            if let notNil = evaluated {
+                write(message: String(describing: notNil), level: level)
+            } else {
+                write(message: "nil", level: level)
+            }
         } catch {
             write(message: error.localizedDescription, level: .error)
         }
@@ -65,15 +74,15 @@ public extension Logger.LogLevel {
 
 public extension Logger {
 
-    static func debug(_ data: @autoclosure () throws -> CustomStringConvertible?) {
+    static func debug(_ data: @autoclosure () throws -> Any?) {
         log(try data(), at: .debug)
     }
 
-    static func info(_ data: @autoclosure () throws -> CustomStringConvertible?) {
+    static func info(_ data: @autoclosure () throws -> Any?) {
         log(try data(), at: .info)
     }
 
     static func error(_ error: Error) {
-        log(error.localizedDescription, at: .error)
+        log(error, at: .error)
     }
 }
