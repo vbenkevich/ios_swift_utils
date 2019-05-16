@@ -31,12 +31,12 @@ public extension DispatchQueue {
 
     @discardableResult
     func execute<T>(task action: @escaping () throws -> T) -> Task<T> {
-        return self.async(Task(execute: action))
+        return self.async(Task.from(action))
     }
 
     @discardableResult
     func execute<T>(after interval: DispatchTimeInterval, task action: @escaping () throws -> T) -> Task<T> {
-        return self.async(Task(execute: action), after: interval)
+        return self.async(Task.from(action), after: interval)
     }
 
     @discardableResult

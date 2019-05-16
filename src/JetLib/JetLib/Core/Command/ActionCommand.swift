@@ -5,6 +5,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use CommandFactory instead")
 open class ActionCommand: SerialCommand {
 
     private let execute: (Any?) -> Void

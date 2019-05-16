@@ -46,9 +46,9 @@ public class CommandFactory {
     public static func action<T>(queue: DispatchQueue = DispatchQueue.main, block: @escaping (T) -> Void) -> UnownedCommandGeneric<T> {
         let command = UnownedCommandGeneric<T>()
         command.execution = { _, param in
-            queue.async(Task(execute: {
+            queue.execute {
                 block(param as! T)
-            }))
+            }
         }
         return command
     }

@@ -12,7 +12,7 @@ public extension Task {
     }
 
     static func delay(_ interval: DispatchTimeInterval) -> Task<Void> {
-        return DispatchQueue.global().async(Task<Void>(execute: {}), after: interval)
+        return DispatchQueue.global().execute(after: interval){}
     }
 
     func delay(_ milliseconds: Int) -> Task {
@@ -29,7 +29,7 @@ public extension Task {
 
     func delayOnSuccess(_ interval: DispatchTimeInterval) -> Task {
         return self.chainOnSuccess(nextTask: { _ in
-            DispatchQueue.global().async(Task<Void>(execute: {}), after: interval)
+            DispatchQueue.global().execute(after: interval){}
         }).chain { _ in
             return self
         }

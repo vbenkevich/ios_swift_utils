@@ -15,6 +15,7 @@ extension Task: DispatchWorkItemProxy {
 
 // TODO: try to generalize with ActionCommand (may be we should move DispatchWorkItemProxy into serial command)
 
+@available(*, deprecated, message: "Use CommandFactory instead")
 open class AsyncCommand: SerialCommand {
 
     private let taskFactory: (Any?) -> DispatchWorkItemProxy

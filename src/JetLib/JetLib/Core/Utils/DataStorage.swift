@@ -50,24 +50,24 @@ public class AsyncDataStorageAdapter: AsyncDataStorage {
     }
 
     public func value<T: Codable>(forKey defaultName: UserDefaults.Key) -> Task<T> {
-        return queue.async(Task(execute: { [sync] in
+        return queue.execute { [sync] in
             if let value: T = try sync.value(forKey: defaultName) {
                 return value
             } else {
                 throw KeyNotFoundException(defaultName)
             }
-        }))
+        }
     }
 
     public func set<T: Codable>(_ value: T, forKey defaultName: UserDefaults.Key) -> Task<Void> {
-        return queue.async(Task(execute: { [sync] in
+        return queue.execute { [sync] in
             try sync.set(value, forKey: defaultName)
-        }))
+        }
     }
 
     public func delete(key defaultName: UserDefaults.Key) -> Task<Void> {
-        return queue.async(Task(execute: { [sync] in
+        return queue.execute { [sync] in
             try sync.delete(key: defaultName)
-        }))
+        }
     }
 }

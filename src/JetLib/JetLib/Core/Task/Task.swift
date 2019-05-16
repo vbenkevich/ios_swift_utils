@@ -24,6 +24,7 @@ public extension NotifyCompletion {
     }
 }
 
+
 public final class Task<T>: Cancellable, NotifyCompletion {
 
     private var lock = SpinLock()
@@ -37,11 +38,16 @@ public final class Task<T>: Cancellable, NotifyCompletion {
         self.init(status: .failed(error))
     }
 
-    public init(execute: @escaping () throws -> T) {
+    @available(*, deprecated, renamed: "Task.from" )
+    convenience init(execute: @escaping () throws -> T) {
+        self.init(block: execute)
+    }
+
+    init(block: @escaping () throws -> T) {
         item = DispatchWorkItem {
             do {
                 try self.setStatus(.executing)
-                let data = try execute()
+                let data = try block()
                 try? self.setStatus(.success(data))
             } catch {
                 try? self.setStatus(.failed(error))
@@ -121,6 +127,10 @@ public final class Task<T>: Cancellable, NotifyCompletion {
 
 public extension Task {
 
+    static func from(_ block: @escaping () throws -> T) -> Task<T> {
+        return Task(block: block)
+    }
+
     static func cancelled() -> Task {
         return Task(status: .cancelled)
     }
@@ -132,36 +142,3 @@ public extension Task where T == Void {
         self.init(Void())
     }
 }
-
-//class WorkItemWrapper {
-//
-//    init(_ workItem: DispatchWorkItem) {
-//        self.workItem = workItem
-//    }
-//
-//    let workItem: DispatchWorkItem
-//
-//    private (set) var isCancelled: Bool = false
-//
-//    private (set) var isPerformed: Bool = false
-//
-//    func cancel() {
-//        if !isPerformed && !isCancelled {
-//            workItem.perform()
-//        }
-//
-//        isCancelled = true
-//    }
-//
-//    func perform() {
-//        if !isPerformed && !isCancelled {
-//            workItem.perform()
-//        }
-//
-//        isPerformed = true
-//    }
-//
-//    func notify(queue: DispatchQueue, execute: @escaping @convention(block) () -> Void) {
-//        workItem.notify(queue: queue, execute: execute)
-//    }
-//}
