@@ -9,16 +9,18 @@ public protocol Command: class {
 
     var executing: Bool { get }
 
-    var delegate: CommandDelegate? { get set }
-
     func execute(parameter: Any?)
 
     func canExecute(parameter: Any?) -> Bool
 
     func invalidate()
+
+    func addDelegate(_ commandDelegate: CommandDelegate)
+
+    func removeDelegate(_ commandDelegate: CommandDelegate)
 }
 
-public protocol CommandDelegate: class {
+public protocol CommandDelegate: AnyObject {
 
     func stateChanged(_ command: Command)
 }

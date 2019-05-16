@@ -71,7 +71,7 @@ class OwnedCommandTests: XCTestCase {
         let delegate = Delegate()
         delegate.expectation = expectation(description: "state changed")
         delegate.expectation.expectedFulfillmentCount = 2
-        command.delegate = delegate
+        command.addDelegate(delegate)
         command.execute()
 
         wait(delegate.expectation)
@@ -88,7 +88,7 @@ class OwnedCommandTests: XCTestCase {
             exp.fulfill()
         }
 
-        command.delegate = delegate
+        command.addDelegate(delegate)
 
         command.execute()
         wait(delegate.canExecuteTrue!)
@@ -106,7 +106,7 @@ class OwnedCommandTests: XCTestCase {
         }
         let delegate = TestCommandDelegate()
         delegate.canExecuteTrue = expectation(description: "execution has been completed")
-        command.delegate = delegate
+        command.addDelegate(delegate)
 
         XCTAssertEqual(true, command.canExecute())
 
@@ -147,7 +147,7 @@ class OwnedCommandTests: XCTestCase {
         let delegate = TestCommandDelegate()
         delegate.canExecuteTrue = expectation(description: "execution has been completed")
         delegate.parameter = parameter
-        command.delegate = delegate
+        command.addDelegate(delegate)
 
         XCTAssertTrue(command.canExecute(parameter: parameter))
 

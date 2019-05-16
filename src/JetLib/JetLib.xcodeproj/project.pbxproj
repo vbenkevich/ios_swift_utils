@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BA03893D228DB2AE00D9F0A4 /* UnownedCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA03893C228DB2AE00D9F0A4 /* UnownedCommandTests.swift */; };
 		BA03893F228DD9B800D9F0A4 /* OwnedCommadnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA03893E228DD9B800D9F0A4 /* OwnedCommadnTests.swift */; };
+		BA038941228DDEA800D9F0A4 /* WeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA038940228DDEA800D9F0A4 /* WeakBox.swift */; };
 		BA16997B222D26B100351F44 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997A222D26B100351F44 /* DataStorage.swift */; };
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
@@ -124,6 +125,7 @@
 /* Begin PBXFileReference section */
 		BA03893C228DB2AE00D9F0A4 /* UnownedCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnownedCommandTests.swift; sourceTree = "<group>"; };
 		BA03893E228DD9B800D9F0A4 /* OwnedCommadnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedCommadnTests.swift; sourceTree = "<group>"; };
+		BA038940228DDEA800D9F0A4 /* WeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakBox.swift; sourceTree = "<group>"; };
 		BA16997A222D26B100351F44 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				BA3052A821E6028400C6F56A /* UserDefaults.swift */,
 				BA3052AA21E602D300C6F56A /* Logger.swift */,
 				BA16997A222D26B100351F44 /* DataStorage.swift */,
+				BA038940228DDEA800D9F0A4 /* WeakBox.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */,
 				BABB23F72254FA74006AA462 /* PincodeController.swift in Sources */,
 				BA3052A121E4C16100C6F56A /* Task+Delay.swift in Sources */,
+				BA038941228DDEA800D9F0A4 /* WeakBox.swift in Sources */,
 				BABB23FB2254FD8C006AA462 /* ContainerViewController.swift in Sources */,
 				BA541F56212D615500904EC4 /* ActionCommand.swift in Sources */,
 				BA7BF56A218CB20000647286 /* Observable+Validation.swift in Sources */,
