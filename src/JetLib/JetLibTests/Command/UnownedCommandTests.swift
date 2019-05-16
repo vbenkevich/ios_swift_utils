@@ -6,10 +6,10 @@
 import XCTest
 import JetLib
 
-class SimpleCommandTests: XCTestCase {
+class UnownedCommandTests: XCTestCase {
 
     func testActionTriggered() {
-        let exp1 = expectation(description: "simple command execute")
+        let exp1 = expectation(description: "command execute")
 
         let command = CommandFactory.action {
             exp1.fulfill()
@@ -58,7 +58,7 @@ class SimpleCommandTests: XCTestCase {
     }
 
     func testActionTriggeredManyTimes() {
-        let exp = expectation(description: "simple command execute")
+        let exp = expectation(description: "command execute")
         exp.expectedFulfillmentCount = 2
 
         let delegate = TestCommandDelegate()
@@ -171,23 +171,5 @@ class SimpleCommandTests: XCTestCase {
 
         canExec = true
         XCTAssertEqual(canExec, commad.canExecute(parameter: param))
-    }
-}
-
-class TestCommandDelegate: CommandDelegate {
-
-    var onChanged: XCTestExpectation?
-    var canExecuteTrue: XCTestExpectation?
-    var canExecuteFalse: XCTestExpectation?
-    var parameter: Any?
-
-    func stateChanged(_ command: Command) {
-        onChanged?.fulfill()
-
-        if command.canExecute(parameter: parameter) {
-            canExecuteTrue?.fulfill()
-        } else {
-            canExecuteFalse?.fulfill()
-        }
     }
 }

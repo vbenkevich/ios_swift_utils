@@ -102,7 +102,7 @@ extension OwnedCommand {
     ///
     /// - Parameter factory: task factory
     /// - Returns: self
-    public func task<Param, TRes>(factory: @escaping (Owner, Param) -> Task<TRes>) -> OwnedCommandGeneric<Owner, Param> {
+    public func taskg<Param, TRes>(factory: @escaping (Owner, Param) -> Task<TRes>) -> OwnedCommandGeneric<Owner, Param> {
         assertCanMakeGeneric()
         let command = OwnedCommandGeneric<Owner, Param>(owner!)
         command.execution = { exec, param in
@@ -127,7 +127,7 @@ public class OwnedCommandGeneric<Owner: AnyObject, Param>: BaseCommand<Owner> {
     ///
     /// - Parameter check: condition to check
     /// - Returns: execute comand or not
-    public func predicate<Param>(check: @escaping (Owner, Param) -> Bool) -> Self {
+    public func predicate(check: @escaping (Owner, Param) -> Bool) -> Self {
         assertSetPredicatePossible()
         predicate = { (exec: Owner, param: Any?) in
             return check(exec, param as! Param)

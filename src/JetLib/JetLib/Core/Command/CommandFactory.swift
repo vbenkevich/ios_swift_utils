@@ -19,7 +19,7 @@ public class CommandFactory {
         return OwnedCommand(owner)
     }
 
-    /// Creates parameterless SimpleCommad with executing block
+    /// Creates parameterless unowned commad with executing block
     ///
     /// - Parameters:
     ///   - queue: dispatch queue for block execution
@@ -29,7 +29,7 @@ public class CommandFactory {
         return UnownedCommand().action(queue: queue, block: { _ in block() })
     }
 
-    /// Creates parameterless SimpleCommad with executing task
+    /// Creates parameterless unowned commad with executing task
     ///
     /// - Parameter factory: task factory
     /// - Returns: new SimpleCommand
@@ -37,7 +37,7 @@ public class CommandFactory {
         return UnownedCommand().task { _ in factory().map { _ in Void() } }
     }
 
-    /// Creates parametrized SimpleCommad with executing block
+    /// Creates parametrized unowned commad with executing block
     ///
     /// - Parameters:
     ///   - queue: dispatch queue for block execution
@@ -53,7 +53,7 @@ public class CommandFactory {
         return command
     }
 
-    /// Creates parametrized SimpleCommad with executing task
+    /// Creates parametrized unowned commad with executing task
     ///
     /// - Parameter factory: task factory
     /// - Returns: new SimpleCommandGeneric

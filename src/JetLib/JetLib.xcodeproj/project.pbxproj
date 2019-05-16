@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA03893D228DB2AE00D9F0A4 /* SimpleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA03893C228DB2AE00D9F0A4 /* SimpleCommandTests.swift */; };
+		BA03893D228DB2AE00D9F0A4 /* UnownedCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA03893C228DB2AE00D9F0A4 /* UnownedCommandTests.swift */; };
+		BA03893F228DD9B800D9F0A4 /* OwnedCommadnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA03893E228DD9B800D9F0A4 /* OwnedCommadnTests.swift */; };
 		BA16997B222D26B100351F44 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997A222D26B100351F44 /* DataStorage.swift */; };
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
@@ -121,7 +122,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BA03893C228DB2AE00D9F0A4 /* SimpleCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCommandTests.swift; sourceTree = "<group>"; };
+		BA03893C228DB2AE00D9F0A4 /* UnownedCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnownedCommandTests.swift; sourceTree = "<group>"; };
+		BA03893E228DD9B800D9F0A4 /* OwnedCommadnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedCommadnTests.swift; sourceTree = "<group>"; };
 		BA16997A222D26B100351F44 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
@@ -512,7 +514,8 @@
 			children = (
 				BAD74819213823D100259F95 /* ActionCommandTests.swift */,
 				BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */,
-				BA03893C228DB2AE00D9F0A4 /* SimpleCommandTests.swift */,
+				BA03893C228DB2AE00D9F0A4 /* UnownedCommandTests.swift */,
+				BA03893E228DD9B800D9F0A4 /* OwnedCommadnTests.swift */,
 				BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */,
 			);
 			path = Command;
@@ -750,7 +753,7 @@
 				BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */,
 				BAF27E9321906E390075B6F1 /* BindingValidationTests.swift in Sources */,
 				BAF27E8F219046AA0075B6F1 /* ViewModelUpdatingTests.swift in Sources */,
-				BA03893D228DB2AE00D9F0A4 /* SimpleCommandTests.swift in Sources */,
+				BA03893D228DB2AE00D9F0A4 /* UnownedCommandTests.swift in Sources */,
 				BAC4451921357BEC005AB974 /* TestError.swift in Sources */,
 				BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */,
 				BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */,
@@ -760,6 +763,7 @@
 				BAC4451D21358679005AB974 /* HttpClientHelpersTests.swift in Sources */,
 				BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */,
 				BA68137121D50B22008BE2FA /* ExtendedViewModelTests.swift in Sources */,
+				BA03893F228DD9B800D9F0A4 /* OwnedCommadnTests.swift in Sources */,
 				BA3052AE21E65DAC00C6F56A /* KeyChainStorageTests.swift in Sources */,
 				BA7D58CF21CFD9DA008A3177 /* Observable+Correction.swift in Sources */,
 				BAD7481A213823D100259F95 /* ActionCommandTests.swift in Sources */,
