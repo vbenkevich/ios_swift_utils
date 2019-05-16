@@ -20,7 +20,7 @@ extension UIButton: CommandDelegate {
             if newValue != nil {
                 stateChanged(newValue!)
                 self.addTarget(self, action: #selector(handleTouchUpInside), for: .touchUpInside)
-                newValue?.delegate = self
+                newValue?.addDelegate(self)
             }
         }
     }

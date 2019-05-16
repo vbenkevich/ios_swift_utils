@@ -186,8 +186,6 @@ extension PincodeView: Pinpad {
             numberButtons[i].commanParameter = i.description
             numberButtons[i].command = command
         }
-
-        command.delegate = nil
     }
 
     func setDeleteCommand(_ command: Command) {

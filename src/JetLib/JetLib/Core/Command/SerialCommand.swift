@@ -12,8 +12,6 @@ open class SerialCommand: Command {
     public init() {
     }
 
-    public weak var delegate: CommandDelegate?
-
     open var callbackQueue: DispatchQueue = DispatchQueue.main
 
     open var serial = true
@@ -22,9 +20,12 @@ open class SerialCommand: Command {
         return executingCount > 0
     }
 
+    // TODO try to use WeakCollection
+    private var delegates = [DelegateWrapper]()
+
     private var executingCount: Int32 = 0 {
         didSet {
-            delegate?.stateChanged(self)
+            delegates.forEach { $0.delegate?.stateChanged(self) }
         }
     }
 
@@ -46,7 +47,7 @@ open class SerialCommand: Command {
     }
 
     open func invalidate() {
-        delegate?.stateChanged(self)
+        delegates.forEach { $0.delegate?.stateChanged(self) }
     }
 
     open func executeImpl(parameter: Any?) -> DispatchWorkItem {
@@ -55,5 +56,41 @@ open class SerialCommand: Command {
 
     open func canExecuteImpl(parameter: Any?) -> Bool {
         preconditionFailure("abstract")
+    }
+
+    public func addDelegate(_ commandDelegate: CommandDelegate) {
+        delegates.append(DelegateWrapper(commandDelegate))
+    }
+
+    public func removeDelegate(_ commandDelegate: CommandDelegate) {
+        delegates.removeAll { $0.delegate === commandDelegate || $0.delegate == nil }
+    }
+
+    class DelegateWrapper {
+        init(_ delegate: CommandDelegate) {
+            self.delegate = delegate
+        }
+        weak var delegate: CommandDelegate?
+    }
+}
+
+public extension SerialCommand {
+
+    var delegate: CommandDelegate? {
+        get {
+            for d in delegates {
+                if let delegate = d.delegate {
+                    return delegate
+                }
+            }
+            return nil
+        }
+        set {
+            if let d = newValue {
+                delegates = [DelegateWrapper(d)]
+            } else {
+                delegates = []
+            }
+        }
     }
 }

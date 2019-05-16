@@ -205,7 +205,7 @@ class ActionCommandTests: XCTestCase {
         delegate.executing = executing
         delegate.completed = completed
 
-        command.delegate = delegate
+        command.addDelegate(delegate)
         command.execute()
 
         wait(for: [executing, completed], timeout: 1, enforceOrder: true)
@@ -239,7 +239,7 @@ class ActionCommandTests: XCTestCase {
         let command = ActionCommand{}
 
         delegate.exp = expectation(description: "delegate")
-        command.delegate = delegate
+        command.addDelegate(delegate)
         command.invalidate()
 
         wait(delegate.exp)
