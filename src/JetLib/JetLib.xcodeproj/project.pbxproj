@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA03893D228DB2AE00D9F0A4 /* SimpleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA03893C228DB2AE00D9F0A4 /* SimpleCommandTests.swift */; };
 		BA16997B222D26B100351F44 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA16997A222D26B100351F44 /* DataStorage.swift */; };
 		BA18413B21B2D34600253718 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413A21B2D34600253718 /* Exception.swift */; };
 		BA18413D21B2D87B00253718 /* VIewModel+DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */; };
@@ -48,8 +49,7 @@
 		BA7CEDFE211C966400C81653 /* TaskSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */; };
 		BA7D58CD21CFBFA3008A3177 /* Observable+Correction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7D58CC21CFBFA3008A3177 /* Observable+Correction.swift */; };
 		BA7D58CF21CFD9DA008A3177 /* Observable+Correction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7D58CE21CFD9DA008A3177 /* Observable+Correction.swift */; };
-		BA9CBDEE227B09B00099FFE1 /* ExecutorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9CBDED227B09B00099FFE1 /* ExecutorCommand.swift */; };
-		BA9CBDF0227B145E0099FFE1 /* SimpleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9CBDEF227B145E0099FFE1 /* SimpleCommand.swift */; };
+		BA9CBDEE227B09B00099FFE1 /* OwnedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9CBDED227B09B00099FFE1 /* OwnedCommand.swift */; };
 		BA9CBDF2227B21690099FFE1 /* CommandFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9CBDF1227B21690099FFE1 /* CommandFactory.swift */; };
 		BA9EB30821135DDA0008C539 /* Task+Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EB30721135DDA0008C539 /* Task+Chain.swift */; };
 		BA9F254E211CA679009ABE47 /* TaskChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F254D211CA679009ABE47 /* TaskChainTests.swift */; };
@@ -121,6 +121,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA03893C228DB2AE00D9F0A4 /* SimpleCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCommandTests.swift; sourceTree = "<group>"; };
 		BA16997A222D26B100351F44 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		BA18413A21B2D34600253718 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		BA18413C21B2D87B00253718 /* VIewModel+DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VIewModel+DataLoader.swift"; sourceTree = "<group>"; };
@@ -164,8 +165,7 @@
 		BA7CEDFD211C966400C81653 /* TaskSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSourceTests.swift; sourceTree = "<group>"; };
 		BA7D58CC21CFBFA3008A3177 /* Observable+Correction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Correction.swift"; sourceTree = "<group>"; };
 		BA7D58CE21CFD9DA008A3177 /* Observable+Correction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Correction.swift"; sourceTree = "<group>"; };
-		BA9CBDED227B09B00099FFE1 /* ExecutorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutorCommand.swift; sourceTree = "<group>"; };
-		BA9CBDEF227B145E0099FFE1 /* SimpleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCommand.swift; sourceTree = "<group>"; };
+		BA9CBDED227B09B00099FFE1 /* OwnedCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedCommand.swift; sourceTree = "<group>"; };
 		BA9CBDF1227B21690099FFE1 /* CommandFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandFactory.swift; sourceTree = "<group>"; };
 		BA9EB304211351590008C539 /* SpinLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
 		BA9EB30721135DDA0008C539 /* Task+Chain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Chain.swift"; sourceTree = "<group>"; };
@@ -327,13 +327,12 @@
 		BA54B84D210B739100A5F22F /* Command */ = {
 			isa = PBXGroup;
 			children = (
-				BA541F55212D615400904EC4 /* ActionCommand.swift */,
-				BA9CBDED227B09B00099FFE1 /* ExecutorCommand.swift */,
-				BA9CBDEF227B145E0099FFE1 /* SimpleCommand.swift */,
-				BA9CBDF1227B21690099FFE1 /* CommandFactory.swift */,
-				BAD07BA7217001D500F0B451 /* AsyncCommand.swift */,
 				BA54B85B210B73BF00A5F22F /* Command.swift */,
 				BA54B85C210B73BF00A5F22F /* SerialCommand.swift */,
+				BA9CBDED227B09B00099FFE1 /* OwnedCommand.swift */,
+				BA9CBDF1227B21690099FFE1 /* CommandFactory.swift */,
+				BA541F55212D615400904EC4 /* ActionCommand.swift */,
+				BAD07BA7217001D500F0B451 /* AsyncCommand.swift */,
 				BA54B85A210B73BF00A5F22F /* UIButton+Command.swift */,
 			);
 			path = Command;
@@ -513,6 +512,7 @@
 			children = (
 				BAD74819213823D100259F95 /* ActionCommandTests.swift */,
 				BAD07BA92170108E00F0B451 /* AsyncCommandTests.swift */,
+				BA03893C228DB2AE00D9F0A4 /* SimpleCommandTests.swift */,
 				BAD7481B213823F000259F95 /* UIButtonCommandTests.swift */,
 			);
 			path = Command;
@@ -681,7 +681,6 @@
 				BABB23FA2254FD8A006AA462 /* SlideMenu.swift in Sources */,
 				BA9CBDF2227B21690099FFE1 /* CommandFactory.swift in Sources */,
 				BAD07BA8217001D500F0B451 /* AsyncCommand.swift in Sources */,
-				BA9CBDF0227B145E0099FFE1 /* SimpleCommand.swift in Sources */,
 				BABB2401225509E1006AA462 /* UIEdgeInsets.swift in Sources */,
 				BA18413F21B4170300253718 /* ViewModel+TaskStorage.swift in Sources */,
 				BA54B862210B73BF00A5F22F /* SerialCommand.swift in Sources */,
@@ -695,7 +694,7 @@
 				BA7D58CD21CFBFA3008A3177 /* Observable+Correction.swift in Sources */,
 				BA54B869210B73F600A5F22F /* Task+DispatchQueue.swift in Sources */,
 				BA7CEDFB211C95C700C81653 /* Task+Status.swift in Sources */,
-				BA9CBDEE227B09B00099FFE1 /* ExecutorCommand.swift in Sources */,
+				BA9CBDEE227B09B00099FFE1 /* OwnedCommand.swift in Sources */,
 				BAED2511218CD46B00F68E96 /* BindingTarget+Validation.swift in Sources */,
 				BABB23F72254FA74006AA462 /* PincodeController.swift in Sources */,
 				BA3052A121E4C16100C6F56A /* Task+Delay.swift in Sources */,
@@ -751,6 +750,7 @@
 				BAC4451B21357E19005AB974 /* HTTPURLResponse.swift in Sources */,
 				BAF27E9321906E390075B6F1 /* BindingValidationTests.swift in Sources */,
 				BAF27E8F219046AA0075B6F1 /* ViewModelUpdatingTests.swift in Sources */,
+				BA03893D228DB2AE00D9F0A4 /* SimpleCommandTests.swift in Sources */,
 				BAC4451921357BEC005AB974 /* TestError.swift in Sources */,
 				BAC820232111F0AF0011DCF3 /* TaskExecutionTests.swift in Sources */,
 				BAC44514213566F1005AB974 /* HttpClientBasicTests.swift in Sources */,

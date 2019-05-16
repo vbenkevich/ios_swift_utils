@@ -28,4 +28,8 @@ public extension Command {
     func execute() {
         execute(parameter: nil)
     }
+
+    func canExecute() -> Bool {
+        return canExecute(parameter: nil)
+    }
 }
