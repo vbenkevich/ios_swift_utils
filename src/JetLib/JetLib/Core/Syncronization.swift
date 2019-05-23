@@ -169,3 +169,24 @@ public class RwLock {
         }
     }
 }
+
+
+/// OSSpinLock wrapper
+/// it can cause priority inverstion issues
+@available(*, deprecated, message: "Use UnfairLock() instead")
+class SpinLock: Lock {
+
+    private var _lock = OSSpinLock()
+
+    func lock() {
+        OSSpinLockLock(&_lock)
+    }
+
+    func unlock() {
+        OSSpinLockUnlock(&_lock)
+    }
+
+    func tryLock() -> Bool {
+        return OSSpinLockTry(&_lock)
+    }
+}
