@@ -27,7 +27,7 @@ public extension NotifyCompletion {
 
 public final class Task<T>: Cancellable, NotifyCompletion {
 
-    private var lock = SpinLock()
+    private var lock = UnfairLock()
     private (set) var item: DispatchWorkItem!
 
     convenience public init(_ result: T) {

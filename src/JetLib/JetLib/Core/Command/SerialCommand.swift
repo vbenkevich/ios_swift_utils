@@ -7,7 +7,7 @@ import Foundation
 
 open class SerialCommand: Command {
 
-    private var lock = SpinLock()
+    private var lock = UnfairLock()
 
     public init() {
     }
