@@ -8,7 +8,7 @@ import Foundation
 public extension Task {
 
     @discardableResult
-    public func chain<K>(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (Task<T>) -> Task<K>) -> Task<K> {
+    func chain<K>(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (Task<T>) -> Task<K>) -> Task<K> {
         let tcs = Task<K>.Source()
 
         self.notify(queue: queue) { _ in
@@ -22,7 +22,7 @@ public extension Task {
     }
 
     @discardableResult
-    public func chainOnSuccess<K>(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (T) throws -> Task<K>) -> Task<K>{
+    func chainOnSuccess<K>(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (T) throws -> Task<K>) -> Task<K>{
         return chain(queue: queue) {
             if $0.isSuccess {
                 do {
@@ -41,7 +41,7 @@ public extension Task {
     }
 
     @discardableResult
-    public func chainOnFail(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (Error) -> Task<T>) -> Task<T>{
+    func chainOnFail(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated), nextTask: @escaping (Error) -> Task<T>) -> Task<T>{
         return chain(queue: queue) {
             if $0.isSuccess {
                 return Task($0.result!)
@@ -56,7 +56,7 @@ public extension Task {
     }
 
     @discardableResult
-    public func onSuccess(queue: DispatchQueue = DispatchQueue.main, callback: @escaping (T) -> Void) -> Task<T>{
+    func onSuccess(queue: DispatchQueue = DispatchQueue.main, callback: @escaping (T) -> Void) -> Task<T>{
         return notify(queue: queue) {
             if $0.isSuccess {
                 callback($0.result!)
@@ -65,7 +65,7 @@ public extension Task {
     }
 
     @discardableResult
-    public func onFail(queue: DispatchQueue = DispatchQueue.main, callback: @escaping (Error) -> Void) -> Task<T>{
+    func onFail(queue: DispatchQueue = DispatchQueue.main, callback: @escaping (Error) -> Void) -> Task<T>{
         return notify(queue: queue) {
             if $0.isFailed {
                 callback($0.error!)
@@ -74,7 +74,7 @@ public extension Task {
     }
 
     @discardableResult
-    public func onCancel(queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) -> Task<T>{
+    func onCancel(queue: DispatchQueue = DispatchQueue.main, callback: @escaping () -> Void) -> Task<T>{
         return notify(queue: queue) {
             if $0.isCancelled {
                 callback()
@@ -82,7 +82,7 @@ public extension Task {
         }
     }
 
-    public func map<K>(mapper: @escaping (T) throws -> K) -> Task<K> {
+    func map<K>(mapper: @escaping (T) throws -> K) -> Task<K> {
         return chainOnSuccess {
             do {
                 return Task<K>(try mapper($0))
@@ -90,5 +90,9 @@ public extension Task {
                 return Task<K>(error)
             }
         }
+    }
+
+    func void() -> Task<Void> {
+        return self.map { _ in Void() }
     }
 }

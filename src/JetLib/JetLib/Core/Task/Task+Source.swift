@@ -9,7 +9,7 @@ public typealias TaskCompletionSource<T> = Task<T>.Source
 
 public extension Task {
 
-    public class Source {
+    class Source {
 
         private var item = DispatchWorkItem {}
 

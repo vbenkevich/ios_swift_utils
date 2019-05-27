@@ -21,9 +21,9 @@ public protocol ViewModelDataLoaderProtocol: class {
 
 public extension ViewModel {
 
-    public typealias DataLoader = ViewModelDataLoaderProtocol
+    typealias DataLoader = ViewModelDataLoaderProtocol
 
-    public class DefaultDataLoader: DataLoader {
+    class DefaultDataLoader: DataLoader {
 
         private let syncQueue: DispatchQueue
 

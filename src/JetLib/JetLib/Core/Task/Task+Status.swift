@@ -7,23 +7,23 @@ import Foundation
 
 public extension Task {
 
-    public var isCompleted: Bool {
+    var isCompleted: Bool {
         return status.isCompleted
     }
 
-    public var isSuccess: Bool {
+    var isSuccess: Bool {
         return status.isSuccess
     }
 
-    public var isFailed: Bool {
+    var isFailed: Bool {
         return status.isFailed
     }
 
-    public var isCancelled: Bool {
+    var isCancelled: Bool {
         return status.isCancelled
     }
 
-    public var error: Error? {
+    var error: Error? {
         switch status {
         case .failed(let err):
             return err
@@ -32,7 +32,7 @@ public extension Task {
         }
     }
 
-    public enum Status: Equatable {
+    enum Status: Equatable {
 
         case new
         case executing

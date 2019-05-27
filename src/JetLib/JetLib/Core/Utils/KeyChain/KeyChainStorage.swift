@@ -44,11 +44,9 @@ open class KeyChainStorage: SyncDataStorage {
     }
 
     public func clearAll() throws {
-        let query = QueryBuilder(serviceName: serviceName).accessGroup(accessGroup).all().build()
-
-        let status: OSStatus = SecItemDelete(query)
-
-        guard status == errSecSuccess else {
+        let spec: NSDictionary = [kSecClass: kSecClassGenericPassword]
+        let status = SecItemDelete(spec)
+        guard status == errSecSuccess || status == errSecItemNotFound else {
             throw DataAssessError(status)
         }
     }
@@ -62,6 +60,8 @@ open class KeyChainStorage: SyncDataStorage {
 
         if status == noErr {
             return result as? Data
+        } else if status == errSecItemNotFound {
+            return nil
         } else {
             throw DataAssessError(status)
         }

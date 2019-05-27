@@ -52,9 +52,7 @@ class TaskExecutionTests: XCTestCase {
     func testActionTaskNotify() {
         let notify = expectation(description: "notify")
 
-        let task = Task<Int> {
-            return 1
-        }
+        let task = Task.from { 1 }
         task.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, 1)
             XCTAssertEqual($0.status, .success(1))
@@ -71,7 +69,7 @@ class TaskExecutionTests: XCTestCase {
         let notify = expectation(description: "notify")
         let error = TestError()
 
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
         task.notify(queue: notifyQueue) {
@@ -90,9 +88,7 @@ class TaskExecutionTests: XCTestCase {
         let notify1 = expectation(description: "notify1")
         let notify2 = expectation(description: "notify2")
 
-        let task = Task<Int> {
-            return 1
-        }.notify(queue: notifyQueue) { _ in
+        let task = Task.from { 1 }.notify(queue: notifyQueue) { _ in
             notify1.fulfill()
         }.notify(queue: notifyQueue) { _ in
             notify2.fulfill()
@@ -108,7 +104,7 @@ class TaskExecutionTests: XCTestCase {
         let started = expectation(description: "started")
         let completed = expectation(description: "completed")
 
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             started.fulfill()
             return 1
         }
@@ -126,7 +122,7 @@ class TaskExecutionTests: XCTestCase {
         let started = expectation(description: "started")
         let completed = expectation(description: "completed")
 
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             started.fulfill()
             return 1
         }
@@ -143,9 +139,7 @@ class TaskExecutionTests: XCTestCase {
     func testStatusCancelRun() {
         let notify = expectation(description: "notify")
 
-        let task = Task<Int> {
-            return 1
-        }.notify(queue: notifyQueue) {
+        let task = Task<Int>.from { 1 }.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, nil)
             XCTAssertEqual($0.status, .cancelled)
             notify.fulfill()
@@ -165,7 +159,7 @@ class TaskExecutionTests: XCTestCase {
 
         let semafore = DispatchSemaphore(value: 0)
 
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             started.fulfill()
             semafore.wait()
             return 1
@@ -188,9 +182,7 @@ class TaskExecutionTests: XCTestCase {
     }
 
     func testAwaitSuccess() {
-        let task = Task<Int> {
-            return 1
-        }
+        let task = Task<Int>.from { 1 }
 
         XCTAssertNoThrow(try executeQueue.await(task: task))
         XCTAssertEqual(task.result, 1)
@@ -200,7 +192,7 @@ class TaskExecutionTests: XCTestCase {
     func testAwaitError() {
         let error = TestError()
 
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -215,7 +207,7 @@ class TaskExecutionTests: XCTestCase {
         let cancelled = expectation(description: "cancelled")
         let cancelledError = expectation(description: "cancelledErrors")
 
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             semafore.wait()
             throw error
         }

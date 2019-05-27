@@ -5,6 +5,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use CommandFactory instead")
 open class ActionCommand: SerialCommand {
 
     private let execute: (Any?) -> Void
@@ -55,7 +56,7 @@ open class ActionCommand: SerialCommand {
 
 public extension ActionCommand {
 
-    public convenience init<Source: AnyObject>(
+    convenience init<Source: AnyObject>(
         _ source:   Source,
         execute:    @escaping (Source) -> Void,
         canExecute: @escaping (Source) -> Bool)
@@ -76,7 +77,7 @@ public extension ActionCommand {
         )
     }
 
-    public convenience init<Source: AnyObject, TParam>(
+    convenience init<Source: AnyObject, TParam>(
         _ source:   Source,
         executeGeneric:    @escaping (Source, TParam) -> Void,
         canExecute: @escaping (Source, TParam) -> Bool)
@@ -97,11 +98,11 @@ public extension ActionCommand {
         )
     }
 
-    public convenience init<Source: AnyObject>(_ source: Source, execute: @escaping (Source) -> Void) {
+    convenience init<Source: AnyObject>(_ source: Source, execute: @escaping (Source) -> Void) {
         self.init(source, execute: { execute($0) }, canExecute: { _ in return true } )
     }
 
-    public convenience init<Source: AnyObject, Param>(_ source: Source, execute: @escaping (Source, Param) -> Void) {
+    convenience init<Source: AnyObject, Param>(_ source: Source, execute: @escaping (Source, Param) -> Void) {
         self.init(source, executeGeneric: { execute($0, $1) }, canExecute: { (_, _) in return true } )
     }
 }

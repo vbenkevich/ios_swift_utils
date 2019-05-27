@@ -164,7 +164,7 @@ public extension Observable {
      append validation rule to observable
      */
     @discardableResult
-    public func validation<Validator: ValidationRule>(_ validator: Validator) -> Observable where Validator.Value == Value  {
+    func validation<Validator: ValidationRule>(_ validator: Validator) -> Observable where Validator.Value == Value  {
         getOrCreateValidaition().append(validator)
         return self
     }
@@ -172,7 +172,7 @@ public extension Observable {
     /**
     clear all validations from obsevable
     */
-    public func removeValidation() {
+    func removeValidation() {
         validation?.detach()
         validation = nil
     }

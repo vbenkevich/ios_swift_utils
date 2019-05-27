@@ -9,7 +9,7 @@ private var usedKeys = Set<String>()
 
 public extension UserDefaults {
 
-    public struct Key {
+    struct Key {
 
         let stringKey: String
 

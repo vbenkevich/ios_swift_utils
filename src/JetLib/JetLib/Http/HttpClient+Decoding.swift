@@ -17,7 +17,7 @@ public protocol HttpResponseErrorDecoder {
 
 public extension HttpClient {
 
-    public enum Decoding {
+    enum Decoding {
         public static var defaultBodyDecoder: HttpResponseBodyDecoder = JsonBodyDecoder()
         public static var defaultErrorDecoder: HttpResponseErrorDecoder = DefaultErrorDecoder()
     }

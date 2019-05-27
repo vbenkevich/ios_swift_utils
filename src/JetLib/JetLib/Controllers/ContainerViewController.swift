@@ -17,11 +17,6 @@ open class ContainerViewController: UIViewController, ControllerPresenter {
             if isBeingPresented {
                 oldValue?.beginAppearanceTransition(false, animated: false)
                 currentController?.beginAppearanceTransition(true, animated: false)
-
-                defer {
-                    currentController?.endAppearanceTransition()
-                    oldValue?.endAppearanceTransition()
-                }
             }
 
             oldValue?.willMove(toParent: nil)
@@ -38,6 +33,11 @@ open class ContainerViewController: UIViewController, ControllerPresenter {
 
             oldValue?.removeFromParent()
             currentController?.didMove(toParent: self)
+
+            if isBeingPresented {
+                currentController?.endAppearanceTransition()
+                oldValue?.endAppearanceTransition()
+            }
         }
     }
 }

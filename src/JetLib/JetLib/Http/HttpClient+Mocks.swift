@@ -7,7 +7,7 @@ import Foundation
 
 public extension HttpClient {
 
-    public class URLSessionMockDecorator: URLSession {
+    class URLSessionMockDecorator: URLSession {
 
         public typealias Callback = (Data?, URLResponse?, Error?) -> Swift.Void
         typealias Result = (predicate: MockRequestPredicate, response: URLResponse?, data: Data?, error: Error?)

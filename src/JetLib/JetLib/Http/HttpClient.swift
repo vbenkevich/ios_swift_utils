@@ -11,10 +11,10 @@ public protocol URLRequestAdapter {
 }
 
 public struct Response {
-    let request: URLRequest
-    let content: Data?
-    let response: URLResponse?
-    let error: Error?
+    public let request: URLRequest
+    public let content: Data?
+    public let response: URLResponse?
+    public let error: Error?
 }
 
 public class HttpClient {
@@ -42,3 +42,16 @@ public class HttpClient {
 }
 
 extension URLSessionTask: Cancellable {}
+
+extension Response: CustomDebugStringConvertible {
+
+    public var debugDescription: String {
+        if let response = response {
+            return response.debugDescription
+        } else if let error = error {
+            return "Requset: \(request.debugDescription) failed with error: \(error)"
+        } else {
+            return "Incompleted: \(request.debugDescription)"
+        }
+    }
+}

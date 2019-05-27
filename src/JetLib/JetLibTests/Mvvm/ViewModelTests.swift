@@ -39,7 +39,7 @@ class ViewModelTests: XCTestCase {
 
         XCTAssertNotNil(weakTask)
 
-        viewModel.loadData()
+        viewModel.reload()
 
         wait(completed)
         
@@ -49,10 +49,11 @@ class ViewModelTests: XCTestCase {
     }
 
     func testViewModelRelease() {
-        let task = Task(execute: { return 1})
+        let task = Task.from { 1 }
         weak var weakViewModel = viewModel
 
-        viewModel.load(task: task)
+        viewModel.addTask(task)
+        viewModel.dataUpdateRequested(initiator: BaseTestViewModel()) // viewModel hold initiator untill updation finished
 
         XCTAssertNotNil(weakViewModel)
 
@@ -65,8 +66,8 @@ class ViewModelTests: XCTestCase {
         let tag1 = DataTaskTag("tag1")
         let task1Exp = expectation(description: "task1Exp cancelled")
         let task2Exp = expectation(description: "task2Exp success")
-        let task1 = Task(execute: { return true }).onCancel { task1Exp.fulfill() }
-        let task2 = Task(execute: { return "123" }).onSuccess { _ in task2Exp.fulfill() }
+        let task1 = Task.from { return true }.onCancel { task1Exp.fulfill() }
+        let task2 = Task.from { return "123" }.onSuccess { _ in task2Exp.fulfill() }
 
         viewModel.submit(task: task1, tag: tag1)
         viewModel.submit(task: task2, tag: tag1)
@@ -81,8 +82,8 @@ class ViewModelTests: XCTestCase {
         let tag2 = DataTaskTag("tag2")
         let task1Exp = expectation(description: "task1Exp success")
         let task2Exp = expectation(description: "task2Exp success")
-        let task1 = Task(execute: { return true }).onSuccess { _ in task1Exp.fulfill() }
-        let task2 = Task(execute: { return "123" }).onSuccess { _ in task2Exp.fulfill() }
+        let task1 = Task.from { return true }.onSuccess { _ in task1Exp.fulfill() }
+        let task2 = Task.from  { return "123" }.onSuccess { _ in task2Exp.fulfill() }
 
         viewModel.submit(task: task1, tag: tag1)
         viewModel.submit(task: task2, tag: tag2)
@@ -96,7 +97,7 @@ class ViewModelTests: XCTestCase {
     func testSubmitTask() {
         let exp1 = expectation(description: "submit")
         let exp2 = expectation(description: "submit finished")
-        let task1 = Task(execute: { return true }).onSuccess { _ in exp1.fulfill() }
+        let task1 = Task.from { return true }.onSuccess { _ in exp1.fulfill() }
 
         viewModel.submit(task: task1).notify { _ in
             exp2.fulfill()
@@ -116,8 +117,8 @@ class ViewModelTests: XCTestCase {
         let exp1 = expectation(description: "submit1")
         let exp2 = expectation(description: "submit2")
         let exp3 = expectation(description: "submit finished")
-        let task1 = Task(execute: { return true }).onSuccess { _ in exp1.fulfill() }
-        let task2 = Task(execute: { return true }).onSuccess { _ in exp2.fulfill() }
+        let task1 = Task.from { return true }.onSuccess { _ in exp1.fulfill() }
+        let task2 = Task.from { return true }.onSuccess { _ in exp2.fulfill() }
 
         viewModel.submit(task: task1).notify { _ in
             exp3.fulfill()
@@ -143,7 +144,7 @@ class ViewModelTests: XCTestCase {
     func testBeginLoading() {
         XCTAssertFalse(viewModel.loading)
 
-        viewModel.addTask(Task(execute: { return 123 }))
+        viewModel.addTask(Task.from { return 123 })
         viewModel.viewWillAppear(false)
 
         XCTAssertTrue(viewModel.loading)
@@ -151,7 +152,7 @@ class ViewModelTests: XCTestCase {
 
     func testFinishLoading() {
         let exp1 = expectation(description: "exp1")
-        let task = Task(execute: { return 123 }).notify { _ in exp1.fulfill() }
+        let task = Task.from { return 123 }.notify { _ in exp1.fulfill() }
 
         viewModel.addTask(task)
         viewModel.viewWillAppear(false)
@@ -165,7 +166,7 @@ class ViewModelTests: XCTestCase {
 
     func testCancelLoadingAtDisappear() {
         let exp1 = expectation(description: "exp1")
-        let task = Task(execute: { return 123 }).notify { _ in exp1.fulfill() }
+        let task = Task.from { return 123 }.notify { _ in exp1.fulfill() }
 
         viewModel.addTask(task)
         viewModel.viewWillAppear(false)
@@ -177,7 +178,7 @@ class ViewModelTests: XCTestCase {
     }
 
     func testSimultaniuslyLoading() {
-        let task = Task(execute: { return 123 })
+        let task = Task.from { return 123 }
         viewModel.addTask(task)
 
         viewModel.viewWillAppear(false)
@@ -187,7 +188,7 @@ class ViewModelTests: XCTestCase {
     }
 
     func testSerialLoading() {
-        let task = Task(execute: { return 123 })
+        let task = Task.from { return 123 }
         let completed = expectation(description: "completed")
         viewModel.addTask(task)
         viewModel.onLoadCompleted = { completed.fulfill() }
@@ -199,7 +200,7 @@ class ViewModelTests: XCTestCase {
         XCTAssert(task.isCancelled)
 
         viewModel.cleanTasks()
-        viewModel.addTask(Task(execute: { return 123 }))
+        viewModel.addTask(Task.from { return 123 })
         viewModel.viewWillAppear(true)
 
         XCTAssertEqual(viewModel.loadDataCallCount, 2)
@@ -207,9 +208,9 @@ class ViewModelTests: XCTestCase {
 
     func testReload() {
         let success = expectation(description: "canceled")
-        let task = Task<Int>(execute: {
+        let task = Task.from {
             return 123
-        }).onSuccess { _ in
+        }.onSuccess { _ in
             success.fulfill()
         }
 
@@ -222,9 +223,9 @@ class ViewModelTests: XCTestCase {
 
     func testForceReload() {
         let canceled = expectation(description: "canceled")
-        let task = Task<Int>(execute: {
+        let task = Task.from {
             return 123
-        }).onCancel {
+        }.onCancel {
             canceled.fulfill()
         }
 

@@ -20,13 +20,13 @@ class ViewLifecycleTests: XCTestCase {
         let delegate = TestViewLifecycleDelegate()
         let anotherDelegate = TestViewLifecycleDelegate()
 
-        view.add(delegate)
+        view.sendViewAppearance(to: delegate)
         XCTAssertEqual(view.lifecycleDelegates.count, 1)
 
-        view.add(delegate)
+        view.sendViewAppearance(to: delegate)
         XCTAssertEqual(view.lifecycleDelegates.count, 1)
 
-        view.add(anotherDelegate)
+        view.sendViewAppearance(to: anotherDelegate)
         XCTAssertEqual(view.lifecycleDelegates.count, 2)
     }
 
@@ -35,7 +35,7 @@ class ViewLifecycleTests: XCTestCase {
         let delegate = TestViewLifecycleDelegate()
         let anotherDelegate = TestViewLifecycleDelegate()
 
-        view.add(delegate)
+        view.sendViewAppearance(to: delegate)
         XCTAssertEqual(view.lifecycleDelegates.count, 1)
 
         view.remove(anotherDelegate)
@@ -50,7 +50,7 @@ class ViewLifecycleTests: XCTestCase {
         var delegate: TestViewLifecycleDelegate? = TestViewLifecycleDelegate()
         weak var weakDelegate = delegate
 
-        view.add(delegate!, strongReference: true)
+        view.sendViewAppearance(to: delegate!, retain: true)
         delegate = nil
 
         XCTAssertNotNil(weakDelegate)
@@ -61,7 +61,7 @@ class ViewLifecycleTests: XCTestCase {
         var delegate: TestViewLifecycleDelegate? = TestViewLifecycleDelegate()
         weak var weakDelegate = delegate
 
-        view.add(delegate!, strongReference: false)
+        view.sendViewAppearance(to: delegate!, retain: false)
         delegate = nil
 
         XCTAssertNil(weakDelegate)
@@ -92,7 +92,7 @@ class ViewLifecycleTests: XCTestCase {
             didDisappear.fulfill()
         }
 
-        view.add(delegate, strongReference: true)
+        view.sendViewAppearance(to: delegate, retain: true)
 
         view.beginAppearanceTransition(true, animated: true)
         view.endAppearanceTransition()

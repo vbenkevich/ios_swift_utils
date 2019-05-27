@@ -97,7 +97,7 @@ class ObservableCorrectionTests: XCTestCase {
     }
 
     func testRangeCorrector() {
-        let corrector = RangeValueCorrector(minValue: 10, maxValue: 100)
+        let corrector = RangeValueCorrector(min: 10, max: 100)
         XCTAssertEqual(corrector.correct(oldValue: 50, newValue: nil), 50)
         XCTAssertEqual(corrector.correct(oldValue: 100, newValue: 10), 10)
         XCTAssertEqual(corrector.correct(oldValue: 10, newValue: 100), 100)

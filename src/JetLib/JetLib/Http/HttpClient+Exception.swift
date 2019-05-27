@@ -7,7 +7,7 @@ import Foundation
 
 public extension HttpClient {
 
-    public class DefaultErrorDecoder: HttpResponseErrorDecoder {
+    class DefaultErrorDecoder: HttpResponseErrorDecoder {
 
         public var errorMessageDecoder: ((Data?) -> String?)? = { String(data: $0) }
 
