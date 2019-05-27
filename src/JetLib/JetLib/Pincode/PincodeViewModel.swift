@@ -19,15 +19,19 @@ public class PincodeViewModel: ExtendedViewModel {
 
     let biomentricAuth: BiometricAuth?
 
-    lazy var deleteSymbolCommand = ActionCommand(self,
-                                                 execute: { $0.executeDeleteSymbol() },
-                                                 canExecute: { $0.canExecuteDeleteSymbol() }).dependOn(pincode)
+    lazy var deleteSymbolCommand = CommandFactory.owner(self)
+        .action { $0.executeDeleteSymbol() }
+        .predicate {$0.canExecuteDeleteSymbol() }
+        .dependOn(pincode)
 
-    lazy var appendSymbolCommand = ActionCommand(self, execute: { $0.executeAppendSymbol($1) }).dependOn(pincode)
+    lazy var appendSymbolCommand = CommandFactory.owner(self)
+        .action { $0.executeAppendSymbol($1) }
+        .dependOn(pincode)
 
-    lazy var biomentricAuthCommand = AsyncCommand(self,
-                                                  task: { $0.executeBiomentricAuth() },
-                                                  canExecute: { $0.canExecuteBiomentricAuth() }).dependOn(pincode)
+    lazy var biomentricAuthCommand = CommandFactory.owner(self)
+        .task { $0.executeBiomentricAuth() }
+        .predicate { $0.canExecuteBiomentricAuth() }
+        .dependOn(pincode)
 
     public weak var delegate: PincodeUIPresenterDelegate? {
         didSet {

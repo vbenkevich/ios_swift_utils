@@ -18,10 +18,10 @@ class AsyncCommandTests: XCTestCase {
 
     fileprivate func createTestTask<T>(res: T, with expectation: XCTestExpectation? = nil) -> () -> Task<T> {
         return {
-            DispatchQueue.main.async(Task(execute: {
+            DispatchQueue.main.execute {
                 expectation?.fulfill()
                 return res
-            }))
+            }
         }
     }
 
@@ -73,11 +73,11 @@ class AsyncCommandTests: XCTestCase {
         let semaphore = DispatchSemaphore(value: 0)
 
         let taskFactory: () -> Task<Int> = {
-            DispatchQueue.main.async(Task(execute: {
+            DispatchQueue.main.execute {
                 execute.fulfill()
                 semaphore.wait()
                 return 1
-            }))
+            }
         }
 
         let command = AsyncCommand(task: taskFactory)
@@ -97,11 +97,11 @@ class AsyncCommandTests: XCTestCase {
         let parameter = CommandParameter()
 
         let taskFactory: (CommandParameter) -> Task<Int> = { param in
-            DispatchQueue.main.async(Task(execute: {
+            DispatchQueue.main.execute {
                 XCTAssertEqual(param, parameter)
                 execute.fulfill()
                 return 1
-            }))
+            }
         }
 
         let command = AsyncCommand(task1: taskFactory)
@@ -115,11 +115,11 @@ class AsyncCommandTests: XCTestCase {
         let parameter = CommandParameter()
 
         let taskFactory: (CommandParameter) -> Task<Int> = { param in
-            DispatchQueue.main.async(Task(execute: {
+            DispatchQueue.main.execute {
                 XCTAssertEqual(param, parameter)
                 execute.fulfill()
                 return 1
-            }))
+            }
         }
 
         let command = AsyncCommand(task1: taskFactory, canExecute: { (param: CommandParameter) in
@@ -136,10 +136,10 @@ class AsyncCommandTests: XCTestCase {
         execute.fulfill()
 
         let taskFactory: (CommandParameter) -> Task<Int> = { param in
-            Task(execute: {
+            Task.from {
                 XCTAssertTrue(false)
                 return 1
-            })
+            }
         }
 
         let command = AsyncCommand(task1: taskFactory, canExecute: { (param: CommandParameter) in
@@ -222,17 +222,17 @@ class AsyncCommandTests: XCTestCase {
         }
 
         func executeVoid() -> Task<Int> {
-            return DispatchQueue.main.async(Task(execute: {
+            return DispatchQueue.main.execute {
                 self.exp.fulfill()
                 return 1
-            }))
+            }
         }
 
         func executeGeneric<T: AnyObject>(_ param: T) -> Task<Int> {
-            return DispatchQueue.main.async(Task(execute: {
+            return DispatchQueue.main.execute {
                 self.exp.fulfill()
                 return 1
-            }))
+            }
         }
 
         static func == (lhs: AsyncCommandTests.CommandSource, rhs: AsyncCommandTests.CommandSource) -> Bool {

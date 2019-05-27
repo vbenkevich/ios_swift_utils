@@ -35,12 +35,10 @@ class TaskChainTests: XCTestCase {
             XCTAssertEqual(task.status, .success(result1))
             createTask2.fulfill()
 
-            return executeQueue!.async(Task {
-                return result2
-            })
+            return executeQueue!.execute { result2 }
         }
 
-        let task = Task<Int> { return result1 }
+        let task = Task.from { result1 }
 
         task.notify(queue: notifyQueue) {
             XCTAssertEqual($0.result, result1)
@@ -68,7 +66,7 @@ class TaskChainTests: XCTestCase {
         let createTask2 = expectation(description: "create task2")
         let notifyTask2 = expectation(description: "notify task2")
 
-        let task1 = Task<Int> {
+        let task1 = Task<Int>.from {
             semafore.wait()
             return result1
         }
@@ -101,7 +99,7 @@ class TaskChainTests: XCTestCase {
 
     func testChainOnSuccessCancel() {
         let singleExpectation = expectation(description: "single")
-        let task = Task<Int> { return 1 }
+        let task = Task.from { 1 }
         try! task.cancel()
 
         task.notify(queue: notifyQueue) { _ in singleExpectation.fulfill() }
@@ -123,7 +121,7 @@ class TaskChainTests: XCTestCase {
     func testChainOnSuccessError() {
         let singleExpectation = expectation(description: "single")
         let error = TestError()
-        let task = Task<Int> { throw error }.notify(queue: notifyQueue) { _ in singleExpectation.fulfill() }
+        let task = Task<Int>.from { throw error }.notify(queue: notifyQueue) { _ in singleExpectation.fulfill() }
         let _: Task<String> = task.chainOnSuccess { _ in
             singleExpectation.fulfill()
             return Task("1")
@@ -172,7 +170,7 @@ class TaskChainTests: XCTestCase {
     func testNotifyOnFaill() {
         let exp = expectation(description: "expectation")
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -191,7 +189,7 @@ class TaskChainTests: XCTestCase {
     func testNotifyOnFailOnly() {
         let exp = expectation(description: "expectation")
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -211,7 +209,7 @@ class TaskChainTests: XCTestCase {
     func testNotifyOnCancel() {
         let exp = expectation(description: "expectation")
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -229,7 +227,7 @@ class TaskChainTests: XCTestCase {
     func testNotifyOnCancelOnly() {
         let exp = expectation(description: "expectation")
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -277,7 +275,7 @@ class TaskChainTests: XCTestCase {
         let exp = expectation(description: "expectation")
         let mappedResult = "mapped result"
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -308,7 +306,7 @@ class TaskChainTests: XCTestCase {
         let exp = expectation(description: "expectation")
         let mappedResult = "mapped result"
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 
@@ -339,7 +337,7 @@ class TaskChainTests: XCTestCase {
         let exp = expectation(description: "expectation")
         let mappedResult = "mapped result"
         let error = TestError()
-        let task = Task<Int> {
+        let task = Task<Int>.from {
             throw error
         }
 

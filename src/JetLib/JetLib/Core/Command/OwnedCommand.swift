@@ -48,7 +48,7 @@ public class OwnedCommand<Owner: AnyObject>: BaseCommand<Owner> {
     public func action(queue: DispatchQueue = DispatchQueue.main, block: @escaping (Owner) -> Void) -> Self {
         assertSetExecutionPossible()
         execution = { owner, _ in
-            queue.async(Task(execute: { block(owner) }))
+            queue.execute { block(owner) }
         }
         return self
     }
@@ -92,7 +92,7 @@ extension OwnedCommand {
         assertCanMakeGeneric()
         let command = OwnedCommandGeneric<Owner, Param>(owner!)
         command.execution = { vm, param in
-            queue.async(Task(execute: { block(vm, param as! Param) }))
+            queue.execute { block(vm, param as! Param) }
         }
         return command
     }

@@ -91,4 +91,8 @@ public extension Task {
             }
         }
     }
+
+    func void() -> Task<Void> {
+        return self.map { _ in Void() }
+    }
 }

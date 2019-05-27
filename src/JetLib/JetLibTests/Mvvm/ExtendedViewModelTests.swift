@@ -172,9 +172,9 @@ class ExtendedViewModelTests: XCTestCase {
         let completedExpectation = expectation(description: "completed")
 
         viewModel.willLoadData = {
-            try! $0.append(DispatchQueue.global().async(Task(execute: {
+            try! $0.append(DispatchQueue.global().execute {
                 semaphore.wait()
-            })))
+            })
         }
 
         controller.showLoading = {
@@ -213,7 +213,7 @@ class ExtendedViewModelTests: XCTestCase {
             }
         }
 
-        viewModel.submit(task: DispatchQueue.global().async(Task(execute: { semaphore.wait() })))
+        viewModel.submit(task: DispatchQueue.global().execute { semaphore.wait() })
 
         wait(loadingExpectation)
         semaphore.signal()

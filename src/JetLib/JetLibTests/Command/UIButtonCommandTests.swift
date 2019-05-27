@@ -11,7 +11,7 @@ class UIButtonCommandTests: XCTestCase {
     func testCommandExecution() {
         let expectation = self.expectation(description: "execute")
         let button = UIButton()
-        button.command = ActionCommand(execute: { expectation.fulfill() })
+        button.command = CommandFactory.action { expectation.fulfill() }
         button.sendActions(for: .touchUpInside)
 
         wait(expectation)
@@ -23,7 +23,7 @@ class UIButtonCommandTests: XCTestCase {
 
         expectation.expectedFulfillmentCount = 1
 
-        button.command = ActionCommand(execute: { expectation.fulfill() })
+        button.command = CommandFactory.action { expectation.fulfill() }
         button.sendActions(for: .touchUpInside)
 
         button.command = nil
@@ -36,7 +36,7 @@ class UIButtonCommandTests: XCTestCase {
 
     func testCommandCanExecute() {
         let button = UIButton()
-        button.command = ActionCommand(execute: { XCTFail() }, canExecute: { false })
+        button.command = CommandFactory.action { XCTFail() }.predicate { false }
         XCTAssertFalse(button.isEnabled)
 
         button.sendActions(for: .touchUpInside)
@@ -49,13 +49,13 @@ class UIButtonCommandTests: XCTestCase {
 
         expectation.expectedFulfillmentCount = 1
 
-        button.command = ActionCommand(execute: { (p: CommandParameterRef) in
+        button.command = CommandFactory.action { (p: CommandParameterRef) in
             XCTAssertEqual(p, param)
             expectation.fulfill()
-        }, canExecute: {
+        }.predicate {
             XCTAssertEqual($0, param)
             return true
-        })
+        }
 
         XCTAssertFalse(button.isEnabled)
 
@@ -76,13 +76,13 @@ class UIButtonCommandTests: XCTestCase {
 
         expectation.expectedFulfillmentCount = 1
 
-        button.command = ActionCommand(execute: { (p: CommandParameterStruct) in
+        button.command = CommandFactory.action { (p: CommandParameterStruct) in
             XCTAssertEqual(p, param)
             expectation.fulfill()
-        }, canExecute: {
+        }.predicate {
             XCTAssertEqual($0, param)
             return true
-        })
+        }
 
         XCTAssertFalse(button.isEnabled)
 
