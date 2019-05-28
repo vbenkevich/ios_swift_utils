@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "JetLib"
-  spec.version      = "0.5.0"
+  spec.version      = "0.5.1"
   spec.summary      = "Toolkit for fast development iOS apps"
   spec.homepage     = "https://github.com/vbenkevich/ios_swift_utils"
 
