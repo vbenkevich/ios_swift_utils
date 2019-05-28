@@ -47,7 +47,7 @@ open class ExtendedViewModel: ViewModel {
                 self?.updateCompleted()
             }
         }.onFail { [weak self] in
-            self?.showAlert(error: $0)
+            self?.displayErrorIfNeeded(error: $0)
         }
     }
 
@@ -61,6 +61,16 @@ open class ExtendedViewModel: ViewModel {
 
     override open func updateCompleted() {
         isLoading = false
+    }
+
+    open func handleError(error: Error) -> Bool {
+        return false
+    }
+
+    func displayErrorIfNeeded(error: Error) {
+        if !handleError(error: error) {
+            showAlert(error: error)
+        }
     }
 
     class ShowErrorDecorator: DataLoader {
@@ -81,7 +91,7 @@ open class ExtendedViewModel: ViewModel {
             let originTask = try decoree.append(task)
 
             originTask.onFail { [weak self] in
-                self?.viewModel?.showAlert(error: $0)
+                self?.viewModel?.displayErrorIfNeeded(error: $0)
             }
 
             return originTask
