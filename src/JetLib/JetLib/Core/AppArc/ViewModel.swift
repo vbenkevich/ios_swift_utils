@@ -28,7 +28,7 @@ open class ViewModel: ViewLifecycleDelegate {
     }
 
     open var loading: Bool {
-        return !submitedTasks.all.isEmpty || loader != nil
+        return loader != nil
     }
 
     open var canLoadData: Bool {
