@@ -29,7 +29,7 @@ class PincodeView: UIView {
         }
     }
 
-    var codeView: CodeView!
+    var codeView: CodeView = CodeView()
 
     var deviceOwnerAuthView: UIView!
 
