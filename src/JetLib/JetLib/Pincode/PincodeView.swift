@@ -160,7 +160,7 @@ extension PincodeView: Pinpad {
     func invalideCode(completion: @escaping () -> Void) {
         let duration = TimeInterval(0.5)
         let shift = CGFloat(10)
-        let view = codeView!
+        let view = codeView
 
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.error)
