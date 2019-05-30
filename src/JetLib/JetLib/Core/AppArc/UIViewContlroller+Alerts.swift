@@ -40,10 +40,15 @@ extension UIViewController: AlertPresenter {
         return source.task
     }
 
+    /// Creates UIAlertViewController and present it
     @objc
-    func showAlertImpl(title: String?, message: String?, ok: String, okStyle: UIAlertAction.Style, cancel: String?,
-                       handleOk: @escaping () -> Void,
-                       handleCancel: @escaping () -> Void)
+    public func showAlertImpl(title: String?,
+                              message: String?,
+                              ok: String,
+                              okStyle: UIAlertAction.Style,
+                              cancel: String?,
+                              handleOk: @escaping () -> Void,
+                              handleCancel: @escaping () -> Void)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
