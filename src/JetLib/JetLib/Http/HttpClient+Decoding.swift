@@ -8,6 +8,8 @@ import Foundation
 public protocol HttpResponseBodyDecoder {
 
     func decode<T: Decodable>(response: Response) throws -> T
+    
+    func decode(response: Response) throws -> Void
 }
 
 public protocol HttpResponseErrorDecoder {
@@ -26,6 +28,16 @@ public extension HttpClient {
 public extension Task where T == Response {
 
     func decode<TData: Decodable>(_ bodyDecoder: HttpResponseBodyDecoder? = nil, _ errorDecoder: HttpResponseErrorDecoder? = nil) -> Task<TData> {
+        let bodyDecoder = bodyDecoder ?? HttpClient.Decoding.defaultBodyDecoder
+        let errorDecoder = errorDecoder ?? HttpClient.Decoding.defaultErrorDecoder
+
+        return map {
+            try errorDecoder.throwError(from: $0)
+            return try bodyDecoder.decode(response: $0)
+        }
+    }
+    
+    func decode(_ bodyDecoder: HttpResponseBodyDecoder? = nil, _ errorDecoder: HttpResponseErrorDecoder? = nil) -> Task<Void> {
         let bodyDecoder = bodyDecoder ?? HttpClient.Decoding.defaultBodyDecoder
         let errorDecoder = errorDecoder ?? HttpClient.Decoding.defaultErrorDecoder
 
@@ -77,6 +89,12 @@ extension HttpClient {
                 throw HttpException.responseEmptyBody
             }
             return try currentDecoder.decode(T.self, from: body)
+        }
+        
+        public func decode(response: Response) throws {
+            guard response.content?.isEmpty != false else {
+                throw HttpException.responseNotEmptyBody
+            }
         }
     }
 }

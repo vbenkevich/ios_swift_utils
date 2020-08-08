@@ -100,12 +100,13 @@ public extension URLResponse {
     }
 }
 
-extension HttpException {
+public extension HttpException {
 
     static let badUrlFormat = HttpException("Bad url format")
     static let badParametersFormat = HttpException("Bad parameters format")
     static let badResponseType = HttpException("Bad response type")
     static let responseEmptyBody = HttpException("Empty response body")
+    static let responseNotEmptyBody = HttpException("Not empty response body")
 }
 
 public extension String {
