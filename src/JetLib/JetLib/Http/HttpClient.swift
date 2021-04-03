@@ -17,7 +17,11 @@ public struct Response {
     public let error: Error?
 }
 
-public class HttpClient {
+public protocol ApiClient {
+    func send(_ request: URLRequest, adapter: URLRequestAdapter?) -> Task<Response>
+}
+
+public class HttpClient: ApiClient {
 
     public static let `default`: HttpClient = HttpClient()
 
@@ -25,7 +29,7 @@ public class HttpClient {
 
     public var urlSession: URLSession = URLSession.shared
 
-    public func send(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<Response> {
+    public func send(_ request: URLRequest, adapter: URLRequestAdapter?) -> Task<Response> {
         let prepared = (adapter ?? requetAdapter)?.adapt(origin: request) ?? request
         let tcs = Task<Response>.Source()
 

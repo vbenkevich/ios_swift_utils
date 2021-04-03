@@ -48,35 +48,13 @@ public extension Task where T == Response {
     }
 }
 
-extension HttpClient {
-
-    public enum Json {
+public extension HttpClient {
+    enum Json {
         public static var defaultDecoder: JSONDecoder = JSONDecoder()
         public static var defaultEncoder: JSONEncoder = JSONEncoder()
     }
 
-    public func request<TBody: Encodable>(url: URL,
-                                          urlParams: [String: CustomStringConvertible]?,
-                                          jsonBody: TBody,
-                                          method: String = HttpMethod.post,
-                                          encoder: JSONEncoder? = nil,
-                                          adapter: URLRequestAdapter?) throws -> Task<Response> {
-
-        let encoder = encoder ?? HttpClient.Json.defaultEncoder
-        let encodedData = try encoder.encode(jsonBody)
-
-        return try request(url: url, urlParams: urlParams, body: encodedData, method: method, adapter: adapter)
-    }
-
-    public func post<TBody: Encodable>(_ url: URL, jsonBody: TBody, encoder: JSONEncoder? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
-        return try self.request(url: url, urlParams: nil, jsonBody: jsonBody, method: HttpMethod.post, encoder: encoder, adapter: adapter)
-    }
-
-    public func put<TBody: Encodable>(_ url: URL, jsonBody: TBody, encoder: JSONEncoder? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
-        return try self.request(url: url, urlParams: nil, jsonBody: jsonBody, method: HttpMethod.put, encoder: encoder, adapter: adapter)
-    }
-
-    public class JsonBodyDecoder: HttpResponseBodyDecoder {
+    class JsonBodyDecoder: HttpResponseBodyDecoder {
         public init() { }
 
         public var decoder: JSONDecoder?
@@ -91,11 +69,34 @@ extension HttpClient {
             }
             return try currentDecoder.decode(T.self, from: body)
         }
-        
+
         public func decode(response: Response) throws {
             guard response.content?.isEmpty != false else {
                 throw HttpException.responseNotEmptyBody
             }
         }
+    }
+}
+
+public extension ApiClient {
+    func request<TBody: Encodable>(url: URL,
+                                          urlParams: [String: CustomStringConvertible]?,
+                                          jsonBody: TBody,
+                                          method: String = HttpMethod.post,
+                                          encoder: JSONEncoder? = nil,
+                                          adapter: URLRequestAdapter?) throws -> Task<Response> {
+
+        let encoder = encoder ?? HttpClient.Json.defaultEncoder
+        let encodedData = try encoder.encode(jsonBody)
+
+        return try request(url: url, urlParams: urlParams, body: encodedData, method: method, adapter: adapter)
+    }
+
+    func post<TBody: Encodable>(_ url: URL, jsonBody: TBody, encoder: JSONEncoder? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+        return try self.request(url: url, urlParams: nil, jsonBody: jsonBody, method: HttpMethod.post, encoder: encoder, adapter: adapter)
+    }
+
+    func put<TBody: Encodable>(_ url: URL, jsonBody: TBody, encoder: JSONEncoder? = nil, adapter: URLRequestAdapter? = nil) throws -> Task<Response> {
+        return try self.request(url: url, urlParams: nil, jsonBody: jsonBody, method: HttpMethod.put, encoder: encoder, adapter: adapter)
     }
 }
