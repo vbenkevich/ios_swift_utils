@@ -30,7 +30,11 @@ class PincodeUIPresenter: CodeProvider {
         }
 
         let config = JetPincode.shared.configuration
-        let presentation = Presentation(validator: pincodeStorage, maxAttempts: config.pincodeAttempts)
+        let presentation = Presentation(
+            validator: pincodeStorage,
+            maxAttempts: config.pincodeAttempts,
+            animated: config.presentAnimated
+        )
 
         self.currentPresentation = presentation
 
@@ -64,10 +68,12 @@ class PincodeUIPresenter: CodeProvider {
         private let validator: CodeValidator
         private let maxAttempts: Int
         private let source = Task<String>.Source()
+        private let animated: Bool
 
-        init(validator: CodeValidator, maxAttempts: Int) {
+        init(validator: CodeValidator, maxAttempts: Int, animated: Bool) {
             self.maxAttempts = maxAttempts
             self.validator = validator
+            self.animated = animated
         }
 
         var task: Task<String> {
@@ -115,7 +121,7 @@ class PincodeUIPresenter: CodeProvider {
             if presenter is UIAlertController || presenter == nil {
                 self.tryPresent(controller: controller)
             } else {
-                presenter?.present(controller, animated: true)
+                presenter?.present(controller, animated: animated)
             }
         }
     }

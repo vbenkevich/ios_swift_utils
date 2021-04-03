@@ -49,6 +49,12 @@ public class CodeProtectedStorage: AsyncDataStorage {
         codeLocker.invalidate()
     }
 
+    public func prolongate() {
+        if codeLocker.unlocked {
+            codeLocker.lastUnlockTime = Date()
+        }
+    }
+
     public class InvalidCodeException: Exception {
     }
 
@@ -56,6 +62,10 @@ public class CodeProtectedStorage: AsyncDataStorage {
 
         let validator: CodeValidator
         let configuration: JetPincodeConfiguration
+
+        var unlocked: Bool {
+            unlockTask != nil
+        }
 
         var lastUnlockTime: Date = Date()
         var unlockTask: Task<Void>?

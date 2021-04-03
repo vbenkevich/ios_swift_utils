@@ -15,7 +15,9 @@ open class JetPincodeConfiguration {
 
     public var pincodeLifetime: TimeInterval = TimeInterval(10 * 60)
 
-    public var showBiometricAuthOnDidAppear = true
+    public var presentAnimated: Bool = true
+
+    public var showBiometricAuthOnDidAppear: Bool = true
 
     public var pincodeStatus: PincodeStatus? {
         get { return UserDefaults.standard.value(forKey: UserDefaults.Key.pincodeStatusKey) }

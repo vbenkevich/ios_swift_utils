@@ -77,6 +77,7 @@ extension HttpClient {
     }
 
     public class JsonBodyDecoder: HttpResponseBodyDecoder {
+        public init() { }
 
         public var decoder: JSONDecoder?
 
