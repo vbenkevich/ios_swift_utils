@@ -13,7 +13,10 @@ public class HttpMethod {
     public static let delete  = "DELETE"
 }
 
-public extension HttpClient {
+public extension ApiClient {
+    func send(_ request: URLRequest, adapter: URLRequestAdapter? = nil) -> Task<Response> {
+        send(request, adapter: adapter)
+    }
 
     func request(url: URL, urlParams: [String: CustomStringConvertible]?, body: Data?, method: String, adapter: URLRequestAdapter?) throws -> Task<Response> {
         guard let originUrlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
