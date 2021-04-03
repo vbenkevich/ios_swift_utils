@@ -13,7 +13,11 @@ public protocol LoggerOutput {
 open class Logger {
 
     public struct LogLevel: Equatable, Hashable {
-        let prefix: String
+        public let prefix: String
+
+        public init(prefix: String) {
+            self.prefix = prefix
+        }
     }
 
     public static var outputs: [LoggerOutput] = [ConsoleOutput()]
@@ -84,5 +88,9 @@ public extension Logger {
 
     static func error(_ error: Error) {
         log(error, at: .error)
+    }
+
+    static func error(_ data: @autoclosure () throws -> Any?) {
+        log(try data(), at: .error)
     }
 }
